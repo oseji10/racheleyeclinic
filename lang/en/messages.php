@@ -809,7 +809,8 @@ return [
     // Encounter
     'encounters' => [
         'followup_appointment_date' => 'Followup Appointment Date',
-        'created_at' => 'First Appointment Date'
+        'created_at' => 'First Appointment Date',
+        'new_encounter' => 'New Encounter Added Successfully',
     ],
     //services
     'service' => [

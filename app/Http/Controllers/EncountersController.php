@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\PatientCase;
 use App\Repositories\PatientCaseRepository;
+use Flash;
 
 class EncountersController extends Controller
 {
@@ -81,7 +82,10 @@ class EncountersController extends Controller
       $encounter->save();
     //   redirect()->back()->with('Success');
     // return Redirect::back()->with('Success');
-    return Redirect::back()->with('message', "Encounter has successfuly been updated.");
+    Flash::success(__('messages.encounters.new_encounter'));
+    // return Redirect::back()->with('message', "Encounter has successfuly been updated.");
+    return redirect(route('encounter.index'));
+    // return $this->sendSuccess(__('messages.common.status_updated_successfully'));
     }
 
 

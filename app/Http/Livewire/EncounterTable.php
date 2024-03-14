@@ -61,7 +61,7 @@ class EncounterTable extends LivewireTableComponent
     public function columns(): array
     {
         return [
-            Column::make(__('messages.patients'), 'patientUser.first_name')->view('patients.columns.patient')
+            Column::make(__('messages.patients'), 'patientUser.first_name')->view('patient_cases.encounter.columns.patient')
                 ->sortable()->searchable(),
             Column::make(__('messages.user.phone'), 'patientUser.phone')->view('patient_cases.encounter.columns.phone')
                 ->sortable()->searchable(),

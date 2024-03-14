@@ -1373,3 +1373,12 @@ Route::get('/welcome', [AmbulanceCallController::class, 'test']);
 Route::get('/encounter', [EncountersController::class, 'index'])->name('encounter.index');
 Route::get('/patient-encounter', [EncountersController::class, 'encounter'])->name('patient.encounter');
 Route::post('/encounter', [EncountersController::class, 'store'])->name('encounter.store');
+
+
+
+Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Case Manager|Accountant')->group(function () {
+    Route::get('encounter/{patient}', [EncountersController::class, 'show'])
+        // ->where('patient', '[0-9]+')
+        ->name('encounter_patient.show');
+    Route::get('encounter/{patient?}', [EncountersController::class, 'getBirthDate'])->name('patients.birthDate');
+});
