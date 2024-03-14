@@ -7,14 +7,38 @@ use App\Models\VisualAcuity;
 use App\Models\Encounters;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\PatientCase;
+use App\Repositories\PatientCaseRepository;
 
 class EncountersController extends Controller
 {
+    // public function index()
+    // {
+    //     $data['statusArr'] = VisualAcuity::STATUS_ARR;
+
+    //     return view('encounter.encounters.index', $data);
+    // }
+
+
+        /** @var PatientCaseRepository */
+        private $patientCaseRepository;
+
+        public function __construct(PatientCaseRepository $patientCaseManagerRepo)
+        {
+            $this->patientCaseRepository = $patientCaseManagerRepo;
+        }
+
+
     public function index()
     {
-        $data['statusArr'] = VisualAcuity::STATUS_ARR;
+        $patients = $this->patientCaseRepository->getPatients();
+        $doctors = $this->patientCaseRepository->getDoctors();
 
-        return view('encounters.index', $data);
+        return view('patient_cases.encounter.index', compact('patients', 'doctors'));
+    }
+
+    public function encounter(){
+        return view('patient_cases.encounter.encounter');
     }
 
     public function store(Request $request){
@@ -57,6 +81,36 @@ class EncountersController extends Controller
       $encounter->save();
     //   redirect()->back()->with('Success');
     // return Redirect::back()->with('Success');
-    return Redirect::back()->with('success', "ECF has successfuly been updated.");
+    return Redirect::back()->with('message', "Encounter has successfuly been updated.");
     }
+
+
+
+
+    public function show($patientId)
+    {
+        $data = $this->patientRepository->getPatientAssociatedData($patientId);
+
+        if (! $data) {
+            return view('errors.404');
+        }
+
+        if (getLoggedinPatient() && checkRecordAccess($data->id)) {
+            return view('errors.404');
+        } else {
+            $advancedPaymentRepo = App::make(AdvancedPaymentRepository::class);
+            $patients = $advancedPaymentRepo->getPatients();
+            $user = Auth::user();
+            if ($user->hasRole('Doctor')) {
+                $vaccinationPatients = getPatientsList($user->owner_id);
+            } else {
+                $vaccinationPatients = Patient::getActivePatientNames();
+            }
+            $vaccinations = Vaccination::toBase()->pluck('name', 'id')->toArray();
+            natcasesort($vaccinations);
+
+            return view('patients.show', compact('data', 'patients', 'vaccinations', 'vaccinationPatients'));
+        }
+    }
+
 }

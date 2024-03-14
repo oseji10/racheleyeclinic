@@ -1370,5 +1370,6 @@ Route::any('zoom/callback', [LiveConsultationController::class, 'zoomCallback'])
 
 Route::get('/welcome', [AmbulanceCallController::class, 'test']);
 
-Route::get('/encounter', [PatientCaseController::class, 'encounter'])->name('patient.encounter');
+Route::get('/encounter', [EncountersController::class, 'index'])->name('encounter.index');
+Route::get('/patient-encounter', [EncountersController::class, 'encounter'])->name('patient.encounter');
 Route::post('/encounter', [EncountersController::class, 'store'])->name('encounter.store');

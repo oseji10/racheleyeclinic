@@ -1,4 +1,4 @@
-@if(Auth::user()->hasRole('Receptionist|Case Manager'))
+@if(Auth::user()->hasRole('Doctor|Receptionist|Case Manager'))
     <div class="dropdown">
         <a href="javascript:void(0)" class="btn btn-primary" id="dropdownMenuButton" data-bs-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">{{ __('messages.common.actions') }}
@@ -6,7 +6,7 @@
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li>
-                <a href="{{ route('patient-cases.create') }}"
+                <a href="{{ route('patient.encounter') }}"
                    class="dropdown-item  px-5">{{ __('messages.case.new_case') }}</a>
             </li>
             <li>

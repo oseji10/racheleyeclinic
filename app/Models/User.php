@@ -345,6 +345,11 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return $this->hasOne(Patient::class);
     }
 
+    public function encounters(): HasOne
+    {
+        return $this->hasOne(Encounters::class, 'patient_id');
+    }
+
     public function admin(): HasOne
     {
         return $this->hasOne(admin::class);

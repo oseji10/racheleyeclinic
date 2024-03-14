@@ -805,6 +805,12 @@ return [
         'case_date_should_not_be_smaller_than_patient_birth_date' => 'Case date should not be smaller than patient birth date',
     ],
 
+
+    // Encounter
+    'encounters' => [
+        'followup_appointment_date' => 'Followup Appointment Date',
+        'created_at' => 'First Appointment Date'
+    ],
     //services
     'service' => [
         'service' => 'Service',

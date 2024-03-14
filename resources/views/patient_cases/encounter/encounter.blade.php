@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="d-md-flex align-items-center justify-content-between mb-7">
             <h1 class="mb-0">@yield('title')</h1>
-            <a href="{{ route('patient-cases.index') }}"
+            <a href="{{ route('encounter.index') }}"
                class="btn btn-outline-primary">{{ __('messages.common.back') }}</a>
         </div>
     </div>
@@ -25,7 +25,7 @@
                 <div class="card-body p-12">
                     {{-- {{ Form::open(['route' => 'patient-cases.store', 'id' => 'createPatientCaseForm']) }} --}}
 
-                    @include('patient_cases.encounter_fields')
+                    @include('patient_cases.encounter.encounter_fields')
 
                     {{ Form::close() }}
                 </div>

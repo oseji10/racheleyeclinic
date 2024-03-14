@@ -1054,7 +1054,7 @@ function getMenuLinks($menu)
 
     if ($menu == User::MAIN_DOCTOR_PATIENT_CASE) {
         $defaultRoute = route('patient.encounter');
-        $subMenus = ['Encounter'];
+        $subMenus = ['Patient', 'Encounter'];
     }
 
     if ($menu == User::MAIN_CASE_MANGER_PATIENT_CASE) {
