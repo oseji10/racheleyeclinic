@@ -38,8 +38,8 @@ return new class extends Migration
             $table->text('vitreous')->nullable();
             $table->text('retina')->nullable();
             $table->text('other_findings')->nullable();
-            $table->text('free_handwriting_left')->nullable();
-            $table->text('free_handwriting_right')->nullable();
+            $table->longText('free_handwriting_left')->nullable();
+            $table->longText('free_handwriting_right')->nullable();
             $table->text('diagnosis')->nullable();
             $table->text('treatment_eyedrop')->nullable();
             $table->text('treatment_tablet')->nullable();

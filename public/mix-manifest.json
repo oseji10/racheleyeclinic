@@ -85,5 +85,6 @@
     "/assets/css/third-party.css": "/assets/css/third-party.css?id=f3349f77f5c4612974bd",
     "/css/front-third-party.css": "/css/front-third-party.css?id=ab893c3cb8391189fb8a",
     "/assets/js/third-party.js": "/assets/js/third-party.js?id=bfb64dd8a473f386c239",
-    "/js/front-third-party.js": "/js/front-third-party.js?id=13603041ab527b741ce1"
+    "/js/front-third-party.js": "/js/front-third-party.js?id=13603041ab527b741ce1",
+    "/vendor/fabric.js": "/vendor/fabric.js?id=88069bb9434505cc3070"
 }

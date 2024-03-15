@@ -838,3 +838,4 @@ mix.js(
     "resources/js/drawing.js", "public/js"
 );
 
+mix.copy('node_modules/fabric/dist/fabric.js', 'public/vendor/fabric.js');

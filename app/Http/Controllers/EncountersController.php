@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Models\PatientCase;
 use App\Repositories\PatientCaseRepository;
 use Flash;
+use Illuminate\Support\Facades\Validator;
 
 class EncountersController extends Controller
 {
@@ -43,6 +44,16 @@ class EncountersController extends Controller
     }
 
     public function store(Request $request){
+        $validator = Validator::make($request->all(), [
+            'patient_id' => 'required|integer',
+            // 'visual_acuity_far_presenting_left' => 'required|string',
+            // ... other field validations ...
+            // 'canvasData' => 'required|string',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
       $encounter =  new Encounters();
       $encounter->patient_id = $request->patient_id;
       $encounter->doctor_id = Auth::user()->id;
@@ -69,7 +80,8 @@ class EncountersController extends Controller
       $encounter->vitreous = $request->vitreous;
       $encounter->retina = $request->retina;
       $encounter->other_findings = $request->other_findings;
-      $encounter->free_handwriting_left = $request->free_handwriting_left;
+    //   $encounter->free_handwriting_left = $request->free_handwriting_left;
+      $encounter->free_handwriting_left = $request->input('canvasData');
       $encounter->free_handwriting_right = $request->free_handwriting_right;
 
       $encounter->diagnosis = $request->diagnosis;
@@ -79,12 +91,14 @@ class EncountersController extends Controller
       $encounter->followup_appointment_date = $request->followup_appointment_date;
       $encounter->new_developments = $request->new_developments;
 
-      $encounter->save();
-    //   redirect()->back()->with('Success');
-    // return Redirect::back()->with('Success');
-    Flash::success(__('messages.encounters.new_encounter'));
-    // return Redirect::back()->with('message', "Encounter has successfuly been updated.");
-    return redirect(route('encounter.index'));
+      try {
+        $encounter->save();
+        Flash::success(__('messages.encounters.encounter_created'));
+        return redirect(route('encounter.index'));
+    } catch (Exception $e) {
+        // Handle saving encounter exception (e.g., log the error)
+        return redirect()->back()->withErrors(['error' => 'Encounter creation failed!']);
+    }
     // return $this->sendSuccess(__('messages.common.status_updated_successfully'));
     }
 

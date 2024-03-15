@@ -2,6 +2,7 @@
 @section('title')
     {{ __('messages.case.new_encounter') }}
 @endsection
+
 @section('header_toolbar')
     <div class="container-fluid">
         <div class="d-md-flex align-items-center justify-content-between mb-7">

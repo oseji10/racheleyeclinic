@@ -221,15 +221,28 @@
 <h3>Refraction</h3>
     <div class="form-group col-sm-6 mb-5">
     <table width="100%" style="text-align:center; border-collapse:collapse" border="1" >
-        <tr>
-            <td colspan="2" height="250px"><h2>LEFT EYE</h2></td></tr>
+        <td border="1" style="position: relative;">
+            <canvas id="myCanvas" height="250px"></canvas>
+            <input type="hidden" id="canvasData" name="canvasData">
+            <div id="watermark" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.5;">
+                Left Eye
+            </div>
+        </td>
     </table>
     </div>
 
     <div class="form-group col-sm-6 mb-5">
         <table width="100%" style="text-align:center; border-collapse:collapse" border="1" >
             <tr>
-                <td colspan="2" height="250px"><h2>RIGHT EYE</h2></td></tr>
+                {{-- <td colspan="2" height="250px"><h2>RIGHT EYE</h2></td> --}}
+                <td border="1" style="position: relative;">
+                    <canvas id="myCanvas2" height="250px"></canvas>
+                    <input type="hidden" id="canvasData2" name="canvasData2">
+                    <div id="watermark" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.5;">
+                        Right Eye
+                    </div>
+                </td>
+            </tr>
         </table>
         </div>
 
@@ -295,6 +308,10 @@
             <input type="datetime-local" class="form-control" name="followup_appointment_date" placeholder="{{ __('messages.case.followup_appointment_date') }}">
         </div>
 
+        
+
+
+
 <br/><br/>
     <div class="d-flex justify-content-end">
     <button class="btn btn-primary me-2" type="submit">{{ __('messages.common.save') }}</button>
@@ -316,3 +333,66 @@
 
 </div>
 </form>
+<script src="{{ asset('vendor/fabric.js') }}"></script>
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+    var canvas = new fabric.Canvas('myCanvas');
+    canvas.isDrawingMode = true;
+    canvas.freeDrawingBrush.color = 'red';
+    canvas.freeDrawingBrush.width = 2;
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        canvas.toBlob(function(blob) {
+            if (blob) {
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                    // Set the canvas data to the hidden input field
+                    document.getElementById('canvasData').value = reader.result;
+                    
+                    // Submit the form
+                    document.querySelector('form').submit();
+                }
+            } else {
+                // Handle error if blob creation fails (e.g., show an alert)
+                console.error('Error converting canvas to Blob');
+            }
+        });
+
+        // Prevent the default form submission
+        event.preventDefault();
+    });
+});
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+     var canvas2 = new fabric.Canvas('myCanvas2');
+     canvas2.isDrawingMode = true;
+     canvas2.freeDrawingBrush.color = 'red';
+     canvas2.freeDrawingBrush.width = 2;
+ 
+     document.querySelector('form').addEventListener('submit', function(event) {
+         canvas.toBlob(function(blob) {
+             if (blob) {
+                 var reader = new FileReader();
+                 reader.readAsDataURL(blob);
+                 reader.onloadend = function() {
+                     // Set the canvas data to the hidden input field
+                     document.getElementById('canvasData2').value = reader.result;
+                     
+                     // Submit the form
+                     document.querySelector('form').submit();
+                 }
+             } else {
+                 // Handle error if blob creation fails (e.g., show an alert)
+                 console.error('Error converting canvas to Blob');
+             }
+         });
+ 
+         // Prevent the default form submission
+         event.preventDefault();
+     });
+ });
+ </script>
+ 

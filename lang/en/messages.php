@@ -811,6 +811,7 @@ return [
         'followup_appointment_date' => 'Followup Appointment Date',
         'created_at' => 'First Appointment Date',
         'new_encounter' => 'New Encounter Added Successfully',
+        'page_title' => 'Patient Encounters',
     ],
     //services
     'service' => [
