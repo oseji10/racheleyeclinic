@@ -311,7 +311,7 @@
     <table width="100%" style="text-align:center; border-collapse:collapse" border="1" >
         <td border="1" style="position: relative;">
             <canvas id="myCanvas" height="250px"></canvas>
-            <input type="text" id="canvasData" name="canvasData">
+            <input type="hidden" id="canvasData" name="canvasData">
             
         </td>
     </table>
