@@ -116,7 +116,7 @@ class PatientRepository extends BaseRepository
         return Patient::with('patientUser')
             ->whereHas('patientUser', function (Builder $query) {
                 $query->where('status', 1);
-            })->get()->pluck('patientUser.full_name', 'id')->sort();
+            })->get()->pluck('patientUser.full_name', 'user_id')->sort();
     }
 
     public function getPatientAssociatedData($patientId)
@@ -126,6 +126,18 @@ class PatientRepository extends BaseRepository
             'cases.doctor.doctorUser', 'advancedpayments', 'documents.media', 'documents.documentType', 'patientUser',
             'vaccinations.vaccination',
             'address',
+        ])->find($patientId);
+
+        return $patientData;
+    }
+
+    public function getPatientEncounterData($patientId)
+    {
+        $patientData = Patient::with([
+            'bills', 'invoices', 'appointments.doctor.doctorUser', 'appointments.doctor.department', 'admissions.doctor.doctorUser',
+            'cases.doctor.doctorUser', 'advancedpayments', 'documents.media', 'documents.documentType', 'patientUser',
+            'vaccinations.vaccination',
+            'address', 'encounters'
         ])->find($patientId);
 
         return $patientData;

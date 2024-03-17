@@ -7,6 +7,7 @@ use App\Models\Encounters;
 use App\Models\Patient;
 use Livewire\WithPagination;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use DB;
 // use Illuminate\Support\Facades\DB;
 
 class EncounterTable extends LivewireTableComponent
@@ -87,7 +88,12 @@ class EncounterTable extends LivewireTableComponent
         // });
 
         $query = Encounters::with('patientUser')->select('encounters.*');
+        // $query = DB::table('encounter')->select('encounters.*', 'patients.*')
+        // ->join('patients', 'patients.user_id', '=', 'encounters.patient_id')->get();
         // $query = $encounters->get(); // Retrieves all encounters
+        // $payee = DB::table('payee')
+        // ->select('payee.*')
+        // ->get();
         
         return $query;
     }

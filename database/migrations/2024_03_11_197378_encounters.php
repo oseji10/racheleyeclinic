@@ -24,22 +24,51 @@ return new class extends Migration
             $table->unsignedBigInteger('visual_acuity_near_left')->nullable(); 
             $table->unsignedBigInteger('visual_acuity_near_right')->nullable(); 
             
-            $table->text('intraoccular_pressure')->nullable();
-            $table->text('chief_complaint')->nullable();
-            $table->text('detailed_history')->nullable();
-            $table->text('findings')->nullable();
-            $table->text('eyelid')->nullable();
-            $table->text('conjunctiva')->nullable();
-            $table->text('cornea')->nullable();
-            $table->text('AC')->nullable();
-            $table->text('iris')->nullable();
-            $table->text('pupil')->nullable();
-            $table->text('lens')->nullable();
-            $table->text('vitreous')->nullable();
-            $table->text('retina')->nullable();
-            $table->text('other_findings')->nullable();
+            // Left Eye
+            $table->text('intraoccular_pressure_left')->nullable();
+            $table->text('chief_complaint_left')->nullable();
+            $table->text('detailed_history_left')->nullable();
+            $table->text('findings_left')->nullable();
+            $table->text('eyelid_left')->nullable();
+            $table->text('conjunctiva_left')->nullable();
+            $table->text('cornea_left')->nullable();
+            $table->text('AC_left')->nullable();
+            $table->text('iris_left')->nullable();
+            $table->text('pupil_left')->nullable();
+            $table->text('lens_left')->nullable();
+            $table->text('vitreous_left')->nullable();
+            $table->text('retina_left')->nullable();
+            $table->text('other_findings_left')->nullable();
+
+
+            // Right Eye
+            $table->text('intraoccular_pressure_right')->nullable();
+            $table->text('chief_complaint_right')->nullable();
+            $table->text('detailed_history_right')->nullable();
+            $table->text('findings_right')->nullable();
+            $table->text('eyelid_right')->nullable();
+            $table->text('conjunctiva_right')->nullable();
+            $table->text('cornea_right')->nullable();
+            $table->text('AC_right')->nullable();
+            $table->text('iris_right')->nullable();
+            $table->text('pupil_right')->nullable();
+            $table->text('lens_right')->nullable();
+            $table->text('vitreous_right')->nullable();
+            $table->text('retina_right')->nullable();
+            $table->text('other_findings_right')->nullable();
+
             $table->longText('free_handwriting_left')->nullable();
             $table->longText('free_handwriting_right')->nullable();
+
+            $table->text('sphere_right')->nullable();
+            $table->text('sphere_left')->nullable();
+            $table->text('cylinder_right')->nullable();
+            $table->text('cylinder_left')->nullable();
+            $table->text('axis_right')->nullable();
+            $table->text('axis_left')->nullable();
+            $table->text('prism_right')->nullable();
+            $table->text('prism_left')->nullable();
+
             $table->text('diagnosis')->nullable();
             $table->text('treatment_eyedrop')->nullable();
             $table->text('treatment_tablet')->nullable();

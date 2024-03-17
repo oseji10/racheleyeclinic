@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App;
 use Illuminate\Http\Request;
 use App\Models\VisualAcuity;
 use App\Models\Encounters;
@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\PatientCase;
 use App\Repositories\PatientCaseRepository;
+use App\Repositories\PatientRepository;
 use Flash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Patient;
 
 class EncountersController extends Controller
 {
@@ -66,20 +68,47 @@ class EncountersController extends Controller
       $encounter->visual_acuity_near_left = $request->visual_acuity_near_left;
       $encounter->visual_acuity_near_right = $request->visual_acuity_near_right;
 
-      $encounter->intraoccular_pressure = $request->intraoccular_pressure;
-      $encounter->chief_complaint = $request->chief_complaint;
-      $encounter->detailed_history = $request->detailed_history;
-      $encounter->findings = $request->findings;
-      $encounter->eyelid = $request->eyelid;
-      $encounter->conjunctiva = $request->conjunctiva;
-      $encounter->cornea = $request->cornea;
-      $encounter->AC = $request->AC;
-      $encounter->iris = $request->iris;
-      $encounter->pupil = $request->pupil;
-      $encounter->lens = $request->lens;
-      $encounter->vitreous = $request->vitreous;
-      $encounter->retina = $request->retina;
-      $encounter->other_findings = $request->other_findings;
+    //   Left Eye
+      $encounter->intraoccular_pressure_left = $request->intraoccular_pressure_left;
+      $encounter->chief_complaint_left = $request->chief_complaint_left;
+      $encounter->detailed_history_left = $request->detailed_history_left;
+      $encounter->findings_left = $request->findings_left;
+      $encounter->eyelid_left = $request->eyelid_left;
+      $encounter->conjunctiva_left = $request->conjunctiva_left;
+      $encounter->cornea_left = $request->cornea_left;
+      $encounter->AC_left = $request->AC_left;
+      $encounter->iris_left = $request->iris_left;
+      $encounter->pupil_left = $request->pupil_left;
+      $encounter->lens_left = $request->lens_left;
+      $encounter->vitreous_left = $request->vitreous_left;
+      $encounter->retina_left = $request->retina_left;
+      $encounter->other_findings_left = $request->other_findings_left;
+
+    //   Right Eye
+    $encounter->intraoccular_pressure_right = $request->intraoccular_pressure_right;
+    $encounter->chief_complaint_right = $request->chief_complaint_right;
+    $encounter->detailed_history_right = $request->detailed_history_right;
+    $encounter->findings_right = $request->findings_right;
+    $encounter->eyelid_right = $request->eyelid_right;
+    $encounter->conjunctiva_right = $request->conjunctiva_right;
+    $encounter->cornea_right = $request->cornea_right;
+    $encounter->AC_right = $request->AC_right;
+    $encounter->iris_right = $request->iris_right;
+    $encounter->pupil_right = $request->pupil_right;
+    $encounter->lens_right = $request->lens_right;
+    $encounter->vitreous_right = $request->vitreous_right;
+    $encounter->retina_right = $request->retina_right;
+    $encounter->other_findings_right = $request->other_findings_right;
+
+    $encounter->sphere_right = $request->sphere_right;
+    $encounter->sphere_left = $request->sphere_left;
+    $encounter->cylinder_right = $request->cylinder_right;
+    $encounter->cylinder_left = $request->cylinder_left;
+    $encounter->axis_right = $request->axis_right;
+    $encounter->axis_left = $request->axis_left;
+    $encounter->prism_right = $request->prism_right;
+    $encounter->prism_left = $request->prism_left;
+
     //   $encounter->free_handwriting_left = $request->free_handwriting_left;
       $encounter->free_handwriting_left = $request->input('canvasData');
       $encounter->free_handwriting_right = $request->free_handwriting_right;
@@ -107,28 +136,32 @@ class EncountersController extends Controller
 
     public function show($patientId)
     {
-        $data = $this->patientRepository->getPatientAssociatedData($patientId);
+        
+        $data = Patient::where('id', '=', $patientId);
+        // $data = Encounters::with('patientUser')->select('encounters.*');
+        // $data = $this->patientRepository->getPatientEncounterData($patientId);
 
-        if (! $data) {
-            return view('errors.404');
-        }
+        // if (! $data) {
+        //     return view('errors.404');
+        // }
 
-        if (getLoggedinPatient() && checkRecordAccess($data->id)) {
-            return view('errors.404');
-        } else {
-            $advancedPaymentRepo = App::make(AdvancedPaymentRepository::class);
-            $patients = $advancedPaymentRepo->getPatients();
-            $user = Auth::user();
-            if ($user->hasRole('Doctor')) {
-                $vaccinationPatients = getPatientsList($user->owner_id);
-            } else {
-                $vaccinationPatients = Patient::getActivePatientNames();
-            }
-            $vaccinations = Vaccination::toBase()->pluck('name', 'id')->toArray();
-            natcasesort($vaccinations);
+        // if (getLoggedinPatient() && checkRecordAccess($data->id)) {
+        //     return view('errors.404');
+        // } else {
+        //     $advancedPaymentRepo = App::make(AdvancedPaymentRepository::class);
+        //     $patients = $advancedPaymentRepo->getPatients();
+        //     $user = Auth::user();
+        //     if ($user->hasRole('Doctor')) {
+        //         $vaccinationPatients = getPatientsList($user->owner_id);
+        //     } else {
+        //         $vaccinationPatients = Patient::getActivePatientNames();
+        //     }
+        //     $vaccinations = Vaccination::toBase()->pluck('name', 'id')->toArray();
+        //     natcasesort($vaccinations);
 
-            return view('patients.show', compact('data', 'patients', 'vaccinations', 'vaccinationPatients'));
-        }
+            // return view('patients.show', compact('data', 'patients', 'vaccinations', 'vaccinationPatients'));
+        // }
+        return view('patients.show', compact('data'));
     }
 
 }
