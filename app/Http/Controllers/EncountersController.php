@@ -13,6 +13,9 @@ use App\Repositories\PatientRepository;
 use Flash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Patient;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use DB;
 
 class EncountersController extends Controller
 {
@@ -137,8 +140,10 @@ class EncountersController extends Controller
     public function show($patientId)
     {
         
-        $data = Patient::where('id', '=', $patientId);
-        // $data = Encounters::with('patientUser')->select('encounters.*');
+        // $data = Patient::where('user_id', '=', $patientId);
+        $data = Encounters::with('patientUser')->select('encounters.*')->where('user_id', '=', $patientId);
+        // $data = DB::table('encounters')->select('encounters.*', 'patients.*')
+        // ->join('patients', 'patients.user_id', '=', 'encounters.patient_id')->get();
         // $data = $this->patientRepository->getPatientEncounterData($patientId);
 
         // if (! $data) {
@@ -161,7 +166,8 @@ class EncountersController extends Controller
 
             // return view('patients.show', compact('data', 'patients', 'vaccinations', 'vaccinationPatients'));
         // }
-        return view('patients.show', compact('data'));
+        return view('patient_cases.encounter.show', compact('data'));
+        // return "Success";
     }
 
 }

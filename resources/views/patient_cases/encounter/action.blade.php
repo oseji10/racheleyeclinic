@@ -1,9 +1,9 @@
 <div class="d-flex align-items-center">
-    <a href="{{ url('patients'.'/'.$row->id.'') }}" title="{{__('messages.common.edit') }}"
+    <a href="{{ url('encounter'.'/'.$row->patient_id.'') }}" title="{{__('messages.common.edit') }}"
         class=" btn px-1 text-primary fs-3 ps-0">
          <i class="fa-solid fa-eye"></i>
      </a>
-    <a href="{{ url('patient-cases'.'/'.$row->id.'/edit') }}" title="{{__('messages.common.edit') }}"
+    <a href="{{ url('encounter'.'/'.$row->patient_id.'') }}" title="{{__('messages.common.edit') }}"
        class=" btn px-1 text-primary fs-3 ps-0">
         <i class="fa-solid fa-pen-to-square"></i>
     </a>

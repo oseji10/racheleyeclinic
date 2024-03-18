@@ -19,12 +19,12 @@
     <div class="form-group col-sm-6 mb-5">
     </div>
 
-<table width="100%" style="text-align:center">
+{{-- <table width="100%" style="text-align:center">
     <tr>
         <td width="50%"><h2>RIGHT</h2></td>
         <td><h2>LEFT</h2></td>
     </tr>
-</table>
+</table> --}}
 
 
 <div class="form-group col-sm-6 mb-5">
@@ -41,7 +41,7 @@
 
 <div class="form-group col-sm-6 mb-5">
     {{ Form::label('visual_acuity_far_presenting_left', __('messages.case.visual_acuity_far_presenting_left') . ':', ['class' => 'form-label']) }}
-    <span class="required"></span>
+    {{-- <span class="required"></span> --}}
 
     <select id="visual_acuity_far_presenting_left" class="select2 form-select" name="visual_acuity_far_presenting_left" data-control="select2">
         <option value="">Select Visual Acuity Far (Presenting) Left</option>
