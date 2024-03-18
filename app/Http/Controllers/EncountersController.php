@@ -16,6 +16,7 @@ use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use DB;
+use Illuminate\Support\Facades\Response;
 
 class EncountersController extends Controller
 {
@@ -141,9 +142,20 @@ class EncountersController extends Controller
     {
         
         // $data = Patient::where('user_id', '=', $patientId);
-        $data = Encounters::with('patientUser')->select('encounters.*')->where('user_id', '=', $patientId);
-        // $data = DB::table('encounters')->select('encounters.*', 'patients.*')
-        // ->join('patients', 'patients.user_id', '=', 'encounters.patient_id')->get();
+        // $data = Encounters::with('patientUser')->select('encounters.*')->where('user_id', '=', $patientId)->get();
+        $datum = DB::table('encounters')
+        ->select('encounters.*', 'patients.*', 'users.*', 'addresses.*')
+        ->leftjoin('patients', 'patients.user_id', '=', 'encounters.patient_id')
+        ->leftjoin('users', 'users.id', '=', 'encounters.patient_id') 
+        ->leftjoin('addresses', 'addresses.owner_id', '=', 'users.owner_id') 
+        ->get();
+
+        $encounterCounts = DB::table('encounters')
+        ->select('patient_id', DB::raw('COUNT(*) as encounter_count'))
+        ->groupBy('patient_id')
+        ->get();
+
+    
         // $data = $this->patientRepository->getPatientEncounterData($patientId);
 
         // if (! $data) {
@@ -166,8 +178,9 @@ class EncountersController extends Controller
 
             // return view('patients.show', compact('data', 'patients', 'vaccinations', 'vaccinationPatients'));
         // }
-        return view('patient_cases.encounter.show', compact('data'));
-        // return "Success";
+        return view('patient_cases.encounter.show', compact('datum', 'encounterCounts'));
+        // return response()->json($data);
+        // return $data;
     }
 
 }

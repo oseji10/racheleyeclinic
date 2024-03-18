@@ -835,7 +835,8 @@ return [
         'created_at' => 'First Appointment Date',
         'new_encounter' => 'New Encounter Added Successfully',
         'page_title' => 'Patient Encounters',
-        'encounter_created' => 'New encounter successfully created'
+        'encounter_created' => 'New encounter successfully created',
+        'total_encounters' => 'Total Encounters'
     
     ],
     //services

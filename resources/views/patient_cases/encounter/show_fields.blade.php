@@ -1,3 +1,4 @@
+@foreach ($datum as $data)
 <div>
     <div class="card">
         <div class="card-body">
@@ -5,46 +6,49 @@
                 <div class="col-xxl-5 col-12">
                     <div class="d-sm-flex align-items-center mb-5 mb-xxl-0 text-center text-sm-start">
                         <div class="image image-circle image-small">
-                            {{-- <img src="{{ !empty($data->patientUser->image_url) ? $data->patientUser->image_url : '' }}"
-                                alt="image" /> --}}
+                            <img src="{{ !empty($data->image_url) ? $data->image_url : '' }}"
+                                alt="image" />
                         </div>
                         <div class="ms-0 ms-md-10 mt-5 mt-sm-0">
                             <h2><a href="javascript:void(0)"
-                                    class="text-decoration-none">{{ !empty($data->patientUser->full_name) ? $data->patientUser->full_name : '' }}</a>
+                                    class="text-decoration-none">{{ !empty($data->first_name) ? $data->first_name : '' }} {{ !empty($data->last_name) ? $data->last_name : '' }}</a>
                             </h2>
 
-                            <a href="mailto:{{ !empty($data->patientUser->email) ? $data->patientUser->email : '' }}"
+                            <a href="mailto:{{ !empty($data->email) ? $data->email : '' }}"
                                 class="text-gray-600 text-decoration-none fs-5">
-                                {{ !empty($data->patientUser->email) ? $data->patientUser->email : '' }}
+                                {{ !empty($data->email) ? $data->email : '' }}
                             </a>
                             <span class="d-flex align-items-center me-2 mb-2 mt-2">
                                 @if (
-                                    !empty($data->address->address1) ||
-                                        !empty($data->address->address2) ||
-                                        !empty($data->address->city) ||
-                                        !empty($data->address->zip))
+                                    !empty($data->address1) ||
+                                        !empty($data->address2) ||
+                                        !empty($data->city) ||
+                                        !empty($data->zip))
                                     <span><i class="fas fa-location"></i></span>
                                 @endif
                                 <span class="p-2">
-                                    {{ !empty($data->address->address1) ? $data->address->address1 : '' }}{{ !empty($data->address->address2) ? (!empty($data->address->address1) ? ',' : '') : '' }}
-                                    {{ empty($data->address->address1) || !empty($data->address->address2) ? (!empty($data->address->address2) ? $data->address->address2 : '') : '' }}
-                                    {{ empty($data->address->address1) && empty($data->address->address2) ? '' : '' }}{{ !empty($data->address->city) ? ',' . $data->address->city : '' }}{{ !empty($data->address->zip) ? ',' . $data->address->zip : '' }}
+                                    {{ !empty($data->address1) ? $data->address1 : '' }}{{ !empty($data->address2) ? (!empty($data->address1) ? ',' : '') : '' }}
+                                    {{ empty($data->address1) || !empty($data->address2) ? (!empty($data->address2) ? $data->address2 : '') : '' }}
+                                    {{ empty($data->address1) && empty($data->address2) ? '' : '' }}{{ !empty($data->city) ? ',' . $data->city : '' }}{{ !empty($data->zip) ? ',' . $data->zip : '' }}
                                 </span>
                             </span>
                         </div>
                     </div>
                 </div>
-                {{-- <div class="col-xxl-7 col-12">
+                @foreach ($encounterCounts as $encounter_count2)
+                <div class="col-xxl-7 col-12">
                     <div class="row justify-content-center">
                         <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
                             <div class="border rounded-10 p-5 h-100">
-                                <h2 class="text-primary mb-3">{{ !empty($data->cases) ? $data->cases->count() : 0 }}
+                                <h2 class="text-primary mb-3">{{ !empty($encounter_count2->encounter_count) ? $encounter_count2->encounter_count : 0 }}
                                 </h2>
-                                <h3 class="fs-5 fw-light text-gray-600 mb-0">{{ __('messages.patient.total_cases') }}
+                                <h3 class="fs-5 fw-light text-gray-600 mb-0">{{ __('messages.encounters.total_encounters') }}
                                 </h3>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
+                    
+                @endforeach
+                        {{-- <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
                             <div class="border rounded-10 p-5 h-100">
                                 <h2 class="text-primary mb-3">
                                     {{ !empty($data->admissions) ? $data->admissions->count() : 0 }}</h2>
@@ -59,22 +63,22 @@
                                 <h3 class="fs-5 fw-light text-gray-600 mb-0">
                                     {{ __('messages.patient.total_appointments') }}</h3>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
-    {{-- <div class="mt-7 overflow-hidden">
+    <div class="mt-7 overflow-hidden">
         <ul class="nav nav-tabs mb-5 pb-1 overflow-auto flex-nowrap text-nowrap">
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link active p-0" data-bs-toggle="tab"
                     href="#PatientOverview">{{ __('messages.overview') }}</a>
             </li>
             <li class="nav-item position-relative me-7 mb-3">
-                <a class="nav-link p-0" data-bs-toggle="tab" href="#showPatientCases">{{ __('messages.cases') }}</a>
+                <a class="nav-link p-0" data-bs-toggle="tab" href="#showPatientCases">{{ __('messages.encounters.page_title') }}</a>
             </li>
-            <li class="nav-item position-relative me-7 mb-3">
+            {{-- <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                     href="#showPatientAdmissions">{{ __('messages.patient_admissions') }}</a>
             </li>
@@ -100,9 +104,9 @@
             <li class="nav-item position-relative me-7 mb-3">
                 <a class="nav-link p-0" data-bs-toggle="tab"
                     href="#showPatientVaccinated">{{ __('messages.vaccinations') }}</a>
-            </li>
+            </li> --}}
         </ul>
-    </div> --}}
+    </div>
 </div>
 <div class="tab-content" id="myPatientTabContent">
     {{-- <div class="tab-pane fade show active" id="PatientOverview" role="tabpanel">
@@ -240,3 +244,4 @@
         <livewire:patient-vaccination-detail-table patient-id="{{ $data->id }}" />
     </div> --}}
 </div>
+@endforeach
