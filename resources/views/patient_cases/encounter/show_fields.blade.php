@@ -1,4 +1,9 @@
-@foreach ($datum as $data)
+@foreach ($data as $data)
+    
+@endforeach
+
+@foreach($encounterCounts as $encounterCounts )
+@endforeach
 <div>
     <div class="card">
         <div class="card-body">
@@ -11,7 +16,7 @@
                         </div>
                         <div class="ms-0 ms-md-10 mt-5 mt-sm-0">
                             <h2><a href="javascript:void(0)"
-                                    class="text-decoration-none">{{ $data->patient_id }} - {{ !empty($data->first_name) ? $data->first_name : '' }} {{ !empty($data->last_name) ? $data->last_name : '' }}</a>
+                                    class="text-decoration-none">{{ !empty($data->first_name) ? $data->first_name : '' }} {{ !empty($data->last_name) ? $data->last_name : '' }}</a>
                             </h2>
 
                             <a href="mailto:{{ !empty($data->email) ? $data->email : '' }}"
@@ -35,19 +40,19 @@
                         </div>
                     </div>
                 </div>
-                @foreach ($encounterCounts as $encounter_count2)
+                
                 <div class="col-xxl-7 col-12">
                     <div class="row justify-content-center">
                         <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
                             <div class="border rounded-10 p-5 h-100">
-                                <h2 class="text-primary mb-3">{{ !empty($encounter_count2->encounter_count) ? $encounter_count2->encounter_count : 0 }}
+                                <h2 class="text-primary mb-3">{{ !empty($encounterCounts->encounter_count) ? $encounterCounts->encounter_count : 0 }}
                                 </h2>
                                 <h3 class="fs-5 fw-light text-gray-600 mb-0">{{ __('messages.encounters.total_encounters') }}
                                 </h3>
                             </div>
                         </div>
                     
-                @endforeach
+                
                         {{-- <div class="col-md-4 col-sm-6 col-12 mb-6 mb-md-0">
                             <div class="border rounded-10 p-5 h-100">
                                 <h2 class="text-primary mb-3">
@@ -244,4 +249,4 @@
         <livewire:patient-vaccination-detail-table patient-id="{{ $data->id }}" />
     </div> --}}
 </div>
-@endforeach
+{{-- @endisset --}}

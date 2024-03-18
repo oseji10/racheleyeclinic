@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Response;
 
 class EncountersController extends Controller
 {
+    public $patientId;
     // public function index()
     // {
     //     $data['statusArr'] = VisualAcuity::STATUS_ARR;
@@ -143,15 +144,18 @@ class EncountersController extends Controller
         
         // $data = Patient::where('user_id', '=', $patientId);
         // $data = Encounters::with('patientUser')->select('encounters.*')->where('user_id', '=', $patientId)->get();
-        $datum = DB::table('encounters')
+        $data = DB::table('encounters')
         ->select('encounters.*', 'patients.*', 'users.*', 'addresses.*')
-        ->leftjoin('patients', 'patients.user_id', '=', 'encounters.patient_id')
-        ->leftjoin('users', 'users.id', '=', 'encounters.patient_id') 
-        ->leftjoin('addresses', 'addresses.owner_id', '=', 'users.owner_id') 
+        ->leftJoin('patients', 'patients.user_id', '=', 'encounters.patient_id')
+        ->leftJoin('users', 'users.id', '=', 'encounters.patient_id') 
+        ->leftJoin('addresses', 'addresses.owner_id', '=', 'users.owner_id') 
+        ->where('encounters.patient_id', $patientId)
         ->get();
+    
 
         $encounterCounts = DB::table('encounters')
         ->select('patient_id', DB::raw('COUNT(*) as encounter_count'))
+        ->where('encounters.patient_id', $patientId)
         ->groupBy('patient_id')
         ->get();
 
@@ -178,7 +182,7 @@ class EncountersController extends Controller
 
             // return view('patients.show', compact('data', 'patients', 'vaccinations', 'vaccinationPatients'));
         // }
-        return view('patient_cases.encounter.show', compact('datum', 'encounterCounts'));
+        return view('patient_cases.encounter.show', compact('data', 'encounterCounts'));
         // return response()->json($data);
         // return $data;
     }
