@@ -225,7 +225,7 @@
     <div class="tab-pane fade" id="showPatientAdmissions" role="tabpanel">
         <livewire:patient-admission-detail-table patientId="{{ $data->id }}" />
     </div>
-    <div class="tab-pane fade" id="showPatientAppointments" role="tabpanel">
+    {{-- <div class="tab-pane fade" id="showPatientAppointments" role="tabpanel">
         <livewire:patient-appoinment-detail-table patientId="{{ $data->id }}" />
     </div>
     <div class="tab-pane fade" id="showPatientBills" role="tabpanel">
@@ -242,6 +242,6 @@
     </div>
     <div class="tab-pane fade" id="showPatientVaccinated" role="tabpanel">
         <livewire:patient-vaccination-detail-table patient-id="{{ $data->id }}" />
-    </div>
+    </div> --}}
 </div>
 @endforeach
