@@ -12,6 +12,8 @@ use DB;
 
 class PatientEncounterTable extends LivewireTableComponent
 {
+    public $patientId;
+
     use WithPagination;
 
     public $showButtonOnHeader = true;
@@ -87,9 +89,10 @@ class PatientEncounterTable extends LivewireTableComponent
         //     }
         // });
 
-        $query = Encounters::with('patientUser')->select('encounters.*');
+        // $query = Encounters::with('patientUser')->select('encounters.*')->where('patient_id', '=', $patientId);
+        $query = Encounters::where('patient_id', $this->patientId)->select('encounters.*');
         // $query = DB::table('encounter')->select('encounters.*', 'patients.*')
-        // ->join('patients', 'patients.user_id', '=', 'encounters.patient_id')->get();
+        // ->join('patients', 'patients.user_id', '=', 'encounters.patient_id');
         // $query = $encounters->get(); // Retrieves all encounters
         // $payee = DB::table('payee')
         // ->select('payee.*')

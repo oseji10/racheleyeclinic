@@ -11,7 +11,7 @@
                         </div>
                         <div class="ms-0 ms-md-10 mt-5 mt-sm-0">
                             <h2><a href="javascript:void(0)"
-                                    class="text-decoration-none">{{ !empty($data->first_name) ? $data->first_name : '' }} {{ !empty($data->last_name) ? $data->last_name : '' }}</a>
+                                    class="text-decoration-none">{{ $data->patient_id }} - {{ !empty($data->first_name) ? $data->first_name : '' }} {{ !empty($data->last_name) ? $data->last_name : '' }}</a>
                             </h2>
 
                             <a href="mailto:{{ !empty($data->email) ? $data->email : '' }}"
@@ -220,12 +220,12 @@
         </div>
     </div>
     <div class="tab-pane fade" id="showPatientCases" role="tabpanel">
-        <livewire:patient-encounter-table patientId="{{ $data->id }}" />
+        <livewire:patient-encounter-table patientId="{{ $data->patient_id }}" />
     </div>
-    <div class="tab-pane fade" id="showPatientAdmissions" role="tabpanel">
+    {{-- <div class="tab-pane fade" id="showPatientAdmissions" role="tabpanel">
         <livewire:patient-admission-detail-table patientId="{{ $data->id }}" />
     </div>
-    {{-- <div class="tab-pane fade" id="showPatientAppointments" role="tabpanel">
+    <div class="tab-pane fade" id="showPatientAppointments" role="tabpanel">
         <livewire:patient-appoinment-detail-table patientId="{{ $data->id }}" />
     </div>
     <div class="tab-pane fade" id="showPatientBills" role="tabpanel">
