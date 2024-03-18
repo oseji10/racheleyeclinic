@@ -109,7 +109,7 @@
     </div>
 </div>
 <div class="tab-content" id="myPatientTabContent">
-    {{-- <div class="tab-pane fade show active" id="PatientOverview" role="tabpanel">
+    <div class="tab-pane fade show active" id="PatientOverview" role="tabpanel">
         <div class="card mb-5 mb-xl-10">
             <div>
                 <div class="card-body  border-top p-9">
@@ -119,7 +119,7 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.user.phone') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->phone) ? $data->patientUser->phone : __('messages.common.n/a') }}</span>
+                                    class="fs-5 text-gray-800">{{ !empty($data->phone) ? $data->phone : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
@@ -127,17 +127,17 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.user.gender') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->phone) ? ($data->patientUser->gender != 1 ? __('messages.user.male') : __('messages.user.female')) : '' }}</span>
+                                    class="fs-5 text-gray-800">{{ !empty($data->phone) ? ($data->gender != 1 ? __('messages.user.male') : __('messages.user.female')) : '' }}</span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                             <label for="name"
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.user.blood_group') }}</label>
                             <p>
-                                @if (!empty($data->patientUser->blood_group))
+                                @if (!empty($data->blood_group))
                                     <span
-                                        class="badge fs-6 bg-light-{{ !empty($data->patientUser->blood_group) ? 'success' : 'danger' }}">
-                                        {{ $data->patientUser->blood_group }} </span>
+                                        class="badge fs-6 bg-light-{{ !empty($data->blood_group) ? 'success' : 'danger' }}">
+                                        {{ $data->blood_group }} </span>
                                 @else
                                     <span class="fs-5 text-gray-800">{{ __('messages.common.n/a') }}</span>
                                 @endif
@@ -147,7 +147,7 @@
                             <label for="name" class="pb-2 fs-5 text-gray-600">{{ __('messages.user.dob') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->dob) ? \Carbon\Carbon::parse($data->patientUser->dob)->translatedFormat('jS M, Y') : __('messages.common.n/a') }}</span>
+                                    class="fs-5 text-gray-800">{{ !empty($data->dob) ? \Carbon\Carbon::parse($data->dob)->translatedFormat('jS M, Y') : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
@@ -155,7 +155,7 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.common.created_at') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->created_at) ? $data->patientUser->created_at->diffForHumans() : __('messages.common.n/a') }}</span>
+                                    class="fs-5 text-gray-800">{{ !empty($data->created_at) ? $data->created_at : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
@@ -163,16 +163,16 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.common.updated_at') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800">{{ !empty($data->patientUser->updated_at) ? $data->patientUser->updated_at->diffForHumans() : __('messages.common.n/a') }}</span>
+                                    class="fs-5 text-gray-800">{{ !empty($data->updated_at) ? $data->updated_at : __('messages.common.n/a') }}</span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                             <label for="name"
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.facebook_url') }}</label>
                             <p>
-                                @if (!empty($doctorData->doctorUser->facebook_url))
-                                    <a href="{{ $doctorData->doctorUser->facebook_url }}"
-                                        class="fs-5 text-primary-800 text-decoration-none">{{ $doctorData->doctorUser->facebook_url }}</a>
+                                @if (!empty($doctorData->facebook_url))
+                                    <a href="{{ $doctorData->facebook_url }}"
+                                        class="fs-5 text-primary-800 text-decoration-none">{{ $doctorData->facebook_url }}</a>
                                 @else
                                     {{ __('messages.common.n/a') }}
                                 @endif
@@ -182,9 +182,9 @@
                             <label for="name"
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.twitter_url') }}</label>
                             <p>
-                                @if (!empty($doctorData->doctorUser->twitter_url))
-                                    <a href="{{ $doctorData->doctorUser->twitter_url }}"
-                                        class="fs-5 text-primary-800 text-decoration-none">{{ $doctorData->doctorUser->twitter_url }}</a>
+                                @if (!empty($doctorData->twitter_url))
+                                    <a href="{{ $doctorData->twitter_url }}"
+                                        class="fs-5 text-primary-800 text-decoration-none">{{ $doctorData->twitter_url }}</a>
                                 @else
                                     {{ __('messages.common.n/a') }}
                                 @endif
@@ -194,9 +194,9 @@
                             <label for="name"
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.instagram_url') }}</label>
                             <p>
-                                @if (!empty($doctorData->doctorUser->instagram_url))
-                                    <a href="{{ $doctorData->doctorUser->instagram_url }}"
-                                        class="fs-5 text-primary-800 text-decoration-none">{{ $doctorData->doctorUser->instagram_url }}</a>
+                                @if (!empty($doctorData->instagram_url))
+                                    <a href="{{ $doctorData->instagram_url }}"
+                                        class="fs-5 text-primary-800 text-decoration-none">{{ $doctorData->instagram_url }}</a>
                                 @else
                                     {{ __('messages.common.n/a') }}
                                 @endif
@@ -206,9 +206,9 @@
                             <label for="name"
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.linkedIn_url') }}</label>
                             <p>
-                                @if (!empty($doctorData->doctorUser->linkedIn_url))
-                                    <a href="{{ $doctorData->doctorUser->linkedIn_url }}"
-                                        class="fs-5 text-primary-800 text-decoration-none">{{ $doctorData->doctorUser->linkedIn_url }}</a>
+                                @if (!empty($doctorData->linkedIn_url))
+                                    <a href="{{ $doctorData->linkedIn_url }}"
+                                        class="fs-5 text-primary-800 text-decoration-none">{{ $doctorData->linkedIn_url }}</a>
                                 @else
                                     {{ __('messages.common.n/a') }}
                                 @endif
@@ -218,9 +218,9 @@
                 </div>
             </div>
         </div>
-    </div> --}}
-    {{-- <div class="tab-pane fade" id="showPatientCases" role="tabpanel">
-        <livewire:patient-case-table patientId="{{ $data->id }}" />
+    </div>
+    <div class="tab-pane fade" id="showPatientCases" role="tabpanel">
+        <livewire:patient-encounter-table patientId="{{ $data->id }}" />
     </div>
     <div class="tab-pane fade" id="showPatientAdmissions" role="tabpanel">
         <livewire:patient-admission-detail-table patientId="{{ $data->id }}" />
@@ -242,6 +242,6 @@
     </div>
     <div class="tab-pane fade" id="showPatientVaccinated" role="tabpanel">
         <livewire:patient-vaccination-detail-table patient-id="{{ $data->id }}" />
-    </div> --}}
+    </div>
 </div>
 @endforeach
