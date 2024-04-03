@@ -19,12 +19,12 @@
     <div class="form-group col-sm-6 mb-5">
     </div>
 
-{{-- <table width="100%" style="text-align:center">
+<table width="100%" style="text-align:center">
     <tr>
         <td width="50%"><h2>RIGHT</h2></td>
         <td><h2>LEFT</h2></td>
     </tr>
-</table> --}}
+</table>
 
 
 <div class="form-group col-sm-6 mb-5">
@@ -41,7 +41,7 @@
 
 <div class="form-group col-sm-6 mb-5">
     {{ Form::label('visual_acuity_far_presenting_left', __('messages.case.visual_acuity_far_presenting_left') . ':', ['class' => 'form-label']) }}
-    {{-- <span class="required"></span> --}}
+    <span class="required"></span>
 
     <select id="visual_acuity_far_presenting_left" class="select2 form-select" name="visual_acuity_far_presenting_left" data-control="select2">
         <option value="">Select Visual Acuity Far (Presenting) Left</option>
@@ -312,7 +312,9 @@
         <td border="1" style="position: relative;">
             <canvas id="myCanvas" height="250px"></canvas>
             <input type="hidden" id="canvasData" name="canvasData">
-            
+            {{-- <div id="watermark" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.5;">
+                Left Eye
+            </div> --}}
         </td>
     </table>
     </div>
@@ -529,58 +531,35 @@
 </form>
 <script src="{{ asset('vendor/fabric.js') }}"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Create canvas and configure drawing options
-  var canvas = new fabric.Canvas('myCanvas');
-  canvas.isDrawingMode = true;
-  canvas.freeDrawingBrush.color = 'red';
-  canvas.freeDrawingBrush.width = 2;
+   document.addEventListener('DOMContentLoaded', function() {
+    var canvas = new fabric.Canvas('myCanvas');
+    canvas.isDrawingMode = true;
+    canvas.freeDrawingBrush.color = 'red';
+    canvas.freeDrawingBrush.width = 2;
 
-  // Get the input field
-  var canvasDataInput = document.getElementById('canvasData');
+    document.querySelector('form').addEventListener('submit', function(event) {
+        canvas.toBlob(function(blob) {
+            if (blob) {
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                    // Set the canvas data to the hidden input field
+                    document.getElementById('canvasData').value = reader.result;
+                    
+                    // Submit the form
+                    document.querySelector('form').submit();
+                }
+            } else {
+                // Handle error if blob creation fails (e.g., show an alert)
+                console.error('Error converting canvas to Blob');
+            }
+        });
 
-  // Capture drawing on mouse up or touch end
-  canvas.on('mouse:up touch:end', function(event) {
-    event.e.preventDefault(); // Prevent default behavior
-
-    // Convert canvas image to data URL
-    var canvasDataURL = canvas.toDataURL();
-
-    // Get the current value of the input field (if any)
-    var currentData = document.getElementById('canvasData').value;
-
-    // Append the new data URL to the current value
-    var updatedData = currentData ? currentData + ',' + canvasDataURL : canvasDataURL;
-
-    // Set the updated data back to the input field
-    canvasDataInput.value = updatedData;
-
-    // Optional: Indicate drawing complete for user (e.g., change submit button color)
-  });
-
-  // Submit form event listener (consider using AJAX instead)
-  document.querySelector('form').addEventListener('submit', function(event) {
-    // Prevent the default form submission (consider using AJAX)
-    // event.preventDefault();
-
-    // **Alternative using AJAX (recommended for large amounts of data):**
-    var formData = new FormData(this); // Create FormData object
-    formData.append('canvasData', canvasDataInput.value); // Add canvas data to FormData
-
-    fetch('/encounter.store', { // Replace with your server-side endpoint
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json()) // Process server response (optional)
-    .catch(error => console.error(error)); // Handle errors
-
-    // **Original form submission (if not using AJAX):**
-    // this.submit(); // Submit the form (uncomment if not using AJAX)
-  });
+        // Prevent the default form submission
+        event.preventDefault();
+    });
 });
-
 </script>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

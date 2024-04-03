@@ -75,11 +75,14 @@ return new class extends Migration
             $table->text('investigations_required')->nullable();
             $table->datetime('followup_appointment_date')->nullable();
             $table->text('new_developments')->nullable();
+            $table->string('temporary_id')->nullable();
+            $table->boolean('is_complete')->default(false); 
+
             $table->timestamps();
 
 
             $table->foreign('patient_id')->references('user_id')->on('patients')->onDelete('no action')->onUpdate('no action');
-            $table->foreign('doctor_id')->references('user_id')->on('doctors')->onDelete('no action')->onUpdate('no action');
+            $table->foreign('doctor_id')->references('id')->on('users')->onDelete('no action')->onUpdate('no action');
 
             $table->foreign('visual_acuity_far_presenting_left')->references('id')->on('visual_acuity')->onDelete('no action')->onUpdate('no action');
             $table->foreign('visual_acuity_far_presenting_right')->references('id')->on('visual_acuity')->onDelete('no action')->onUpdate('no action');

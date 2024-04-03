@@ -5,6 +5,7 @@ use App;
 use Illuminate\Http\Request;
 use App\Models\VisualAcuity;
 use App\Models\Encounters;
+use App\Models\TemporaryEncounters;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\PatientCase;
@@ -17,6 +18,11 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class EncountersController extends Controller
 {
@@ -50,7 +56,266 @@ class EncountersController extends Controller
         return view('patient_cases.encounter.encounter');
     }
 
-    public function store(Request $request){
+    public function encounter2(){
+        return view('patient_cases.encounter.encounter2');
+    }
+
+    public function encounter3(){
+        return view('patient_cases.encounter.encounter3');
+    }
+
+    public function encounter4(){
+        return view('patient_cases.encounter.encounter4');
+    }
+
+    public function encounter5(){
+        return view('patient_cases.encounter.encounter5');
+    }
+
+    public function encounter6(){
+        return view('patient_cases.encounter.encounter6');
+    }
+
+    public function store(Request $request)
+    {
+        $temporary_id = Str::random(10);
+        
+        // Validation rules
+        $validator = Validator::make($request->all(), [
+            'patient_id' => 'required|integer',
+        ]);
+    
+        // Check if validation fails
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+    
+        // Begin transaction
+        DB::beginTransaction();
+    
+        try {
+            // Save encounter
+            $encounter = new Encounters();
+            $encounter->patient_id = $request->patient_id;
+            $encounter->doctor_id = Auth::user()->id;
+            $encounter->temporary_id = $temporary_id;
+            $encounter->save();
+    
+             // Save encounter
+             $encounter = new TemporaryEncounters();
+             $encounter->patient_id = $request->patient_id;
+             $encounter->doctor_id = Auth::user()->id;
+             $encounter->temporary_id = $temporary_id;
+             $encounter->save();
+    
+            // Commit the transaction
+            DB::commit();
+    
+            // Store patient_id and temporary_id in the session
+            $request->session()->put('patient_id', $request->patient_id);
+            $request->session()->put('temporary_id', $temporary_id);
+    
+            // Redirect to the next page with success message
+            return redirect()->route('patient.encounter2')->with('success', __('messages.encounters.encounter_created'));
+        } catch (\Exception $e) {
+            // If an error occurs, rollback the transaction
+            DB::rollBack();
+    
+            // Log the error
+            Log::error('Encounter creation failed: ' . $e->getMessage());
+    
+            // Return to the previous page with an error message
+            return redirect()->back()->withErrors(['error' => 'Encounter creation failed! Please try again later.']);
+        }
+    }
+    
+
+    public function updateVisualAcuity(Request $request)
+{
+   
+    try {
+        // Find the encounter by patient_id and temporary_id
+        $encounter = Encounters::where('patient_id', $request->patient_id)
+            ->where('temporary_id', $request->temporary_id)
+            ->firstOrFail();
+
+        // Update the visual acuity fields
+        $encounter->update([
+            'visual_acuity_far_presenting_left' => $request->visual_acuity_far_presenting_left,
+            'visual_acuity_far_presenting_right' => $request->visual_acuity_far_presenting_right,
+            'visual_acuity_far_pinhole_left' => $request->visual_acuity_far_pinhole_left,
+            'visual_acuity_far_pinhole_right' => $request->visual_acuity_far_pinhole_right,
+            'visual_acuity_far_best_corrected_left' => $request->visual_acuity_far_best_corrected_left,
+            'visual_acuity_far_best_corrected_right' => $request->visual_acuity_far_best_corrected_right,
+            'visual_acuity_near_left' => $request->visual_acuity_near_left,
+            'visual_acuity_near_right' => $request->visual_acuity_near_right,
+        ]);
+
+        // Redirect with success message
+        return redirect()->route('patient.encounter3')->with('success', __('messages.encounters.visual_acuity'));
+    } catch (\Exception $e) {
+        // Log the error
+        Log::error('Error updating visual acuity: ' . $e->getMessage());
+
+        // Return to the previous page with an error message
+        return redirect()->back()->withErrors(['error' => 'Failed to update visual acuity']);
+    }
+}
+
+
+public function updateConsultation(Request $request)
+{
+    try {
+        // Find the encounter by patient_id and temporary_id
+        $encounter = Encounters::where('patient_id', $request->patient_id)
+            ->where('temporary_id', $request->temporary_id)
+            ->firstOrFail();
+
+        // Update the visual acuity fields
+        $encounter->update([
+            // Left Eye
+            'intraoccular_pressure_left' => $request->intraoccular_pressure_left,
+            'chief_complaint_left' => $request->chief_complaint_left,
+            'detailed_history_left' => $request->detailed_history_left,
+            'findings_left' => $request->findings_left,
+            'eyelid_left' => $request->eyelid_left,
+            'conjunctiva_left' => $request->conjunctiva_left,
+            'cornea_left' => $request->cornea_left,
+            'AC_left' => $request->AC_left,
+            'iris_left' => $request->iris_left,
+            'pupil_left' => $request->pupil_left,
+            'lens_left' => $request->lens_left,
+            'vitreous_left' => $request->vitreous_left,
+            'retina_left' => $request->retina_left,
+            'other_findings_left' => $request->other_findings_left,
+
+            // Right Eye
+            'intraoccular_pressure_right' => $request->intraoccular_pressure_right,
+            'chief_complaint_right' => $request->chief_complaint_right,
+            'detailed_history_right' => $request->detailed_history_right,
+            'findings_right' => $request->findings_right,
+            'eyelid_right' => $request->eyelid_right,
+            'conjunctiva_right' => $request->conjunctiva_right,
+            'cornea_right' => $request->cornea_right,
+            'AC_right' => $request->AC_right,
+            'iris_right' => $request->iris_right,
+            'pupil_right' => $request->pupil_right,
+            'lens_right' => $request->lens_right,
+            'vitreous_right' => $request->vitreous_right,
+            'retina_right' => $request->retina_right,
+            'other_findings_right' => $request->other_findings_right,
+        ]);
+
+        // Redirect with success message
+        return redirect()->route('patient.encounter4')->with('success', __('messages.encounters.visual_acuity'));
+    } catch (\Exception $e) {
+        // Log the error
+        Log::error('Error updating consultations: ' . $e->getMessage());
+
+        // Return to the previous page with an error message
+        return redirect()->back()->withErrors(['error' => 'Failed to update consultations']);
+    }
+}
+
+
+
+public function freeHandwritingRightEye(Request $request)
+{
+    // Validate the request
+    $request->validate([
+        // 'canvasData' => 'required|string', // Adjust this validation rule as needed
+        'patient_id' => 'required', // Add validation rules for patient_id and temporary_id if necessary
+        'temporary_id' => 'required',
+    ]);
+
+    // Decode the base64-encoded image data
+    $imageData = $request->input('canvasData');
+    $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
+    
+    // Generate a unique file name
+    $fileName = 'canvas_image_' . uniqid() . '.png';
+    
+    // Save the image to the storage directory
+     Storage::disk('public')->put('canvas_images/' . $fileName, $decodedImageData);
+    $filePath = "public/canvas_images/$fileName$decodedImageData";
+    // Find the encounter by patient_id and temporary_id
+    $encounter = Encounters::where('patient_id', $request->patient_id)
+        ->where('temporary_id', $request->temporary_id)
+        ->firstOrFail();
+
+    // Update the visual acuity fields
+    $encounter->update([
+        'free_handwriting_right' => $filePath,
+    ]);
+    Flash::success(__('messages.encounters.encounter_created'));
+    return redirect()->route('patient.encounter5')->with('success', __('messages.encounters.visual_acuity'));
+    // return redirect()->back()->with('success', 'Free hand image saved successfully.');
+}
+
+public function freeHandwritingLeftEye(Request $request)
+{
+    // Validate the request
+    $request->validate([
+        // 'canvasData' => 'required|string', // Adjust this validation rule as needed
+        'patient_id' => 'required', // Add validation rules for patient_id and temporary_id if necessary
+        'temporary_id' => 'required',
+    ]);
+
+    // Decode the base64-encoded image data
+    $imageData = $request->input('canvasData');
+    $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
+    
+    // Generate a unique file name
+    $fileName = 'canvas_image_' . uniqid() . '.png';
+    
+    // Save the image to the storage directory
+     Storage::disk('public')->put('canvas_images/' . $fileName, $decodedImageData);
+    $filePath = "public/canvas_images/$fileName$decodedImageData";
+    // Find the encounter by patient_id and temporary_id
+    $encounter = Encounters::where('patient_id', $request->patient_id)
+        ->where('temporary_id', $request->temporary_id)
+        ->firstOrFail();
+
+    // Update the visual acuity fields
+    $encounter->update([
+        'free_handwriting_left' => $filePath,
+    ]);
+    Flash::success(__('messages.encounters.encounter_created'));
+    return redirect()->route('patient.encounter6')->with('success', __('messages.encounters.visual_acuity'));
+    // return redirect()->back()->with('success', 'Free hand image saved successfully.');
+}
+
+// public function freeHandwriting(Request $request)
+// {
+   
+//     try {
+//         // Find the encounter by patient_id and temporary_id
+//         $encounter = Encounters::where('patient_id', $request->patient_id)
+//             ->where('temporary_id', $request->temporary_id)
+//             ->firstOrFail();
+
+//         // Update the visual acuity fields
+//         $encounter->update([
+//             'free_handwriting_left' => $request->input('canvasData'),
+//             // 'free_handwriting_right' => $request->input('canvasData2'),
+            
+          
+//         ]);
+
+//         // Redirect with success message
+//         return redirect()->route('patient.encounter5')->with('success', __('messages.encounters.visual_acuity'));
+//     } catch (\Exception $e) {
+//         // Log the error
+//         Log::error('Error updating visual acuity: ' . $e->getMessage());
+
+//         // Return to the previous page with an error message
+//         return redirect()->back()->withErrors(['error' => 'Failed to update visual acuity']);
+//     }
+// }
+
+
+
+    public function update(Request $request){
         $validator = Validator::make($request->all(), [
             'patient_id' => 'required|integer',
             // 'visual_acuity_far_presenting_left' => 'required|string',
@@ -136,9 +401,6 @@ class EncountersController extends Controller
     // return $this->sendSuccess(__('messages.common.status_updated_successfully'));
     }
 
-
-
-
     public function show($patientId)
     {
         
@@ -187,4 +449,7 @@ class EncountersController extends Controller
         // return $data;
     }
 
+
+    // UPDATE ENCOUNTER
+    
 }

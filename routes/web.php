@@ -1374,6 +1374,20 @@ Route::get('/encounter', [EncountersController::class, 'index'])->name('encounte
 Route::get('/patient-encounter', [EncountersController::class, 'encounter'])->name('patient.encounter');
 Route::post('/encounter', [EncountersController::class, 'store'])->name('encounter.store');
 
+Route::get('/patient-encounter-page-2', [EncountersController::class, 'encounter2'])->name('patient.encounter2');
+Route::post('/patient-encounter-page-2', [EncountersController::class, 'updateVisualAcuity'])->name('update.visual.acuity');
+
+Route::get('/patient-encounter-page-3', [EncountersController::class, 'encounter3'])->name('patient.encounter3');
+Route::post('/patient-encounter-page-3', [EncountersController::class, 'updateConsultation'])->name('update.consultation');
+
+Route::get('/patient-encounter-page-4', [EncountersController::class, 'encounter4'])->name('patient.encounter4');
+Route::post('/patient-encounter-page-4', [EncountersController::class, 'freeHandwritingRightEye'])->name('update.free_handwriting_right');
+
+Route::get('/patient-encounter-page-5', [EncountersController::class, 'encounter5'])->name('patient.encounter5');
+Route::post('/patient-encounter-page-5', [EncountersController::class, 'freeHandwritingLeftEye'])->name('update.free_handwriting_left');
+
+Route::get('/patient-encounter-page-6', [EncountersController::class, 'encounter6'])->name('patient.encounter6');
+Route::post('/patient-encounter-page-6', [EncountersController::class, 'refraction'])->name('update.refraction');
 
 
 Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Case Manager|Accountant')->group(function () {

@@ -87,7 +87,7 @@ class EncounterTable extends LivewireTableComponent
         //     }
         // });
 
-        $query = Encounters::with('patientUser')->select('encounters.*');
+        $query = Encounters::with('patientUser')->select('encounters.*')->where('is_complete', '=', '1');
         // $query = DB::table('encounter')->select('encounters.*', 'patients.*')
         // ->join('patients', 'patients.user_id', '=', 'encounters.patient_id')->get();
         // $query = $encounters->get(); // Retrieves all encounters

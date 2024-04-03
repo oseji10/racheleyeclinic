@@ -836,7 +836,14 @@ return [
         'new_encounter' => 'New Encounter Added Successfully',
         'page_title' => 'Patient Encounters',
         'encounter_created' => 'New encounter successfully created',
-        'total_encounters' => 'Total Encounters'
+        'total_encounters' => 'Total Encounters',
+        'select_patient' => 'Enter Patient ID, Patient Name, Email or Phone Number',
+        'continue_button' => 'Continue',
+        'page1' => 'Page 1',
+        'page2' => 'Page 2',
+        'page3' => 'Page 3',
+        'page4' => 'Page 4',
+        'page5' => 'Page 5',
     
     ],
     //services

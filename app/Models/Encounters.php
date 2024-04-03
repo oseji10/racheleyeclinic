@@ -60,7 +60,68 @@ use Illuminate\Support\Str;
 class Encounters extends Model
 {
     protected $table = 'encounters';
-    public $fillable = ['id', 'patient_id', 'doctor_id', 'visual_acuity_far_presenting_left', 'visual_acuity_far_presenting_right', 'visual_acuity_far_pinhole_left', 'visual_acuity_far_pinhole_right', 'visual_acuity_far_best_corrected_left', 'visual_acuity_far_best_corrected_right', 'visual_acuity_near_left', 'visual_acuity_near_right', 'intraoccular_pressure', 'chief_complaint', 'detailed_history', 'findings', 'eyelid', 'conjunctiva', 'cornea', 'AC', 'iris', 'pupil', 'lens', 'vitreous', 'retina', 'free_handwriting_left', 'free_handwriting_right'];
+    public $fillable = ['id', 
+    'patient_id', 
+    'doctor_id', 
+    'visual_acuity_far_presenting_left', 
+    'visual_acuity_far_presenting_right', 
+    'visual_acuity_far_pinhole_left', 
+    'visual_acuity_far_pinhole_right', 
+    'visual_acuity_far_best_corrected_left', 
+    'visual_acuity_far_best_corrected_right', 
+    'visual_acuity_near_left', 
+    'visual_acuity_near_right', 
+
+    'intraoccular_pressure_left',
+    'intraoccular_pressure_right',  
+    'chief_complaint_left',
+    'chief_complaint_right', 
+    'detailed_history_left', 
+    'detailed_history_right', 
+    'findings_left',
+    'findings_right', 
+    'eyelid_left', 
+    'eyelid_right', 
+    'conjunctiva_left',
+    'conjunctiva_right', 
+    'cornea_left', 
+    'cornea_right', 
+    'AC_left', 
+    'AC_right', 
+    'iris_left', 
+    'iris_right', 
+    'pupil_left', 
+    'pupil_right', 
+    'lens_left', 
+    'lens_right',
+    'vitreous_left',  
+    'vitreous_right', 
+    'retina_left', 
+    'retina_right', 
+    'other_findings_left',
+    'other_findings_right',
+
+    'free_handwriting_left', 
+    'free_handwriting_right',
+
+    'sphere_left',
+    'sphere_right',
+    'cylinder_left',
+    'cylinder_right',
+    'axis_left',
+    'axis_right',
+    'prism_left',
+    'prism_right',
+    'diagnosis',
+    'treatment_eyedrop',
+    'treatment_tablet',
+    'investigations_required',
+    'followup_appointment_date',
+    'new_developments',
+    'temporary_id',
+    'is_complete'];
+    
+    
     // public $table = 'patients';
 
     // public $fillable = [
