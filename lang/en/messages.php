@@ -316,6 +316,7 @@ return [
         'bed_assigned_successfully' => 'Bed Assigned Successfully',
         'username_and_password_required' => 'username and password required',
         'meeting_finished_or_cancelled' => 'This meeting is finished or cancelled',
+        'reschedule_appointment' => "Reschedule Appointment"
       ],
 
     'hospital_schedules' => [
@@ -844,6 +845,8 @@ return [
         'page3' => 'Page 3',
         'page4' => 'Page 4',
         'page5' => 'Page 5',
+        'page6' => 'Page 6 - Refraction',
+        'page7' => 'Page 7 - Diagnosis',
     
     ],
     //services

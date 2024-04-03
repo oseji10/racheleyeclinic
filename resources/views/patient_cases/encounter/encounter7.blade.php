@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('title')
-    {{ __('messages.encounters.page6') }}
+    {{ __('messages.encounters.page7') }}
 @endsection
 
 @section('header_toolbar')
     <div class="container-fluid">
         <div class="d-md-flex align-items-center justify-content-between mb-7">
             <h1 class="mb-0">@yield('title')</h1>
-            <a href="{{ route('patient.encounter5') }}"
+            <a href="{{ route('patient.encounter6') }}"
                class="btn btn-outline-primary">{{ __('messages.common.back') }}</a>
         </div>
     </div>
@@ -26,7 +26,7 @@
                 <div class="card-body p-12">
                     {{-- {{ Form::open(['route' => 'patient-cases.store', 'id' => 'createPatientCaseForm']) }} --}}
 
-                    @include('patient_cases.encounter.form6')
+                    @include('patient_cases.encounter.form7')
 
                     {{ Form::close() }}
                 </div>

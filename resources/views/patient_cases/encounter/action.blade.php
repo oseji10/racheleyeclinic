@@ -1,8 +1,14 @@
 <div class="d-flex align-items-center">
-    <a href="{{ url('encounter'.'/'.$row->patient_id.'') }}" title="{{__('messages.common.edit') }}"
+    <a href="{{ url('encounter'.'/'.$row->patient_id.'') }}" title="{{__('messages.common.view') }}"
         class=" btn px-1 text-primary fs-3 ps-0">
          <i class="fa-solid fa-eye"></i>
      </a>
+
+     <a href="{{ url('encounter'.'/'.$row->patient_id.'') }}" title="{{__('messages.common.print') }}"
+        class=" btn px-1 text-primary fs-3 ps-0">
+         <i class="fa-solid fa-print"></i>
+     </a>
+
     <a href="{{ url('encounter'.'/'.$row->patient_id.'') }}" title="{{__('messages.common.edit') }}"
        class=" btn px-1 text-primary fs-3 ps-0">
         <i class="fa-solid fa-pen-to-square"></i>

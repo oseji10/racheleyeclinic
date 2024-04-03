@@ -1389,6 +1389,9 @@ Route::post('/patient-encounter-page-5', [EncountersController::class, 'freeHand
 Route::get('/patient-encounter-page-6', [EncountersController::class, 'encounter6'])->name('patient.encounter6');
 Route::post('/patient-encounter-page-6', [EncountersController::class, 'refraction'])->name('update.refraction');
 
+Route::get('/patient-encounter-page-7', [EncountersController::class, 'encounter7'])->name('patient.encounter7');
+Route::post('/patient-encounter-page-7', [EncountersController::class, 'diagnosis'])->name('update.diagnosis');
+
 
 Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Case Manager|Accountant')->group(function () {
     Route::get('encounter/{patient}', [EncountersController::class, 'show'])

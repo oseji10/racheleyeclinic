@@ -76,6 +76,10 @@ class EncountersController extends Controller
         return view('patient_cases.encounter.encounter6');
     }
 
+    public function encounter7(){
+        return view('patient_cases.encounter.encounter7');
+    }
+
     public function store(Request $request)
     {
         $temporary_id = Str::random(10);
@@ -283,6 +287,81 @@ public function freeHandwritingLeftEye(Request $request)
     Flash::success(__('messages.encounters.encounter_created'));
     return redirect()->route('patient.encounter6')->with('success', __('messages.encounters.visual_acuity'));
     // return redirect()->back()->with('success', 'Free hand image saved successfully.');
+}
+
+
+public function refraction(Request $request)
+{
+    try {
+        // Find the encounter by patient_id and temporary_id
+        $encounter = Encounters::where('patient_id', $request->patient_id)
+            ->where('temporary_id', $request->temporary_id)
+            ->firstOrFail();
+
+        // Update the visual acuity fields
+        $encounter->update([
+            // Left Eye
+            'sphere_right' => $request->sphere_right,
+            'sphere_left' => $request->sphere_left,
+            'cylinder_right' => $request->cylinder_right,
+            'cylinder_left' => $request->cylinder_left,
+            'axis_right' => $request->axis_right,
+            'axis_left' => $request->axis_left,
+            'prism_right' => $request->prism_right,
+            'prism_left' => $request->prism_left,
+           
+     
+        ]);
+
+        // Redirect with success message
+        return redirect()->route('patient.encounter7')->with('success', __('messages.encounters.visual_acuity'));
+    } catch (\Exception $e) {
+        // Log the error
+        Log::error('Error updating consultations: ' . $e->getMessage());
+
+        // Return to the previous page with an error message
+        return redirect()->back()->withErrors(['error' => 'Failed to update consultations']);
+    }
+}
+
+
+public function diagnosis(Request $request)
+{
+    try {
+        // Find the encounter by patient_id and temporary_id
+        $encounter = Encounters::where('patient_id', $request->patient_id)
+            ->where('temporary_id', $request->temporary_id)
+            ->firstOrFail();
+
+        // Update the visual acuity fields
+        $encounter->update([
+            // Left Eye
+            'diagnosis' => $request->diagnosis,
+            'treatment_eyedrop' => $request->treatment_eyedrop,
+            'treatment_tablet' => $request->treatment_tablet,
+            'investigations_required' => $request->investigations_required,
+            'followup_appointment_date' => $request->followup_appointment_date,
+            'new_developments' => $request->new_developments,
+            'is_complete' => "1",
+        ]);
+
+        Encounters::where('patient_id', $request->patient_id)
+             ->where('is_complete', 0)
+             ->delete();
+
+             TemporaryEncounters::where('patient_id', $request->patient_id)
+            //  ->where('temporary_id', $request->temporary_id)
+             ->delete();
+
+        // Redirect with success message
+        return redirect()->route('encounter.index')->with('success', __('messages.encounters.visual_acuity'));
+    } catch (\Exception $e) {
+        // Log the error
+        Log::error('Error updating consultations: ' . $e->getMessage());
+
+        // Return to the previous page with an error message
+        return redirect()->back()->withErrors(['error' => 'Failed to update consultations']);
+    }
 }
 
 // public function freeHandwriting(Request $request)

@@ -13,6 +13,7 @@
         "ext-json": "*",
         "barryvdh/laravel-dompdf": "^2.0",
         "doctrine/dbal": "^3.5",
+        "dompdf/dompdf": "*",
         "firebase/php-jwt": "^5.2",
         "guzzlehttp/guzzle": "^7.2",
         "imanghafoori/laravel-microscope": "^1.0",
