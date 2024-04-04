@@ -11,7 +11,7 @@ class PdfController extends Controller
 {
    
 
-public function generatePdf($patient_id)
+public function generatePdf($id)
 {
    
 
@@ -63,7 +63,7 @@ public function generatePdf($patient_id)
     
     
     
-    ->where('patient_id', $patient_id)
+    ->where('encounters.id', $id)
     ->get();
 
     $pdf = PDF::loadView('patient_cases.encounter.print_encounter', ['data' => $encounter])->setPaper('letter', 'portrait');

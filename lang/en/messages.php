@@ -316,7 +316,8 @@ return [
         'bed_assigned_successfully' => 'Bed Assigned Successfully',
         'username_and_password_required' => 'username and password required',
         'meeting_finished_or_cancelled' => 'This meeting is finished or cancelled',
-        'reschedule_appointment' => "Reschedule Appointment"
+        'reschedule_appointment' => "Reschedule Appointment",
+        'print' => 'Print'
       ],
 
     'hospital_schedules' => [

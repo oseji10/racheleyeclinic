@@ -4,7 +4,7 @@
          <i class="fa-solid fa-eye"></i>
      </a>
 
-     <a href="{{ url('print-encounter'.'/'.$row->patient_id.'') }}" title="{{__('messages.common.print') }}"
+     <a href="{{ url('print-encounter'.'/'.$row->id.'') }}" title="{{__('messages.common.print') }}"
         class=" btn px-1 text-primary fs-3 ps-0" target="_blank">
          <i class="fa-solid fa-print"></i>
      </a>
