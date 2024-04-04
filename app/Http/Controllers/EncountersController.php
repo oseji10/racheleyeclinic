@@ -240,8 +240,8 @@ public function freeHandwritingRightEye(Request $request)
     $fileName = 'canvas_image_' . uniqid() . '.png';
     
     // Save the image to the storage directory
-     Storage::disk('public')->put('canvas_images/' . $fileName, $decodedImageData);
-    $filePath = "public/canvas_images/$fileName$decodedImageData";
+     Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
+    $filePath = "uploads/uploads/canvas_images/$fileName$decodedImageData";
     // Find the encounter by patient_id and temporary_id
     $encounter = Encounters::where('patient_id', $request->patient_id)
         ->where('temporary_id', $request->temporary_id)
@@ -255,6 +255,9 @@ public function freeHandwritingRightEye(Request $request)
     return redirect()->route('patient.encounter5')->with('success', __('messages.encounters.visual_acuity'));
     // return redirect()->back()->with('success', 'Free hand image saved successfully.');
 }
+
+
+
 
 public function freeHandwritingLeftEye(Request $request)
 {
@@ -273,8 +276,8 @@ public function freeHandwritingLeftEye(Request $request)
     $fileName = 'canvas_image_' . uniqid() . '.png';
     
     // Save the image to the storage directory
-     Storage::disk('public')->put('canvas_images/' . $fileName, $decodedImageData);
-    $filePath = "public/canvas_images/$fileName$decodedImageData";
+    Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
+    $filePath = "uploads/uploads/canvas_images/$fileName$decodedImageData";
     // Find the encounter by patient_id and temporary_id
     $encounter = Encounters::where('patient_id', $request->patient_id)
         ->where('temporary_id', $request->temporary_id)

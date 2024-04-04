@@ -111,6 +111,7 @@ use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\Web;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EncountersController;
+use App\Http\Controllers\PDFController;
 // use App\Http\Controllers\AmbulanceCallController;
 
 /*
@@ -1391,6 +1392,9 @@ Route::post('/patient-encounter-page-6', [EncountersController::class, 'refracti
 
 Route::get('/patient-encounter-page-7', [EncountersController::class, 'encounter7'])->name('patient.encounter7');
 Route::post('/patient-encounter-page-7', [EncountersController::class, 'diagnosis'])->name('update.diagnosis');
+
+
+Route::get('print-encounter/{patient_id}', [PDFController::class, 'generatePdf']);
 
 
 Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Case Manager|Accountant')->group(function () {

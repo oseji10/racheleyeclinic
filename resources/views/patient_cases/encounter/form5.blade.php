@@ -1,4 +1,4 @@
-<form action="{{ route('update.free_handwriting_left') }}" method="post">
+<form action="{{ route('update.free_handwriting_left') }}" method="post" id="canvasForm">
     @csrf
     <div class="row">
 
@@ -88,7 +88,7 @@
     </div>
 </form>
 
-<script src="{{ asset('vendor/fabric.js') }}"></script>
+<script src="{{ asset('vendor/fabric.js') }}" defer></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Create canvas and configure drawing options
@@ -127,8 +127,8 @@
             event.e.preventDefault();
         });
 
-        // Convert canvas to image and submit form on button click
-        document.getElementById('submitCanvas').addEventListener('click', function(event) {
+        // Submit form when canvas is submitted
+        document.getElementById('canvasForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
             // Convert canvas to data URL
@@ -138,8 +138,7 @@
             document.getElementById('canvasData').value = canvasData;
             
             // Submit the form
-            document.getElementById('canvasForm').submit();
+            this.submit();
         });
     });
 </script>
-
