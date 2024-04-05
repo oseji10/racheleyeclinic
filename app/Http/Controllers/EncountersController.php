@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\Appointment;
+use App\Models\Doctor;
+// use App\Models\Patient;
 
 
 class EncountersController extends Controller
@@ -355,6 +357,17 @@ public function diagnosis(Request $request)
              TemporaryEncounters::where('patient_id', $request->patient_id)
             //  ->where('temporary_id', $request->temporary_id)
              ->delete();
+
+             $doctor = Doctor::select('doctor_department_id', 'id')->where('user_id', Auth::user()->id)->first();
+             $patient = Patient::select('id')->where('user_id', $request->patient_id)->first();
+
+             $appointment = new Appointment();
+             $appointment->patient_id = $patient->id;
+             $appointment->doctor_id = $doctor->id;
+             $appointment->department_id = $doctor->doctor_department_id;
+             $appointment->opd_date = $request->followup_appointment_date;
+             $appointment->is_completed = "0";
+             $appointment->save();
 
         // Redirect with success message
         return redirect()->route('encounter.index')->with('success', __('messages.encounters.visual_acuity'));
