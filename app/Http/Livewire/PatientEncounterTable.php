@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\Encounters;
 use App\Models\Patient;
+use App\Models\VisualAcuity;
 use Livewire\WithPagination;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use DB;
@@ -79,25 +80,10 @@ class PatientEncounterTable extends LivewireTableComponent
 
     public function builder(): Builder
     {
-        // $query = Patient::whereHas('patientUser')->with('patientUser.media')->select('patients.*');
-        // $query->when(isset($this->statusFilter), function (Builder $q) {
-        //     if ($this->statusFilter == 1) {
-        //         $q->where('status', Patient::ACTIVE);
-        //     }
-        //     if ($this->statusFilter == 2) {
-        //         $q->where('status', Patient::INACTIVE);
-        //     }
-        // });
-
-        // $query = Encounters::with('patientUser')->select('encounters.*')->where('patient_id', '=', $patientId);
-        $query = Encounters::where('patient_id', $this->patientId)->select('encounters.*');
-        // $query = DB::table('encounter')->select('encounters.*', 'patients.*')
-        // ->join('patients', 'patients.user_id', '=', 'encounters.patient_id');
-        // $query = $encounters->get(); // Retrieves all encounters
-        // $payee = DB::table('payee')
-        // ->select('payee.*')
-        // ->get();
-        
-        return $query;
+               
+        // $id = $request->input('id');
+        //        $query = Encounters::where('id', $id)->select('encounters.*');
+               $query = Encounters::where('patient_id', $this->patientId)->select('encounters.*');
+               return $query;
     }
 }

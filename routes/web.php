@@ -1394,7 +1394,7 @@ Route::get('/patient-encounter-page-7', [EncountersController::class, 'encounter
 Route::post('/patient-encounter-page-7', [EncountersController::class, 'diagnosis'])->name('update.diagnosis');
 
 
-Route::get('print-encounter/{patient_id}', [PDFController::class, 'generatePdf']);
+Route::get('print-encounter/{id}', [PDFController::class, 'generatePdf'])->name('print-encounter');
 
 
 Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Case Manager|Accountant')->group(function () {

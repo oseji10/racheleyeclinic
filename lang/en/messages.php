@@ -822,6 +822,10 @@ return [
         'axis_left' => 'Axis Left',
         'prism_right' => 'Prism Right',
         'prism_left' => 'Prism Left',
+        'visual_acuity' => 'Visual Acuity',
+        'other_info' => "Other Information",
+        'refraction' => 'Refraction',
+        'freehand' => 'Freehand Drawing',
         
         
         'case_id' => 'Case ID',

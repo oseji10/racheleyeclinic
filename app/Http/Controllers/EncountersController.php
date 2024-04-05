@@ -489,7 +489,7 @@ public function diagnosis(Request $request)
         // $data = Patient::where('user_id', '=', $patientId);
         // $data = Encounters::with('patientUser')->select('encounters.*')->where('user_id', '=', $patientId)->get();
         $data = DB::table('encounters')
-        ->select('encounters.*', 'patients.*', 'users.*', 'addresses.*')
+        ->select('encounters.*', 'patients.*', 'users.*', 'addresses.*', 'encounters.id as encounter_id')
         ->leftJoin('patients', 'patients.user_id', '=', 'encounters.patient_id')
         ->leftJoin('users', 'users.id', '=', 'encounters.patient_id') 
         ->leftJoin('addresses', 'addresses.owner_id', '=', 'users.owner_id') 
