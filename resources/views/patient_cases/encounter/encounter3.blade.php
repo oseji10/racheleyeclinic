@@ -25,7 +25,7 @@
                 {{Form::hidden('isEdit',false,['class'=>'isEdit'])}}
                 <div class="card-body p-12">
                     {{-- {{ Form::open(['route' => 'patient-cases.store', 'id' => 'createPatientCaseForm']) }} --}}
-
+                    @include('patient_cases.encounter.column.timeline')
                     @include('patient_cases.encounter.form3')
 
                     {{ Form::close() }}

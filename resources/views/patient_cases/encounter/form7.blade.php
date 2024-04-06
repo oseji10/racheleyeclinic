@@ -15,44 +15,11 @@
         @foreach ($patients as $patient)
 
         @endforeach
-        <div class="form-group col-sm-6 mb-5">
-            <table width="100%" style="font-size:18px; color:darkmagenta">
-                <tr>
-                    <td width="25%">Patient Name</td>
-                    <td>{{ $patient->first_name }} {{ $patient->last_name }}</td>
-                </tr>
-
-                <tr>
-                    <td>Patient Email</td>
-                    <td>{{ $patient->email }}</td>
-                </tr>
-
-                <tr>
-                    <td>Patient Phone</td>
-                    <td>{{ $patient->phone }}</td>
-                </tr>
-            </table>
-        </div>
+        @include('patient_cases.encounter.patient_id_card_template.fields')
+  
         <div>
         </div>
 
-        {{-- <table width="100%" style="text-align:center">
-            <tr>
-                <td width="50%">
-                    <h2>RIGHT</h2>
-                </td>
-                <td>
-                    <h2>LEFT</h2>
-                </td>
-            </tr>
-        </table> --}}
-
-
-
- 
-    
-
-  
 {{-- Diagnosis --}}
 
 
@@ -158,6 +125,8 @@
         </div>
 
 
+
+        @include('patient_cases.encounter.columns.medical-table')
 
         <br /><br />
         <div class="d-flex justify-content-end">

@@ -774,7 +774,7 @@ return [
         'visual_acuity_far_best_corrected_right' => 'Visual acuity Far (Best Corrected) Right',
         'visual_acuity_near_left' => 'Visual acuity Near Left',
         'visual_acuity_near_right' => 'Visual acuity Near Right',
-        'intraoccular_pressure_left' => 'Intraoccular Pressure Left',
+        'intraoccular_pressure_left' => 'Intraoccular Pressure Left (mmHg)',
         'chief_complaint_left' => 'Chief Complaint Left',
         'detailed_history_left' => 'Detailed History Left',
         'findings_left' => 'Findings Left',
@@ -789,7 +789,7 @@ return [
         'retina_left' => 'Retina Left',
         'other_findings_left' => 'Other findings Left',
 
-        'intraoccular_pressure_right' => 'Intraoccular Pressure Right',
+        'intraoccular_pressure_right' => 'Intraoccular Pressure Right (mmHg)',
         'chief_complaint_right' => 'Chief Complaint Right',
         'detailed_history_right' => 'Detailed History Right',
         'findings_right' => 'Findings Right',
@@ -826,6 +826,8 @@ return [
         'other_info' => "Other Information",
         'refraction' => 'Refraction',
         'freehand' => 'Freehand Drawing',
+
+        'encounter' => 'Encounters',
         
         
         'case_id' => 'Case ID',

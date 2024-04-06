@@ -296,7 +296,7 @@
     @module('Encounter', $modules)
         <li
             class="nav-item position-relative mx-xl-3 mb-3 mb-xl-0 {{ !Request::is('patients*', 'patient-cases*', 'case-handlers*', 'patient-admissions*', 'encounter*') ? 'd-none' : '' }}">
-            <a class="nav-link p-0 {{ Request::is('encounter**') ? 'active' : '' }}"
+            <a class="nav-link p-0 {{ Request::is('encounter*') ? 'active' : '' }}"
                 href="{{ route('encounter.index') }}">
                 {{ __('messages.encounters.page_title') }}
                 

@@ -15,7 +15,8 @@
         @foreach ($patients as $patient)
 
         @endforeach
-        <div class="form-group col-sm-6 mb-5">
+        @include('patient_cases.encounter.patient_id_card_template.fields')
+        {{-- <div class="form-group col-sm-6 mb-5">
             <table width="100%" style="font-size:18px; color:darkmagenta">
                 <tr>
                     <td width="25%">Patient Name</td>
@@ -32,7 +33,7 @@
                     <td>{{ $patient->phone }}</td>
                 </tr>
             </table>
-        </div>
+        </div> --}}
         <div>
         </div>
 
