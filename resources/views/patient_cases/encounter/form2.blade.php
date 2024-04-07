@@ -1,21 +1,10 @@
-<h2>Consultation</h2>
+
 <form action="{{ route('update.visual.acuity') }}" method="post">
     @csrf
     <div class="row">
 
 
-        {{-- <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('patient', __('messages.case.patient') . ':', ['class' => 'form-label']) }}
-            <select id="patient_id" class="select2 form-select" name="patient_id" data-control="select2" required>
-                <option value="">Select Patient</option>
-                {{$patient_id = App\Models\Patient::select('patients.user_id', 'users.*')->join('users', 'users.id',
-                '=', 'patients.user_id')->get();}}
-                @forelse($patient_id as $item)
-                <option value="{{$item->user_id}}">{{$item->first_name}} {{$item->last_name}}</option>
-                @empty
-                @endforelse
-            </select>
-        </div> --}}
+   
         <input type="hidden" name="patient_id" value="{{ session('patient_id') }}">
 <input type="hidden" name="temporary_id" value="{{ session('temporary_id') }}">
 
@@ -29,7 +18,7 @@
                 @foreach ($patients as $patient)
                 
             @endforeach
-        <div class="form-group col-sm-6 mb-5">
+        {{-- <div class="form-group col-sm-6 mb-5">
             <table width="100%" style="font-size:18px; color:darkmagenta">
                 <tr>
                     <td width="25%">Patient Name</td>
@@ -48,7 +37,8 @@
             </table>
         </div>
 <div>
-</div>
+</div> --}}
+@include('patient_cases.encounter.patient_id_card_template.fields')
         {{-- <table width="100%" style="text-align:center">
             <tr>
                 <td width="50%">
