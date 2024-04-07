@@ -11,7 +11,7 @@
         <i class="far fa-calendar-check"></i>
     </a>
 @endif
-@if (Auth::user()->hasRole('Admin|Doctor'))
+@if (Auth::user()->hasRole('Admin'))
     @if ($row->is_completed == 0 || $row->is_completed == 1)
         <a href="{{ route('appointments.edit',['appointment' => $row->id])}}" title="{{__('messages.common.edit') }}"
         class="btn px-1 text-primary fs-3 ps-0">
