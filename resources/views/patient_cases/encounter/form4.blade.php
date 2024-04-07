@@ -1,11 +1,11 @@
 <form action="{{ route('update.free_handwriting_right') }}" method="post" id="canvasForm">
     @csrf
     <div class="row">
-
-
+        
+        
         <input type="hidden" name="patient_id" value="{{ session('patient_id') }}">
         <input type="hidden" name="temporary_id" value="{{ session('temporary_id') }}">
-
+        
         @php
         $patients = App\Models\Patient::select('patients.*', 'users.*')
         ->join('users', 'users.id', '=', 'patients.user_id')
@@ -13,9 +13,32 @@
         ->get();
         @endphp
         @foreach ($patients as $patient)
-
+        
         @endforeach
         @include('patient_cases.encounter.patient_id_card_template.fields')
+<<<<<<< HEAD
+=======
+        {{-- <div class="form-group col-sm-6 mb-5">
+            <table width="100%" style="font-size:18px; color:darkmagenta">
+                <tr>
+                    <td width="25%">Patient Name</td>
+                    <td>{{ $patient->first_name }} {{ $patient->last_name }}</td>
+                </tr>
+
+                <tr>
+                    <td>Patient Email</td>
+                    <td>{{ $patient->email }}</td>
+                </tr>
+
+                <tr>
+                    <td>Patient Phone</td>
+                    <td>{{ $patient->phone }}</td>
+                </tr>
+            </table>
+        </div> --}}
+        <div>
+        </div>
+>>>>>>> origin/main
 
 
         {{-- <div class="form-group col-sm-6 mb-5">

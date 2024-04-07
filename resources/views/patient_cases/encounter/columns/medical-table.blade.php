@@ -13,23 +13,10 @@
                                 class="required"></span></th>
                         <th class="">{{ __('messages.prescription.comment') }}</th>
                         <th class="table__add-btn-heading text-center form-label fw-bolder text-gray-700 mb-3">
-<<<<<<< HEAD
                             <a href="javascript:void(0)" type="button"
                                 class="btn btn-primary text-star add-medicine-btn" id="addPrescriptionMedicineBtn">
                                 {{ __('messages.common.add') }}
                             </a>
-
-                            
-=======
-                            {{-- <a href="javascript:void(0)" type="button"
-                                class="btn btn-primary text-star add-medicine-btn" id="addPrescriptionMedicineBtn">
-                                {{ __('messages.common.add') }}
-                            </a> --}}
-
-                            <button type="button" class="btn btn-primary text-star add-medicine-btn" id="addPrescriptionMedicineBtn">
-                                {{ __('messages.common.add') }}
-                            </button>
->>>>>>> origin/main
                         </th>
                     </tr>
                 </thead>
@@ -44,7 +31,7 @@
                                     <div class="form-inpu" id="medicineDiv{{ $dataId }}"
                                         style="width:180px;margin-top:22px;">
                                         {{-- {{ Form::select('medicine[]', $medicines['medicines'], $prescription->medicine, ['class' => 'form-select prescriptionMedicineId', 'data-id' => $dataId]) }} --}}
-                                        <select id="visual_acuity_far_presenting_right" class="select2 form-select prescriptionMedicineId" name="visual_acuity_far_presenting_right" data-id="dataId" data-control="select2">
+                                        <select id="visual_acuity_far_presenting_right" class="select2 form-select" name="visual_acuity_far_presenting_right" data-control="select2">
                                             <option value="">Select Visual Acuity Far (Presenting) Right</option>
                                             <?php 
                                                 $medicines = App\Models\Medicine::select('medicines.*')->get();
@@ -98,10 +85,11 @@
                             <td>
                                 <div class="form-input" id="medicineDiv1" style="width:180px;">
                                     {{-- {{ Form::select('medicine[]', $medicines['medicines'], null, ['class' => 'form-select prescriptionMedicineId', 'data-id' => 1, 'placeholder' => __('messages.medicine_bills.select_medicine')]) }} --}}
-                                    <select id="medicines"  class="select2 form-select" name="medicines" data-control="select2">
+                                    <select id="medicines"  class="select2 form-select" data-id = "1" placeholder = "__('messages.medicine_bills.select_medicine')" name="medicines" data-control="select2">
                                         <option value="">Select Medicine</option>
                                         <?php 
-                                            
+                                            $medicines = App\Models\Medicine::select('medicines.*')->first();
+                                            $selected_medicine = $medicines ? $medicines->id : null;
                                             $select_medicines = App\Models\Medicine::select('name', 'id')->get(); 
                                         ?>
                                         @foreach($select_medicines as $item)
@@ -141,19 +129,3 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        // Add Medicine Button Click
-        $('#addPrescriptionMedicineBtn').click(function(e) {
-            e.preventDefault();
-            var template = $('.prescription-medicine-template').clone().removeClass('prescription-medicine-template').show();
-            $('.prescription-medicine-container').append(template);
-        });
-
-        // Delete Medicine Button Click
-        $(document).on('click', '.delete-prescription-medicine-item', function(e) {
-            e.preventDefault();
-            $(this).closest('tr').remove();
-        });
-    });
-</script>

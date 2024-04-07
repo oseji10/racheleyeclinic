@@ -86,8 +86,8 @@
           </tr>
         <tr>
           <td style="width: 25%"><h5>Intraoccular Pressure:</h5></td>
-          <td style="width: 25%"><h3 class="text-uppercase">{{ $item->intraoccular_pressure_right }}</h3></td>
-          <td style="width: 25%"><h3 class="text-uppercase">{{ $item->intraoccular_pressure_left }}</h3></td>
+          <td style="width: 25%"><h3 class="text-uppercase">{{ $item->intraoccular_pressure_right }} (mmHg)</h3></td>
+          <td style="width: 25%"><h3 class="text-uppercase">{{ $item->intraoccular_pressure_left }} (mmHg)</h3></td>
         </tr>
 
         <tr>

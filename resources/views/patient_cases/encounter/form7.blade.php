@@ -17,6 +17,7 @@
         @endforeach
         @include('patient_cases.encounter.patient_id_card_template.fields')
 
+
         {{-- <table width="100%" style="text-align:center">
             <tr>
                 <td width="50%">
@@ -139,6 +140,8 @@
         </div>
 
 
+
+        @include('patient_cases.encounter.columns.medical-table')
 
         <br /><br />
         <div class="d-flex justify-content-end">

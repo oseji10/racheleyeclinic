@@ -56,7 +56,7 @@
 
     {{-- Users --}}
     <li
-        class="nav-item {{ Request::is('users*', 'admins*', 'accountants*', 'nurses*', 'lab-technicians*', 'receptionists*', 'pharmacists*') ? 'active' : '' }}">
+        class="nav-item {{ Request::is('doctors*', 'users*', 'admins*', 'accountants*', 'nurses*', 'lab-technicians*', 'receptionists*', 'pharmacists*') ? 'active' : '' }}">
         <a class="nav-link  d-flex align-items-center py-3" href="{{ route('users.index') }}">
             <span class="aside-menu-icon me-3">
                 <i class="fas fa-user-friends"></i>
@@ -196,6 +196,8 @@
             </a>
         </li>
     @endif
+
+    
 
     <?php
     $prescriptionMGT = getMenuLinks(\App\Models\User::MAIN_PRESCRIPTION);
@@ -519,6 +521,18 @@
                     </a>
                 </li>
             @endmodule
+
+            @module('Encounter', $modules)
+                <li class="nav-item  {{ Request::is('encounter*') ? 'active' : '' }}">
+                    <a class="nav-link  d-flex align-items-center py-3" href="{{ url('encounter') }}">
+                        <span class="aside-menu-icon me-3"><i class="fa fa-handshake"></i></span>
+                        <span class="aside-menu-title">{{ __('messages.case.encounter') }}</span>
+                        <span class="d-none">{{ __('messages.schedules') }}</span>
+                        <span class="d-none">{{ __('messages.prescriptions') }}</span>
+                    </a>
+                </li>
+            @endmodule
+
             @module('Schedules', $modules)
                 <li class="nav-item  {{ Request::is('schedules*', 'holidays*', 'breaks*') ? 'active' : '' }}">
                     <a class="nav-link  d-flex align-items-center py-3"
