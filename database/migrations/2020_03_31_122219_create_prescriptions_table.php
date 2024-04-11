@@ -10,6 +10,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('patient_id');
@@ -30,16 +31,23 @@ return new class extends Migration
             $table->string('low_income', 100)->nullable();
             $table->string('reference', 100)->nullable();
             $table->boolean('status')->nullable();
+            $table->string('prescriptions_id')->unique()->nullable();
+            
+            
             $table->timestamps();
 
             $table->foreign('patient_id')->references('id')->on('patients')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
+            
             $table->foreign('doctor_id')->references('id')->on('doctors')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+
+            
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

@@ -7,17 +7,23 @@
         <input type="hidden" name="temporary_id" value="{{ session('temporary_id') }}">
 
         @php
-        $patients = App\Models\Patient::select('patients.*', 'users.*')
-        ->join('users', 'users.id', '=', 'patients.user_id')
-        ->where('user_id', '=', session('patient_id'))
-        ->get();
-        @endphp
-        @foreach ($patients as $patient)
-
-        @endforeach
+        if(session()->has('patient_id')) {
+            $patients = App\Models\Patient::select('patients.*', 'patients.id as pid', 'users.*')
+                        ->join('users', 'users.id', '=', 'patients.user_id')
+                        ->where('user_id', '=', session('patient_id'))
+                        ->get();
+        } else {
+            // Redirect to the login page
+            return redirect()->route('login');
+        }
+    @endphp
+    
+    @foreach ($patients as $patient)
+        <!-- Your code to display patient information goes here -->
+    @endforeach
         @include('patient_cases.encounter.patient_id_card_template.fields')
 
-
+        <input type="hidden" name="pid" value="{{ $patient->pid }}">
         {{-- <table width="100%" style="text-align:center">
             <tr>
                 <td width="50%">
@@ -63,42 +69,15 @@
 
 
         {{--Treatment Eyedrops  --}}
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('treatment_eyedrop', __('messages.case.treatment_eyedrop') . ':', ['class' => 'form-label']) }}
-            <select id="treatment_eyedrop" class="select2 form-select" name="treatment_eyedrop" data-control="select2">
-                <option value="">Select Diagnosis Type</option>
-                <?php 
-                    $encounter = App\Models\Encounters::where('patient_id', session('patient_id') )->where('temporary_id', session('temporary_id'))->first();
-                    $selected_visual_acuity_id = $encounter ? $encounter->treatment_eyedrop : null;
-                    $visual_acuities = App\Models\VisualAcuity::select('acuity_value', 'id')->where('acuity_group_id', '=', 'TREATDROPS')->get(); 
-                ?>
-                @foreach($visual_acuities as $item)
-                    <option value="{{ $item->id }}" {{ ($item->id == $selected_visual_acuity_id) ? 'selected' : '' }}>
-                        {{ $item->acuity_value }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+        @include('patient_cases.encounter.prescriptions.eye-drops')
 
 
 
         {{-- Treatment tablets --}}
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('treatment_tablet', __('messages.case.treatment_tablet') . ':', ['class' => 'form-label']) }}
-            <select id="treatment_tablet" class="select2 form-select" name="treatment_tablet" data-control="select2">
-                <option value="">Select Treatment Tablets</option>
-                <?php 
-                    $encounter = App\Models\Encounters::where('patient_id', session('patient_id') )->where('temporary_id', session('temporary_id'))->first();
-                    $selected_visual_acuity_id = $encounter ? $encounter->treatment_tablet : null;
-                    $visual_acuities = App\Models\VisualAcuity::select('acuity_value', 'id')->where('acuity_group_id', '=', 'TREATTABS')->get(); 
-                ?>
-                @foreach($visual_acuities as $item)
-                    <option value="{{ $item->id }}" {{ ($item->id == $selected_visual_acuity_id) ? 'selected' : '' }}>
-                        {{ $item->acuity_value }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+        {{-- @include('patient_cases.encounter.prescriptions.med-table') --}}
+
+        {{-- Ointments--}}
+        {{-- @include('patient_cases.encounter.prescriptions.ointment') --}}
 
         {{-- Investigations Required --}}
         <div class="form-group col-sm-6 mb-5">
@@ -141,7 +120,8 @@
 
 
 
-        @include('patient_cases.encounter.columns.medical-table')
+        {{-- @include('patient_cases.encounter.columns.medical-table') --}}
+        {{-- @include('patient_cases.encounter.prescriptions.med-table') --}}
 
         <br /><br />
         <div class="d-flex justify-content-end">

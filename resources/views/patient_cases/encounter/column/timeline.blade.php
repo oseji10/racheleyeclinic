@@ -1,7 +1,7 @@
 <nav aria-label="Page navigation">
     <ul class="pagination">
         <li class="page-item">
-            <a class="page-link" href="patient-encounter-page-1">Patient</a>
+            <a class="page-link" href="patient-encounter">Patient</a>
         </li>
         <li class="page-item">
             <a class="page-link" href="patient-encounter-page-2">Visual Acuity</a>

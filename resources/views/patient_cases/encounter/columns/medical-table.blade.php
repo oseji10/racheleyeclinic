@@ -30,21 +30,7 @@
                                 <td>
                                     <div class="form-inpu" id="medicineDiv{{ $dataId }}"
                                         style="width:180px;margin-top:22px;">
-                                        {{-- {{ Form::select('medicine[]', $medicines['medicines'], $prescription->medicine, ['class' => 'form-select prescriptionMedicineId', 'data-id' => $dataId]) }} --}}
-                                        <select id="visual_acuity_far_presenting_right" class="select2 form-select" name="visual_acuity_far_presenting_right" data-control="select2">
-                                            <option value="">Select Visual Acuity Far (Presenting) Right</option>
-                                            <?php 
-                                                $medicines = App\Models\Medicine::select('medicines.*')->get();
-                                                $selected_medicine = $medicines ? $medicines->id : null;
-                                                $select_medicines = App\Models\Medicine::select('name', 'id')->get(); 
-                                            ?>
-                                            @foreach($visual_acuities as $item)
-                                                <option value="{{ $item->id }}" {{ ($item->id == $selected_medicine) ? 'selected' : '' }}>
-                                                    {{ $item->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        {{-- {{ Form::select('day[]', \App\Models\Prescription::DOSE_DURATION, null, ['class' => 'form-select prescriptionMedicineMealId']) }} --}}
+                                        {{ Form::select('medicine[]', $medicines['medicines'], $prescription->medicine, ['class' => 'form-select prescriptionMedicineId', 'data-id' => $dataId]) }}
                                         @foreach ($medicineQty as $key => $qty)
                                             <small
                                                 class="{{ $key == $prescription->medicine && $qty == 0 ? 'text-danger' : 'text-success' }} AvailbleQtyClass"
@@ -84,20 +70,7 @@
                         <tr>
                             <td>
                                 <div class="form-input" id="medicineDiv1" style="width:180px;">
-                                    {{-- {{ Form::select('medicine[]', $medicines['medicines'], null, ['class' => 'form-select prescriptionMedicineId', 'data-id' => 1, 'placeholder' => __('messages.medicine_bills.select_medicine')]) }} --}}
-                                    <select id="medicines"  class="select2 form-select" data-id = "1" placeholder = "__('messages.medicine_bills.select_medicine')" name="medicines" data-control="select2">
-                                        <option value="">Select Medicine</option>
-                                        <?php 
-                                            $medicines = App\Models\Medicine::select('medicines.*')->first();
-                                            $selected_medicine = $medicines ? $medicines->id : null;
-                                            $select_medicines = App\Models\Medicine::select('name', 'id')->get(); 
-                                        ?>
-                                        @foreach($select_medicines as $item)
-                                            <option value="{{ $item->id }}" >
-                                                {{ $item->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    {{ Form::select('medicine[]', $medicines['medicines'], null, ['class' => 'form-select prescriptionMedicineId', 'data-id' => 1, 'placeholder' => __('messages.medicine_bills.select_medicine')]) }}
                                     <small class="" id="AvailbleQty"></small>
                                 </div>
                             </td>

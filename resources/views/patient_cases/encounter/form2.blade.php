@@ -10,14 +10,21 @@
 
 
 @php
-    $patients = App\Models\Patient::select('patients.*', 'users.*')
-                ->join('users', 'users.id', '=', 'patients.user_id')
-                ->where('user_id', '=', session('patient_id'))
-                ->get();
+    if(session()->has('patient_id')) {
+        $patients = App\Models\Patient::select('patients.*', 'users.*')
+                    ->join('users', 'users.id', '=', 'patients.user_id')
+                    ->where('user_id', '=', session('patient_id'))
+                    ->get();
+    } else {
+        // Redirect to the login page
+        return redirect()->route('login');
+    }
 @endphp
-                @foreach ($patients as $patient)
-                
-            @endforeach
+
+@foreach ($patients as $patient)
+    <!-- Your code to display patient information goes here -->
+@endforeach
+
             {{-- @include('patient_cases.encounter.patient_id_card_template.fields') --}}
 
 @include('patient_cases.encounter.patient_id_card_template.fields')

@@ -119,7 +119,9 @@ class Encounters extends Model
     'followup_appointment_date',
     'new_developments',
     'temporary_id',
-    'is_complete'];
+    'is_complete',
+    'prescription_id'
+];
     
     
     // public $table = 'patients';

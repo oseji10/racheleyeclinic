@@ -76,6 +76,8 @@ return new class extends Migration
             $table->datetime('followup_appointment_date')->nullable();
             $table->text('new_developments')->nullable();
             $table->string('temporary_id')->nullable();
+            $table->string('prescription_medicines_id')->nullable();
+            $table->unsignedInteger('prescription_id')->nullable();
             $table->boolean('is_complete')->default(false); 
 
             $table->timestamps();
@@ -93,13 +95,22 @@ return new class extends Migration
             $table->foreign('visual_acuity_near_left')->references('id')->on('visual_acuity')->onDelete('no action')->onUpdate('no action');
             $table->foreign('visual_acuity_near_right')->references('id')->on('visual_acuity')->onDelete('no action')->onUpdate('no action');
 
-            
+
+                $table->foreign('prescription_medicines_id')->references('prescription_medicines_id')->on('prescriptions_medicines')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+
+                    $table->foreign('prescription_id')->references('id')->on('prescriptions')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            });
+
             // $table->unsignedInteger('bill_id');
             // $table->string('status')->nullable();
             // $table->text('meta')->nullable();
             // $table->boolean('is_manual_payment')->nullable();
             // $table->foreign('bill_id')->references('id')->on('bills')->onUpdate('cascade')->onDelete('cascade');
-        });
+        // });
     }
 
     /**

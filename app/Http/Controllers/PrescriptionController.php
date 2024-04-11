@@ -45,7 +45,7 @@ class PrescriptionController extends AppBaseController
     }
 
     public function create()
-    {
+    { 
         $patients = $this->prescriptionRepository->getPatients();
         $medicines = $this->prescriptionRepository->getMedicines();
         $doctors = $this->doctorRepository->getDoctors();

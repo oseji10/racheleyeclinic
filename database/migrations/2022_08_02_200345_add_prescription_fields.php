@@ -19,6 +19,12 @@ return new class extends Migration
             $table->string('advice', 100)->nullable();
             $table->string('next_visit_qty', 100)->nullable();
             $table->string('next_visit_time', 100)->nullable();
+            $table->string('prescriptions_medicines_id')->nullable();
+
+            $table->foreign('prescriptions_id')->on('prescriptions')->references('prescriptions_id')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            
         });
     }
 

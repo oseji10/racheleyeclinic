@@ -23,11 +23,29 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Doctor;
 use App\Models\Appointment;
+use App\Models\Prescription;
+// use App\Models\User;
+use App\Repositories\DoctorRepository;
+use App\Repositories\MedicineRepository;
+use App\Repositories\PrescriptionRepository;
+use App\Models\PrescriptionMedicineModal;
 
 
 
 class EncountersController extends Controller
 {
+   
+    /** @var  PrescriptionRepository
+     * @var DoctorRepository
+     */
+    private $prescriptionRepository;
+
+    private $doctorRepository;
+
+    private $medicineRepository;
+
+  
+   
     public $patientId;
     // public function index()
     // {
@@ -40,9 +58,15 @@ class EncountersController extends Controller
         /** @var PatientCaseRepository */
         private $patientCaseRepository;
 
-        public function __construct(PatientCaseRepository $patientCaseManagerRepo)
+        public function __construct(PatientCaseRepository $patientCaseManagerRepo,
+        PrescriptionRepository $prescriptionRepo,
+        DoctorRepository $doctorRepository,
+        MedicineRepository $medicineRepository)
         {
             $this->patientCaseRepository = $patientCaseManagerRepo;
+            $this->prescriptionRepository = $prescriptionRepo;
+        $this->doctorRepository = $doctorRepository;
+        $this->medicineRepository = $medicineRepository;
         }
 
 
@@ -78,8 +102,24 @@ class EncountersController extends Controller
         return view('patient_cases.encounter.encounter6');
     }
 
-    public function encounter7(){
-        return view('patient_cases.encounter.encounter7');
+    // public function encounter7(){
+    //     return view('patient_cases.encounter.encounter7');
+    // }
+
+    public function encounter7()
+    { 
+        
+        $patients = $this->prescriptionRepository->getPatients();
+        $medicines = $this->prescriptionRepository->getMedicines();
+        $doctors = $this->doctorRepository->getDoctors();
+        $data = $this->medicineRepository->getSyncList();
+        $medicineList = $this->medicineRepository->getMedicineList($medicines['medicines']);
+        $mealList = $this->medicineRepository->getMealList();
+        $doseDurationList = $this->medicineRepository->getDoseDurationList();
+        $doseIntervalList = $this->medicineRepository->getDoseIntervalList();
+
+        return view('patient_cases.encounter.encounter7',
+            compact('patients', 'doctors', 'medicines', 'medicineList', 'mealList', 'doseDurationList', 'doseIntervalList'))->with($data);
     }
 
     public function store(Request $request)
@@ -319,7 +359,11 @@ public function refraction(Request $request)
         ]);
 
         // Redirect with success message
-        return redirect()->route('patient.encounter7')->with('success', __('messages.encounters.visual_acuity'));
+        // return redirect()->route('patient.encounter7')->with('success', __('messages.encounters.visual_acuity'));
+        // Redirect with success message and query parameter
+// return redirect()->route('patient.encounter7', ['reload' => 'true'])->with('success', __('messages.encounters.visual_acuity'));
+return view('patient_cases.encounter.encounter7');
+
     } catch (\Exception $e) {
         // Log the error
         Log::error('Error updating consultations: ' . $e->getMessage());
@@ -333,12 +377,41 @@ public function refraction(Request $request)
 public function diagnosis(Request $request)
 {
     try {
+        // Start a database transaction
+        DB::beginTransaction();
+        
+        $randomNumber = random_int(100000, 999999);
+        $randomNumber2 = random_int(100000, 999999);
+        $patient_id = $request->patient_id;
+        $pid = $request->pid;
+        
+        // Generate the new prescription
+        $new_prescription = new Prescription();
+        $new_prescription->patient_id = $pid;
+        $new_prescription->save();
+
+        // Retrieve the auto-generated ID of the new prescription
+        $prescription_id = $new_prescription->id;
+
+        // Loop through the input fields and create PrescriptionMedicineModal instances
+        foreach ($request->addMoreInputFields as $data) {
+            $prescription = new PrescriptionMedicineModal();
+            $prescription->medicine = $data['tablets']; // Updated 'tablets' to 'subject'
+            $prescription->dosage = $data['dosage'];
+            $prescription->day = $data['day'];
+            $prescription->time = $data['time'];
+            $prescription->comment = $data['comment'];
+            // Set prescriptions_id using the retrieved ID
+            $prescription->prescription_id = $prescription_id;
+            $prescription->save();
+        }
+
         // Find the encounter by patient_id and temporary_id
-        $encounter = Encounters::where('patient_id', $request->patient_id)
+        $encounter = Encounters::where('patient_id', $patient_id)
             ->where('temporary_id', $request->temporary_id)
             ->firstOrFail();
 
-        // Update the visual acuity fields
+        // Update the encounter record with the prescription_id
         $encounter->update([
             // Left Eye
             'diagnosis' => $request->diagnosis,
@@ -347,33 +420,40 @@ public function diagnosis(Request $request)
             'investigations_required' => $request->investigations_required,
             'followup_appointment_date' => $request->followup_appointment_date,
             'new_developments' => $request->new_developments,
+            'prescription_id' => $prescription_id,
             'is_complete' => "1",
         ]);
 
-        Encounters::where('patient_id', $request->patient_id)
-             ->where('is_complete', 0)
-             ->delete();
+        Encounters::where('patient_id', $patient_id)
+            ->where('is_complete', 0)
+            ->delete();
 
-             TemporaryEncounters::where('patient_id', $request->patient_id)
-            //  ->where('temporary_id', $request->temporary_id)
-             ->delete();
+        TemporaryEncounters::where('patient_id', $request->patient_id)
+            ->delete();
 
-             if ($request->filled('followup_appointment_date')) {
-                $doctor = Doctor::select('doctor_department_id', 'id')->where('user_id', Auth::user()->id)->first();
-                $patient = Patient::select('id')->where('user_id', $request->patient_id)->first();
-    
-                $appointment = new Appointment();
-                $appointment->patient_id = $patient->id;
-                $appointment->doctor_id = $doctor->id;
-                $appointment->department_id = $doctor->doctor_department_id;
-                $appointment->opd_date = $request->followup_appointment_date;
-                $appointment->is_completed = "0";
-                $appointment->save();
-            }
+        if ($request->filled('followup_appointment_date')) {
+            $doctor = Doctor::select('doctor_department_id', 'id')->where('user_id', Auth::user()->id)->first();
+            $patient = Patient::select('id')->where('user_id', $request->patient_id)->first();
 
+            $appointment = new Appointment();
+            $appointment->patient_id = $patient->id;
+            $appointment->doctor_id = $doctor->id;
+            $appointment->department_id = $doctor->doctor_department_id;
+            $appointment->opd_date = $request->followup_appointment_date;
+            $appointment->is_completed = "0";
+            $appointment->save();
+        }
+
+        // Commit the transaction
+        DB::commit();
+        
         // Redirect with success message
+        Flash::success(__('messages.encounters.encounter_created'));
         return redirect()->route('encounter.index')->with('success', __('messages.encounters.visual_acuity'));
     } catch (\Exception $e) {
+        // Rollback the transaction if an error occurs
+        DB::rollback();
+        
         // Log the error
         Log::error('Error updating consultations: ' . $e->getMessage());
 

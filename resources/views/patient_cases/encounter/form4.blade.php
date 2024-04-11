@@ -7,38 +7,21 @@
         <input type="hidden" name="temporary_id" value="{{ session('temporary_id') }}">
         
         @php
-        $patients = App\Models\Patient::select('patients.*', 'users.*')
-        ->join('users', 'users.id', '=', 'patients.user_id')
-        ->where('user_id', '=', session('patient_id'))
-        ->get();
-        @endphp
-        @foreach ($patients as $patient)
-        
-        @endforeach
+        if(session()->has('patient_id')) {
+            $patients = App\Models\Patient::select('patients.*', 'users.*')
+                        ->join('users', 'users.id', '=', 'patients.user_id')
+                        ->where('user_id', '=', session('patient_id'))
+                        ->get();
+        } else {
+            // Redirect to the login page
+            return redirect()->route('login');
+        }
+    @endphp
+    
+    @foreach ($patients as $patient)
+        <!-- Your code to display patient information goes here -->
+    @endforeach
         @include('patient_cases.encounter.patient_id_card_template.fields')
-<<<<<<< HEAD
-=======
-        {{-- <div class="form-group col-sm-6 mb-5">
-            <table width="100%" style="font-size:18px; color:darkmagenta">
-                <tr>
-                    <td width="25%">Patient Name</td>
-                    <td>{{ $patient->first_name }} {{ $patient->last_name }}</td>
-                </tr>
-
-                <tr>
-                    <td>Patient Email</td>
-                    <td>{{ $patient->email }}</td>
-                </tr>
-
-                <tr>
-                    <td>Patient Phone</td>
-                    <td>{{ $patient->phone }}</td>
-                </tr>
-            </table>
-        </div> --}}
-        <div>
-        </div>
->>>>>>> origin/main
 
 
         {{-- <div class="form-group col-sm-6 mb-5">

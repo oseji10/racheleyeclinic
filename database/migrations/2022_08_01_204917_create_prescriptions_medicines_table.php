@@ -13,21 +13,39 @@ return new class extends Migration
     {
         Schema::create('prescriptions_medicines', function (Blueprint $table) {
             $table->id();
-            $table->integer('prescription_id')->unsigned();
-            $table->integer('medicine')->unsigned();
+            $table->integer('prescription_id')->unsigned()->nullable();
+            $table->integer('medicine')->unsigned()->nullable();
             $table->string('dosage')->nullable();
             $table->string('day')->nullable();
             $table->string('time')->nullable();
             $table->string('comment')->nullable();
+            $table->string('prescriptions_id')->nullable();
+            $table->string('prescription_medicines_id')->unique()->nullable();
+
             $table->foreign('prescription_id')->on('prescriptions')->references('id')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
+                $table->foreign('prescriptions_id')->on('prescriptions')->references('prescriptions_id')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+               
             $table->foreign('medicine')->on('medicines')->references('id')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();
         });
+
+        Schema::table('prescriptions', function (Blueprint $table) {
+            $table->string('prescription_medicines_id')->nullable();
+            $table->foreign('prescription_medicines_id')->references('prescription_medicines_id')->on('prescriptions_medicines')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
+            
+        });
+
     }
 
     /**
@@ -35,6 +53,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('prescriptions_medicines');
+        // Schema::drop('prescriptions_medicines');
+        // Schema::table('encounters', function (Blueprint $table) {
+        //     $table->dropColumn('prescription_id');
+        // });
     }
 };

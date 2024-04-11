@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{ __('messages.prescription.new_prescription') }}
+    {{ __('messages.prescription.edit_prescription') }}
 @endsection
 @section('header_toolbar')
     <div class="container-fluid">
@@ -26,11 +26,19 @@
             {{Form::hidden('associateMeals',json_encode($mealList),['class'=>'associatePrescriptionMeals'])}}
             {{Form::hidden('associateDuration',json_encode($doseDurationList),['class'=>'associatePrescriptionDurations'])}}
             {{Form::hidden('associateInterval',json_encode($doseIntervalList),['class'=>'associatePrescriptionIntervals'])}}
-            {{ Form::open(['route' => 'prescriptions.store', 'id' => 'createPrescription']) }}
+            {{ Form::model($prescription, ['route' => ['prescriptions.update', $prescription->id], 'method' => 'patch', 'id' => 'editPrescription']) }}
             @csrf
             <div class="card">
                 <div class="card-body">
-                    @include('prescriptions.fields')
+                    @include('prescriptions.edit_fields')
+                </div>
+            </div>
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h3>{{ __('messages.prescription.physical_information') }}</h3>
+                </div>
+                <div class="card-body">
+                    @include('prescriptions.edit-physical-info-fields')
                 </div>
             </div>
             <div class="card mt-5">
@@ -45,16 +53,8 @@
                 </div>
             </div>
             <div class="card mt-5">
-                <div class="card-header">
-                    <h3>{{ __('messages.prescription.physical_information') }}</h3>
-                </div>
                 <div class="card-body">
-                    @include('prescriptions.physical-info-fields')
-                </div>
-            </div>
-            <div class="card mt-5">
-                <div class="card-body">
-                    @include('prescriptions.other-fields')
+                    @include('prescriptions.edit-other-fields')
                 </div>
             </div>
             {{ Form::close() }}
@@ -64,5 +64,5 @@
     </div>
 @endsection
 @section('scripts')
-    {{--  assets/js/prescriptions/create-edit.js --}}
+{{--  assets/js/prescriptions/create-edit.js --}}
 @endsection

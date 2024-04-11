@@ -27,6 +27,7 @@
                     {{-- {{ Form::open(['route' => 'patient-cases.store', 'id' => 'createPatientCaseForm']) }} --}}
                     {{-- @include('patient_cases.encounter.column.timeline') --}}
                     @include('patient_cases.encounter.form7')
+                    {{-- @include('patient_cases.encounter.prescriptions.medical-table') --}}
 
                     {{ Form::close() }}
                 </div>
@@ -38,3 +39,34 @@
     JS File :- assets/js/patient_cases/create-edit.js
                assets/js/custom/input_price_format.js
 --}}
+<script>
+    // Check if the URL contains the query parameter indicating reload
+    const urlParams = new URLSearchParams(window.location.search);
+    const shouldReload = urlParams.has('reload') && urlParams.get('reload') === 'true';
+
+    // Check if the page has been loaded after a redirect
+    if (shouldReload) {
+        // Check if this is the first reload
+        if (!sessionStorage.getItem('firstReloaded')) {
+            // Set a flag in sessionStorage to indicate that the page has been reloaded once
+            sessionStorage.setItem('firstReloaded', 'true');
+
+            // Reload the page once after the redirection
+            window.onload = function() {
+                window.location.reload();
+            };
+        } else {
+            // Check if this is the second reload
+            if (!sessionStorage.getItem('secondReloaded')) {
+                // Set a flag in sessionStorage to indicate that the page has been reloaded twice
+                sessionStorage.setItem('secondReloaded', 'true');
+
+                // Reload the page for the second time after the redirection
+                window.onload = function() {
+                    window.location.reload();
+                };
+            }
+        }
+    }
+</script>
+
