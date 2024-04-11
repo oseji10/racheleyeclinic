@@ -361,8 +361,8 @@ public function refraction(Request $request)
         // Redirect with success message
         // return redirect()->route('patient.encounter7')->with('success', __('messages.encounters.visual_acuity'));
         // Redirect with success message and query parameter
-// return redirect()->route('patient.encounter7', ['reload' => 'true'])->with('success', __('messages.encounters.visual_acuity'));
-return view('patient_cases.encounter.encounter7');
+return redirect()->route('patient.encounter7', ['reload' => 'true'])->with('success', __('messages.encounters.visual_acuity'));
+// return view('patient_cases.encounter.encounter7');
 
     } catch (\Exception $e) {
         // Log the error
