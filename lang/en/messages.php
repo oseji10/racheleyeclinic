@@ -756,6 +756,7 @@ return [
 
     //Case
     'case' => [
+        'file_upload' => 'Upload Document',
         'case' => 'Case',
         'case_date' => 'Case Date',
         'new_case' => 'New Case',

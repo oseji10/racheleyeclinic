@@ -298,6 +298,14 @@
 </div>
 
         <div class="form-group col-sm-6 mb-5">
+            {{ Form::label('file_upload', __('messages.case.file_upload') . ':',
+            ['class' => 'form-label']) }}
+           
+            <input class="form-control" type="file" id="file_upload" name="file_upload" placeholder="Followup Appointment Date"  />
+        </div>
+
+
+        <div class="form-group col-sm-6 mb-5">
             {{ Form::label('followup_appointment_date', __('messages.case.followup_appointment_date') . ':',
             ['class' => 'form-label']) }}
             <?php
@@ -309,9 +317,6 @@
                 autofocus placeholder="Followup Appointment Date" @if($followup_appointment_date !==null)
                 value="{{ $followup_appointment_date }}" @endif />
         </div>
-
-
-
        
 
         <br /><br />
