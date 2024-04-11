@@ -394,15 +394,45 @@ public function diagnosis(Request $request)
         $prescription_id = $new_prescription->id;
 
         // Loop through the input fields and create PrescriptionMedicineModal instances
-        foreach ($request->addMoreInputFields as $data) {
+        foreach ($request->addMoreEyedrops as $data) {
             $prescription = new PrescriptionMedicineModal();
-            $prescription->medicine = $data['tablets']; // Updated 'tablets' to 'subject'
+            $prescription->medicine = $data['eyedrop']; // Updated 'tablets' to 'subject'
             $prescription->dosage = $data['dosage'];
             $prescription->day = $data['day'];
             $prescription->time = $data['time'];
             $prescription->comment = $data['comment'];
             // Set prescriptions_id using the retrieved ID
             $prescription->prescription_id = $prescription_id;
+            $prescription->treatment_type = $request->treatment_type1;
+            
+            $prescription->save();
+        }
+
+        foreach ($request->addMoreTablets as $data2) {
+            $prescription = new PrescriptionMedicineModal();
+            $prescription->medicine = $data2['tablet']; // Updated 'tablets' to 'subject'
+            $prescription->dosage = $data2['dosage'];
+            $prescription->day = $data2['day'];
+            $prescription->time = $data2['time'];
+            $prescription->comment = $data2['comment'];
+            // Set prescriptions_id using the retrieved ID
+            $prescription->prescription_id = $prescription_id;
+            $prescription->treatment_type = $request->treatment_type2;
+            
+            $prescription->save();
+        }
+
+        foreach ($request->addMoreTablets as $data2) {
+            $prescription = new PrescriptionMedicineModal();
+            $prescription->medicine = $data2['tablet']; // Updated 'tablets' to 'subject'
+            $prescription->dosage = $data2['dosage'];
+            $prescription->day = $data2['day'];
+            $prescription->time = $data2['time'];
+            $prescription->comment = $data2['comment'];
+            // Set prescriptions_id using the retrieved ID
+            $prescription->prescription_id = $prescription_id;
+            $prescription->treatment_type = $request->treatment_type3;
+            
             $prescription->save();
         }
 
@@ -413,7 +443,7 @@ public function diagnosis(Request $request)
 
         // Update the encounter record with the prescription_id
         $encounter->update([
-            // Left Eye
+            // 'treatment_type' => $request->treatment_type1,
             'diagnosis' => $request->diagnosis,
             'treatment_eyedrop' => $request->treatment_eyedrop,
             'treatment_tablet' => $request->treatment_tablet,

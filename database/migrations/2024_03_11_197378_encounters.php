@@ -69,6 +69,7 @@ return new class extends Migration
             $table->text('prism_right')->nullable();
             $table->text('prism_left')->nullable();
 
+            $table->text('treatment_type')->nullable();
             $table->text('diagnosis')->nullable();
             $table->text('treatment_eyedrop')->nullable();
             $table->text('treatment_tablet')->nullable();

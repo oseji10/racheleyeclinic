@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('prescriptions_medicines', function (Blueprint $table) {
             $table->id();
             $table->integer('prescription_id')->unsigned()->nullable();
+            $table->string('treatment_type')->nullable();
             $table->integer('medicine')->unsigned()->nullable();
             $table->string('dosage')->nullable();
             $table->string('day')->nullable();
