@@ -74,7 +74,7 @@
         
 
 
-
+        <div class="form-group col-sm-12 mb-5">
         <table class="table table-striped" id="dynamicAddRemove" width="auto" border="1">
             <tr><td colspan="7"><h3>Eye Drops</h3></td></tr>
             <tr>
@@ -133,7 +133,7 @@
                 <td></td>
             </tr>
         </table>
-
+        
 
 
          {{-- TABLETS --}}
@@ -257,7 +257,7 @@
                 <td></td>
             </tr>
         </table>
-
+    </div>
 
         {{-- Diagnosis --}}
 
@@ -282,20 +282,21 @@
    {{-- Investigations Required --}}
    <div class="form-group col-sm-6 mb-5">
     {{ Form::label('investigations_required', __('messages.case.investigations_required') . ':', ['class' => 'form-label']) }}
-    <select id="investigations_required" class="select2 form-select" name="investigations_required" data-control="select2">
+    <select id="investigations_required" class="select2 form-select" name="investigations_required[]" multiple data-control="select2">
         <option value="">Select Investigations Required</option>
         <?php 
             $encounter = App\Models\Encounters::where('patient_id', session('patient_id') )->where('temporary_id', session('temporary_id'))->first();
-            $selected_visual_acuity_id = $encounter ? $encounter->investigations_required : null;
+            $selected_visual_acuity_ids = $encounter ? explode(',', $encounter->investigations_required) : [];
             $visual_acuities = App\Models\VisualAcuity::select('acuity_value', 'id')->where('acuity_group_id', '=', 'INVREQ')->get(); 
         ?>
         @foreach($visual_acuities as $item)
-            <option value="{{ $item->id }}" {{ ($item->id == $selected_visual_acuity_id) ? 'selected' : '' }}>
+            <option value="{{ $item->id }}" {{ (in_array($item->id, $selected_visual_acuity_ids)) ? 'selected' : '' }}>
                 {{ $item->acuity_value }}
             </option>
         @endforeach
     </select>
 </div>
+
 
         <div class="form-group col-sm-6 mb-5">
             {{ Form::label('file_upload', __('messages.case.file_upload') . ':',
@@ -318,6 +319,40 @@
                 value="{{ $followup_appointment_date }}" @endif />
         </div>
        
+
+
+
+
+
+        <div class="form-group col-sm-6 mb-5">
+            <h3>Physical Information</h3>
+            <label for="hbp">HBP</label>
+                <input type="checkbox" id="hbp" name="hbp" >
+        
+                <label for="diabetes">Diabetes</label>
+                <input type="checkbox" id="diabetes" name="diabetes">
+
+                <label for="pregnancy">Pregnancy</label>
+                <input type="checkbox" id="pregnancy" name="pregnancy">
+        
+                <br/><br/>
+                <label for="food">Food</label>
+                {{-- <input type="text" id="food" name="food"> --}}
+                <textarea name="food" class="form-control" rows="2" placeholder="Food"></textarea>
+        <br/>
+                <label for="drug-allergy">Drug Allergy</label>
+                <textarea name="drug-allergy" class="form-control" rows="2" placeholder="Drug Allergy"></textarea>
+        
+                <br/>
+                <label for="drug-allergy">Current Medication</label>
+                <textarea name="current-medication" class="form-control" rows="2" placeholder="Current Medication"></textarea>
+        
+        
+                
+        </div>
+
+
+
 
         <br /><br />
         <div class="d-flex justify-content-end">
