@@ -29,7 +29,8 @@ use App\Repositories\DoctorRepository;
 use App\Repositories\MedicineRepository;
 use App\Repositories\PrescriptionRepository;
 use App\Models\PrescriptionMedicineModal;
-
+use App\Models\PhysicalInformation;
+use App\Models\Investigation;
 
 
 class EncountersController extends Controller
@@ -473,6 +474,34 @@ public function diagnosis(Request $request)
             $appointment->is_completed = "0";
             $appointment->save();
         }
+        // Store Physical Information
+        $physical_information = new PhysicalInformation();
+        $physical_information->encounter_id = $encounter->id;
+        $physical_information->hbp = $request->hbp; // Updated 'tablets' to 'subject'
+        $physical_information->diabetes = $request->diabetes;
+        $physical_information->pregnancy = $request->pregnancy;
+        $physical_information->food = $request->food;
+        $physical_information->drug_allergy = $request->drug_allergy;
+        $physical_information->current_medication = $request->current_medication;
+        $physical_information->save();
+
+
+        // Validate incoming request
+    // $request->validate([
+    //     'investigations_required' => 'required|array', // Ensure it's an array
+    //     'investigations_required.*' => 'exists:investigations,id', // Ensure each value exists in your database
+    // ]);
+
+    // Extract the selected values from the request
+    $investigationsRequired = $request->input('investigations_required');
+
+    // Save each selected value as a new row in the investigations table
+    foreach ($investigationsRequired as $investigation_type) {
+        Investigation::create([
+            'encounter_id' => $encounter->id, // Assuming you have $encounter available
+            'investigation_type' => $investigation_type,
+        ]);
+    }
 
         // Commit the transaction
         DB::commit();

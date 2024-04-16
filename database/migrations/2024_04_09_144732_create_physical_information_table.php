@@ -12,14 +12,14 @@ return new class extends Migration
     {
         // Schema::table('investigations', function (Blueprint $table) {
         Schema::create('physical_information', function (Blueprint $table) {
-
+            $table->id();
             $table->unsignedBigInteger('encounter_id')->nullable();
-            $table->string('hbp');
-            $table->string('diabetes');
-            $table->string('pregnancy');
-            $table->string('food');
-            $table->string('drug_allergy');
-            $table->string('current_medication');
+            $table->string('hbp')->nullable();
+            $table->string('diabetes')->nullable();
+            $table->string('pregnancy')->nullable();
+            $table->string('food')->nullable();
+            $table->string('drug_allergy')->nullable();
+            $table->string('current_medication')->nullable();
             $table->timestamps();
 
             $table->foreign('encounter_id')->references('id')->on('encounters')

@@ -341,11 +341,11 @@
                 <textarea name="food" class="form-control" rows="2" placeholder="Food"></textarea>
         <br/>
                 <label for="drug-allergy">Drug Allergy</label>
-                <textarea name="drug-allergy" class="form-control" rows="2" placeholder="Drug Allergy"></textarea>
+                <textarea name="drug_allergy" class="form-control" rows="2" placeholder="Drug Allergy"></textarea>
         
                 <br/>
                 <label for="drug-allergy">Current Medication</label>
-                <textarea name="current-medication" class="form-control" rows="2" placeholder="Current Medication"></textarea>
+                <textarea name="current_medication" class="form-control" rows="2" placeholder="Current Medication"></textarea>
         
         
                 

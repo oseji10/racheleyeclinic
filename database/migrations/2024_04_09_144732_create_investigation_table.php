@@ -13,8 +13,9 @@ return new class extends Migration
         // Schema::table('investigations', function (Blueprint $table) {
         Schema::create('investigations', function (Blueprint $table) {
 
+            $table->id();
             $table->unsignedBigInteger('encounter_id')->nullable();
-            $table->string('investigation_type');
+            $table->string('investigation_type')->nullable();
             $table->timestamps();
 
             $table->foreign('encounter_id')->references('id')->on('encounters')
