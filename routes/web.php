@@ -1394,6 +1394,10 @@ Route::get('/patient-encounter-page-7', [EncountersController::class, 'encounter
 Route::post('/patient-encounter-page-7', [EncountersController::class, 'diagnosis'])->name('update.diagnosis');
 
 
+Route::get('/patient-encounter-page-41', [EncountersController::class, 'encounter41'])->name('patient.encounter41');
+Route::post('/upload-image', [EncountersController::class, 'uploadImage'])->name('upload.image');
+// Route::post('/upload/image', [UploadController::class, 'uploadImage'])->name('upload.image');
+
 Route::get('print-encounter/{id}', [PDFController::class, 'generatePdf'])->name('print-encounter');
 
 

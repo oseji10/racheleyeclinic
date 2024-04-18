@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="d-md-flex align-items-center justify-content-between mb-7">
             <h1 class="mb-0">@yield('title')</h1>
-            <a href="{{ route('patient.encounter5') }}"
+            <a href="{{ route('patient.encounter4') }}"
                class="btn btn-outline-primary">{{ __('messages.common.back') }}</a>
         </div>
     </div>

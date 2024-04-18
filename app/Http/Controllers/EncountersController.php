@@ -31,6 +31,7 @@ use App\Repositories\PrescriptionRepository;
 use App\Models\PrescriptionMedicineModal;
 use App\Models\PhysicalInformation;
 use App\Models\Investigation;
+use App\Models\EncounterImage;
 
 
 class EncountersController extends Controller
@@ -101,6 +102,11 @@ class EncountersController extends Controller
 
     public function encounter6(){
         return view('patient_cases.encounter.encounter6');
+    }
+
+
+    public function encounter41(){
+        return view('patient_cases.encounter.encounter41');
     }
 
     // public function encounter7(){
@@ -423,13 +429,13 @@ public function diagnosis(Request $request)
             $prescription->save();
         }
 
-        foreach ($request->addMoreTablets as $data2) {
+        foreach ($request->addMoreOintments as $data3) {
             $prescription = new PrescriptionMedicineModal();
-            $prescription->medicine = $data2['tablet']; // Updated 'tablets' to 'subject'
-            $prescription->dosage = $data2['dosage'];
-            $prescription->day = $data2['day'];
-            $prescription->time = $data2['time'];
-            $prescription->comment = $data2['comment'];
+            $prescription->medicine = $data3['ointment']; // Updated 'tablets' to 'subject'
+            $prescription->dosage = $data3['dosage'];
+            $prescription->day = $data3['day'];
+            $prescription->time = $data3['time'];
+            $prescription->comment = $data3['comment'];
             // Set prescriptions_id using the retrieved ID
             $prescription->prescription_id = $prescription_id;
             $prescription->treatment_type = $request->treatment_type3;
@@ -496,12 +502,15 @@ public function diagnosis(Request $request)
     $investigationsRequired = $request->input('investigations_required');
 
     // Save each selected value as a new row in the investigations table
-    foreach ($investigationsRequired as $investigation_type) {
-        Investigation::create([
-            'encounter_id' => $encounter->id, // Assuming you have $encounter available
-            'investigation_type' => $investigation_type,
-        ]);
+    if (!empty($investigationsRequired)) {
+        foreach ($investigationsRequired as $investigation_type) {
+            Investigation::create([
+                'encounter_id' => $encounter->id,
+                'investigation_type' => $investigation_type,
+            ]);
+        }
     }
+    
 
         // Commit the transaction
         DB::commit();
@@ -687,5 +696,89 @@ public function diagnosis(Request $request)
 
 
     // UPDATE ENCOUNTER
+
+
+    public function uploadImage(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // adjust validation rules as needed
+        ]);
+
+        // Store the uploaded image in the 'public' disk
+        // $path = $request->file('image')->store('images', 'public');
+
+        // Generate the full URL of the uploaded image
+        // $url = Storage::disk('public')->url($path);
+        
+        $imageData = $request->file('image');
+$extension = $imageData->getClientOriginalExtension(); // Get the original file extension
+$fileName = 'uploaded_image_' . uniqid() . '.' . $extension; // Generate a unique filename
+
+// Get the full path for the "sketches" folder within the storage disk
+$storagePath = Storage::disk('public')->path('sketches');
+
+// Combine the storage path and filename for the final destination
+$destinationPath = $storagePath . '/' . $fileName;
+
+// Store the image directly at the full path
+$imageData->storeAs('sketches', $fileName); // Using storeAs method for clarity
+
+// Update URL to point to the stored image
+$url = "uploads/sketches/" . $fileName; 
+
+        
+        
+
+       
+
+        $encounter = Encounters::where('patient_id', $request->patient_id)
+            ->where('temporary_id', $request->temporary_id)
+            ->firstOrFail();
+
+        $encounter_image = new EncounterImage();
+        $encounter_image->encounter_id = $encounter->id;
+        $encounter_image->image_url = $url;
+        $encounter_image->save();
+
+        Flash::success(__('messages.encounters.encounter_created'));
+        return redirect()->route('patient.encounter6')->with('success', __('messages.encounters.visual_acuity'));
+        // return redirect()->back()->with('success', 'Image uploaded successfully.');
+    }
+
+
+//     public function uploadImage(Request $request)
+// {
+//     // Validate the request
+//     $request->validate([
+//         // 'canvasData' => 'required|string', // Adjust this validation rule as needed
+//         'patient_id' => 'required', // Add validation rules for patient_id and temporary_id if necessary
+//         'temporary_id' => 'required',
+//     ]);
+
+//     // Decode the base64-encoded image data
+//     $imageData = $request->input('canvasData');
+//     // $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
+    
+//     // Generate a unique file name
+//     $fileName = 'canvas_image_' . uniqid() . '.png';
+    
+//     // Save the image to the storage directory
+//     Storage::disk('public')->put('/sketches' . $fileName, $imageData);
+//     $filePath = "/sketches/$fileName$imageData";
+//     // Find the encounter by patient_id and temporary_id
+//     $encounter = Encounters::where('patient_id', $request->patient_id)
+//         ->where('temporary_id', $request->temporary_id)
+//         ->firstOrFail();
+
+//     // Update the visual acuity fields
+//     $encounter_image = new EncounterImage();
+//         $encounter_image->encounter_id = $encounter->id;
+//         $encounter_image->image_url = $url;
+//         $encounter_image->save();
+//     Flash::success(__('messages.encounters.encounter_created'));
+//     // return redirect()->route('patient.encounter6')->with('success', __('messages.encounters.visual_acuity'));
+//     return redirect()->back()->with('success', 'Free hand image saved successfully.');
+// }
     
 }

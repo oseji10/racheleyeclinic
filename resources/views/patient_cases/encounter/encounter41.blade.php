@@ -26,24 +26,7 @@
                 <div class="card-body p-12">
                     {{-- {{ Form::open(['route' => 'patient-cases.store', 'id' => 'createPatientCaseForm']) }} --}}
                     {{-- @include('patient_cases.encounter.column.timeline') --}}
-
-                    
-                    
-                    
-                    
-                    <div class="form-group col-sm-6 mb-5">
-                        <h3>Upload Sketched Diagram</h3>
-                        <form action="{{ route('upload.image') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="patient_id" value="{{ session('patient_id') }}">
-                            <input type="hidden" name="temporary_id" value="{{ session('temporary_id') }}">
-                        <input class="form-control" type="file" name="image"><br/>
-                        <button class="btn btn-outline-primary" type="submit">Upload Image</button>
-                    </form>
-                    <br/>
-                    <h1>OR</h1>
-                    <A href="patient-encounter-page-41">CLICK HERE TO SKETCH</A>
-                    </div>
+                    @include('patient_cases.encounter.form4')
 
                     {{ Form::close() }}
                 </div>
