@@ -702,7 +702,7 @@ public function diagnosis(Request $request)
     {
         // Validate the uploaded file
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // adjust validation rules as needed
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048', // adjust validation rules as needed
         ]);
 
         // Store the uploaded image in the 'public' disk
