@@ -209,7 +209,7 @@
 <table width="100%" border="1" style="border-collapse:collapse">
 <tr>
         <td style="color:black; align-content:center;" colspan="3"> <h5>Right Eye:</h5><img src="{{ $item->right_eye }}" /></td>
-        <td style="color:black" colspan="3"> <h5>Left Eye:</h5><img src="{{ $item->left_eye }}" /></td>
+        <td style="color:black" colspan="3"> <h5>Left Eye:</h5><img src="{{ $item->left_eye }}" />{{ $item->left_eye }}</td>
       </tr>
     </table>
   </div>
