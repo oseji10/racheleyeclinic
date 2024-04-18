@@ -326,7 +326,7 @@ public function freeHandwritingLeftEye(Request $request)
     
     // Save the image to the storage directory
     Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
-    $filePath = "uploads/uploads/canvas_images/$fileName$decodedImageData";
+    $filePath = "uploads/uploads/canvas_images/$fileName";
     // Find the encounter by patient_id and temporary_id
     $encounter = Encounters::where('patient_id', $request->patient_id)
         ->where('temporary_id', $request->temporary_id)

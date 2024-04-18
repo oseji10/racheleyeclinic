@@ -694,12 +694,8 @@
                             <label for="name"
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left') }}</label>
                             <p>
-                                {{-- <span
-                                class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->free_handwriting_left) }}" /></span> --}}
-                                @php
-    $imageUrl = "{{$visual_acuity->free_handwriting_left}}";
-@endphp
-<img src="{{ $imageUrl }}" alt="Left Eye">
+                                <span
+                                class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->free_handwriting_left) }}" /></span>
                             </p>
                         </div>
                    </div>
