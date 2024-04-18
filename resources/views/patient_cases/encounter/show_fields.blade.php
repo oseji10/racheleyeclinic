@@ -697,7 +697,7 @@
                                 {{-- <span
                                 class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->free_handwriting_left) }}" /></span> --}}
                                 @php
-    $imageUrl = "{{ URL::asset($visual_acuity->free_handwriting_left) }}";
+    $imageUrl = "{{$visual_acuity->free_handwriting_left}}";
 @endphp
 <img src="{{ $imageUrl }}" alt="Left Eye">
                             </p>
