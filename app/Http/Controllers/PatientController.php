@@ -42,9 +42,23 @@ class PatientController extends AppBaseController
     public function index()
     {
         $data['statusArr'] = Patient::STATUS_ARR;
-
+    
+        // Paginate the patients directly
+        $data['patients'] = Patient::paginate(100);
+    
         return view('patients.index', $data);
     }
+
+//     public function index()
+// {
+//     $data['statusArr'] = Patient::STATUS_ARR;
+
+//     // Paginate the results, pulling 100 records per page
+//     $data['patients'] = $this->builder()->paginate(100);
+
+//     return view('patients.index', $data);
+// }
+
 
     public function create()
     {
