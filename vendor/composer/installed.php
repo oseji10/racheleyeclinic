@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => '14.3.0',
         'version' => '14.3.0.0',
-        'reference' => NULL,
+        'reference' => null,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -679,7 +679,7 @@
         'laravel/laravel' => array(
             'pretty_version' => '14.3.0',
             'version' => '14.3.0.0',
-            'reference' => NULL,
+            'reference' => null,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
