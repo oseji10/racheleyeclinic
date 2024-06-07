@@ -812,6 +812,7 @@ return [
         'treatment_eyedrop' => 'Treatement (Eye Drops)',
         'treatment_tablet' => 'Treatment (Tablets)',
         'investigations_required' => 'Invesitgations Required',
+        'investigations_done' => 'Invesitgations Done',
         'followup_appointment_date' => 'Followup Appointment Date',
         'new_developments' => 'New Developments',
 
