@@ -22,7 +22,7 @@
 
     <h3>RIGHT EYE</h3>
 
-    <div class="form-group col-sm-6 mb-5">
+    <div class="form-group col-sm-12 mb-5">
         <div>
             <input type="radio" id="blackBrush" name="brushSelector" value="black" checked>
             <label for="blackBrush">Black</label>
@@ -31,13 +31,17 @@
             <label for="redBrush">Red</label>
         </div>
         
-        <div class="form-group col-sm-6 mb-5">
-            <table width="100%" style="text-align:center; border-collapse:collapse" border="1">
-                <td border="1" style="position: relative;">
-                    <canvas id="myCanvas" height="250px"></canvas>
-                    <input type="hidden" id="canvasData" name="canvasData">
-                </td>
-            </table>
+        <div class="form-group col-sm-12 mb-5 d-flex justify-content-between">
+            <div class="canvas-container" style="border: 1px solid #000; padding: 10px;">
+                <h4>Right Eye Front</h4>
+                <canvas id="canvasFront" height="250px" width="250px"></canvas>
+                <input type="hidden" id="canvasDataFront" name="canvasDataFront">
+            </div>
+            <div class="canvas-container" style="border: 1px solid #000; padding: 10px;">
+                <h4>Right Eye Back</h4>
+                <canvas id="canvasBack" height="250px" width="250px"></canvas>
+                <input type="hidden" id="canvasDataBack" name="canvasDataBack">
+            </div>
         </div>
     </div>
 
@@ -51,55 +55,75 @@
 <script src="{{ asset('vendor/fabric.js') }}" defer></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Create canvas and configure drawing options
-        var canvas = new fabric.Canvas('myCanvas');
-        canvas.isDrawingMode = true;
+        // Create canvases and configure drawing options
+        var canvasFront = new fabric.Canvas('canvasFront');
+        var canvasBack = new fabric.Canvas('canvasBack');
+        canvasFront.isDrawingMode = true;
+        canvasBack.isDrawingMode = true;
 
-        // Define brush options
-        var brushOptions = {
-            black: new fabric.PencilBrush(canvas),
-            red: new fabric.PencilBrush(canvas)
+        // Define brush options for canvasFront
+        var brushOptionsFront = {
+            black: new fabric.PencilBrush(canvasFront),
+            red: new fabric.PencilBrush(canvasFront)
         };
 
-        // Configure black brush properties
-        brushOptions.black.color = 'black';
-        brushOptions.black.width = 2;
+        // Define brush options for canvasBack
+        var brushOptionsBack = {
+            black: new fabric.PencilBrush(canvasBack),
+            red: new fabric.PencilBrush(canvasBack)
+        };
 
-        // Configure red brush properties
-        brushOptions.red.color = 'red';
-        brushOptions.red.width = 2;
+        // Configure black brush properties for both canvases
+        brushOptionsFront.black.color = 'black';
+        brushOptionsFront.black.width = 2;
+        brushOptionsBack.black.color = 'black';
+        brushOptionsBack.black.width = 2;
 
-        // Set initial brush to black
-        canvas.freeDrawingBrush = brushOptions.black;
+        // Configure red brush properties for both canvases
+        brushOptionsFront.red.color = 'red';
+        brushOptionsFront.red.width = 2;
+        brushOptionsBack.red.color = 'red';
+        brushOptionsBack.red.width = 2;
+
+        // Set initial brush to black for both canvases
+        canvasFront.freeDrawingBrush = brushOptionsFront.black;
+        canvasBack.freeDrawingBrush = brushOptionsBack.black;
 
         // Switch between brushes based on user input from radio buttons
         var brushSelectors = document.querySelectorAll('input[name="brushSelector"]');
         brushSelectors.forEach(function(selector) {
             selector.addEventListener('change', function() {
                 var selectedColor = this.value;
-                canvas.freeDrawingBrush = brushOptions[selectedColor];
+                canvasFront.freeDrawingBrush = brushOptionsFront[selectedColor];
+                canvasBack.freeDrawingBrush = brushOptionsBack[selectedColor];
             });
         });
 
         // Prevent page scroll when drawing on canvas
-        canvas.on('mouse:down', function(event) {
+        canvasFront.on('mouse:down', function(event) {
+            event.e.preventDefault();
+        });
+        canvasBack.on('mouse:down', function(event) {
             event.e.preventDefault();
         });
 
-        // Clear canvas
+        // Clear both canvases
         document.getElementById('clearCanvas').addEventListener('click', function() {
-            canvas.clear();
+            canvasFront.clear();
+            canvasBack.clear();
         });
 
-        // Submit form when canvas is submitted
+        // Submit form when canvases are submitted
         document.getElementById('canvasForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Convert canvas to data URL
-            var canvasData = canvas.toDataURL('image/png');
+            // Convert canvases to data URL
+            var canvasDataFront = canvasFront.toDataURL('image/png');
+            var canvasDataBack = canvasBack.toDataURL('image/png');
             
-            // Set the data URL as the value of a hidden input field
-            document.getElementById('canvasData').value = canvasData;
+            // Set the data URLs as the values of hidden input fields
+            document.getElementById('canvasDataFront').value = canvasDataFront;
+            document.getElementById('canvasDataBack').value = canvasDataBack;
             
             // Submit the form
             this.submit();

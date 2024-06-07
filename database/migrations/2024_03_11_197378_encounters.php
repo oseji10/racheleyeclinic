@@ -57,8 +57,10 @@ return new class extends Migration
             $table->text('retina_right')->nullable();
             $table->text('other_findings_right')->nullable();
 
-            $table->longText('free_handwriting_left')->nullable();
-            $table->longText('free_handwriting_right')->nullable();
+            $table->longText('free_handwriting_left_front')->nullable();
+            $table->longText('free_handwriting_right_front')->nullable();
+            $table->longText('free_handwriting_left_back')->nullable();
+            $table->longText('free_handwriting_right_back')->nullable();
 
             $table->text('sphere_right')->nullable();
             $table->text('sphere_left')->nullable();

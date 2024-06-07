@@ -272,39 +272,87 @@ public function updateConsultation(Request $request)
 
 
 
+// public function freeHandwritingRightEye(Request $request)
+// {
+//     // Validate the request
+//     $request->validate([
+//         // 'canvasData' => 'required|string', // Adjust this validation rule as needed
+//         'patient_id' => 'required', // Add validation rules for patient_id and temporary_id if necessary
+//         'temporary_id' => 'required',
+//     ]);
+
+//     // Decode the base64-encoded image data
+//     $imageData = $request->input('canvasData');
+//     $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
+    
+//     // Generate a unique file name
+//     $fileName = 'canvas_image_' . uniqid() . '.png';
+    
+//     // Save the image to the storage directory
+//      Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
+//     $filePath = "main2/public/uploads/uploads/canvas_images/$fileName";
+//     // Find the encounter by patient_id and temporary_id
+//     $encounter = Encounters::where('patient_id', $request->patient_id)
+//         ->where('temporary_id', $request->temporary_id)
+//         ->firstOrFail();
+
+//     // Update the visual acuity fields
+//     $encounter->update([
+//         'free_handwriting_right_front' => $filePath,
+//     ]);
+//     Flash::success(__('messages.encounters.encounter_created'));
+//     return redirect()->route('patient.encounter5')->with('success', __('messages.encounters.visual_acuity'));
+//     // return redirect()->back()->with('success', 'Free hand image saved successfully.');
+// }
+
+
 public function freeHandwritingRightEye(Request $request)
 {
     // Validate the request
     $request->validate([
-        // 'canvasData' => 'required|string', // Adjust this validation rule as needed
-        'patient_id' => 'required', // Add validation rules for patient_id and temporary_id if necessary
+        'canvasDataFront' => 'required|string',
+        'canvasDataBack' => 'required|string',
+        'patient_id' => 'required',
         'temporary_id' => 'required',
     ]);
 
-    // Decode the base64-encoded image data
-    $imageData = $request->input('canvasData');
-    $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
-    
-    // Generate a unique file name
-    $fileName = 'canvas_image_' . uniqid() . '.png';
-    
-    // Save the image to the storage directory
-     Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
-    $filePath = "main2/public/uploads/uploads/canvas_images/$fileName";
+    // Function to handle image saving
+    function saveCanvasImage($imageData, $prefix) {
+        // Decode the base64-encoded image data
+        $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
+        
+        // Generate a unique file name
+        $fileName = $prefix . '_' . uniqid() . '.png';
+        
+        // Save the image to the storage directory
+        Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
+        
+        // Return the correct path format
+        return "main2/public/uploads/uploads/canvas_images/$fileName";
+    }
+
+    // Save front image
+    $frontImageData = $request->input('canvasDataFront');
+    $frontImagePath = saveCanvasImage($frontImageData, 'canvas_front');
+
+    // Save back image
+    $backImageData = $request->input('canvasDataBack');
+    $backImagePath = saveCanvasImage($backImageData, 'canvas_back');
+
     // Find the encounter by patient_id and temporary_id
     $encounter = Encounters::where('patient_id', $request->patient_id)
         ->where('temporary_id', $request->temporary_id)
         ->firstOrFail();
 
-    // Update the visual acuity fields
+    // Update the visual acuity fields with paths to the saved images
     $encounter->update([
-        'free_handwriting_right' => $filePath,
+        'free_handwriting_right_front' => $frontImagePath,
+        'free_handwriting_right_back' => $backImagePath,
     ]);
-    Flash::success(__('messages.encounters.encounter_created'));
-    return redirect()->route('patient.encounter5')->with('success', __('messages.encounters.visual_acuity'));
-    // return redirect()->back()->with('success', 'Free hand image saved successfully.');
-}
 
+    Flash::success(__('messages.encounters.encounter_created'));
+    return redirect()->route('patient.encounter')->with('success', __('messages.encounters.visual_acuity'));
+}
 
 
 
@@ -312,33 +360,48 @@ public function freeHandwritingLeftEye(Request $request)
 {
     // Validate the request
     $request->validate([
-        // 'canvasData' => 'required|string', // Adjust this validation rule as needed
-        'patient_id' => 'required', // Add validation rules for patient_id and temporary_id if necessary
+        'canvasDataFront' => 'required|string',
+        'canvasDataBack' => 'required|string',
+        'patient_id' => 'required',
         'temporary_id' => 'required',
     ]);
 
-    // Decode the base64-encoded image data
-    $imageData = $request->input('canvasData');
-    $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
-    
-    // Generate a unique file name
-    $fileName = 'canvas_image_' . uniqid() . '.png';
-    
-    // Save the image to the storage directory
-    Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
-    $filePath = "main2/public/uploads/uploads/canvas_images/$fileName";
+    // Function to handle image saving
+    function saveCanvasImage($imageData, $prefix) {
+        // Decode the base64-encoded image data
+        $decodedImageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $imageData));
+        
+        // Generate a unique file name
+        $fileName = $prefix . '_' . uniqid() . '.png';
+        
+        // Save the image to the storage directory
+        Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
+        
+        // Return the correct path format
+        return "main2/public/uploads/uploads/canvas_images/$fileName";
+    }
+
+    // Save front image
+    $frontImageData = $request->input('canvasDataFront');
+    $frontImagePath = saveCanvasImage($frontImageData, 'canvas_front');
+
+    // Save back image
+    $backImageData = $request->input('canvasDataBack');
+    $backImagePath = saveCanvasImage($backImageData, 'canvas_back');
+
     // Find the encounter by patient_id and temporary_id
     $encounter = Encounters::where('patient_id', $request->patient_id)
         ->where('temporary_id', $request->temporary_id)
         ->firstOrFail();
 
-    // Update the visual acuity fields
+    // Update the visual acuity fields with paths to the saved images
     $encounter->update([
-        'free_handwriting_left' => $filePath,
+        'free_handwriting_left_front' => $frontImagePath,
+        'free_handwriting_left_back' => $backImagePath,
     ]);
+
     Flash::success(__('messages.encounters.encounter_created'));
     return redirect()->route('patient.encounter6')->with('success', __('messages.encounters.visual_acuity'));
-    // return redirect()->back()->with('success', 'Free hand image saved successfully.');
 }
 
 

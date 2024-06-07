@@ -101,8 +101,10 @@ class Encounters extends Model
     'other_findings_left',
     'other_findings_right',
 
-    'free_handwriting_left', 
-    'free_handwriting_right',
+    'free_handwriting_right_front', 
+    'free_handwriting_right_back',
+    'free_handwriting_left_front',
+    'free_handwriting_left_back',
 
     'sphere_left',
     'sphere_right',
