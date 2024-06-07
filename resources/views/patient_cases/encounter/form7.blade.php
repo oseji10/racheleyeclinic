@@ -98,7 +98,17 @@
                         <td>
                             <input type="hidden" value="EYEDROP" name="treatment_type1"/>
                         
-                            <input type="text" name="addMoreEyedrops[' + i + '][eyedrop]" class="form-control"/>
+                            <select id="dynamicSelect2" name="addMoreEyedrops[' + i + '][eyedrop]" class="form-select select2" data-control="select2">
+                            <option value="">Select...</option>
+                            <?php 
+                                $medicines = App\Models\Medicine::select('name', 'id')->get(); 
+                            ?>
+                            @foreach($medicines as $item)
+                                <option value="{{ $item->id }}">
+                                    {{ $item->name }}
+                                </option>
+                            @endforeach
+                        </select>
                         </td>
                         <td><input type="text" name="addMoreEyedrops[' + i + '][dosage]" placeholder="Enter Dosage" class="form-control" /></td>
                         <td>
@@ -479,7 +489,8 @@
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
-        $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreEyedrops[' + i + '][eyedrop]" class="form-control"/></td><td><input type="text" name="addMoreEyedrops[' + i + '][dosage]" placeholder="Enter Dosage" class="form-control" /></td><td><select id="dynamicSelectDuration" name="addMoreEyedrops[' + i + '][day]" class="select2 form-select" data-control="select2"><option value="">Select Duration</option><?php foreach(\App\Models\Prescription::DOSE_DURATION as $day){ ?><option value="<?php echo $day; ?>"><?php echo $day; ?></option><?php } ?></select></td><td><select id="dynamicSelectTime" name="addMoreEyedrops[' + i + '][time]" class="select2 form-select" data-control="select2"><option value="">Select Time</option><?php foreach(\App\Models\Prescription::MEAL_ARR as $time){ ?><option value="<?php echo $time; ?>"><?php echo $time; ?></option><?php } ?></select></td><td><select id="dynamicSelectInterval" name="addMoreEyedrops[' + i + '][dose_interval]" class="select2 form-select" data-control="select2"><option value="">Select Interval</option><?php foreach(\App\Models\Prescription::DOSE_INTERVAL as $dose_interval){ ?><option value="<?php echo $dose_interval; ?>"><?php echo $dose_interval; ?></option><?php } ?></select></td><td><textarea name="addMoreEyedrops[' + i + '][comment]" class="form-control" rows="1" placeholder="{{ __('messages.prescription.comment')}}"></textarea></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+        $("#dynamicAddRemove").append('<tr><td><select id="dynamicSelectSubject3" name="addMoreEyedrops[' + i +
+            '][eyedrop]" class="select2 form-select"><option value="">Select...</option><?php $medicines = App\Models\Medicine::select("name", "id")->get(); foreach($medicines as $item){ ?><option value="<?php echo $item->id; ?>"><?php echo $item->name; ?></option><?php } ?></select></td><td><input type="text" name="addMoreEyedrops[' + i + '][dosage]" placeholder="Enter Dosage" class="form-control" /></td><td><select id="dynamicSelectDuration" name="addMoreEyedrops[' + i + '][day]" class="select2 form-select" data-control="select2"><option value="">Select Duration</option><?php foreach(\App\Models\Prescription::DOSE_DURATION as $day){ ?><option value="<?php echo $day; ?>"><?php echo $day; ?></option><?php } ?></select></td><td><select id="dynamicSelectTime" name="addMoreEyedrops[' + i + '][time]" class="select2 form-select" data-control="select2"><option value="">Select Time</option><?php foreach(\App\Models\Prescription::MEAL_ARR as $time){ ?><option value="<?php echo $time; ?>"><?php echo $time; ?></option><?php } ?></select></td><td><select id="dynamicSelectInterval" name="addMoreEyedrops[' + i + '][dose_interval]" class="select2 form-select" data-control="select2"><option value="">Select Interval</option><?php foreach(\App\Models\Prescription::DOSE_INTERVAL as $dose_interval){ ?><option value="<?php echo $dose_interval; ?>"><?php echo $dose_interval; ?></option><?php } ?></select></td><td><textarea name="addMoreEyedrops[' + i + '][comment]" class="form-control" rows="1" placeholder="{{ __('messages.prescription.comment')}}"></textarea></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
             );
 
         // Initialize select2 for newly added select elements
