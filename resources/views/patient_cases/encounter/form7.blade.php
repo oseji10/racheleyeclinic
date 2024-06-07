@@ -77,9 +77,14 @@
         <div class="form-group col-sm-12 mb-5">
             <div style="overflow-x: auto;">
                 <table class="table table-striped" id="dynamicAddRemove" width="auto" border="1">
-                    <tr>
-                        <td colspan="7"><h3>Eye Drops</h3></td>
-                    </tr>
+            <tr>
+                    <td colspan="7"><h3>Eye Drops</h3>
+                    <a href="#" id="addNewMedicine" data-bs-toggle="modal" data-bs-target="#addMedicineModal">[+ Add New Medicine]</a>
+                </td>
+            </tr>
+   <!-- Modal Structure -->
+   
+
                     <tr>
                         <th>Medicine</th>
                         <th>Dosage</th>
@@ -92,17 +97,8 @@
                     <tr>
                         <td>
                             <input type="hidden" value="EYEDROP" name="treatment_type1"/>
-                            <select id="dynamicSelect1" name="addMoreEyedrops[' + i + '][eyedrop]" class="form-select select2" data-control="select2">
-                                <option value="">Select...</option>
-                                <?php 
-                                    $medicines = App\Models\Medicine::select('name', 'id')->get(); 
-                                ?>
-                                @foreach($medicines as $item)
-                                    <option value="{{ $item->id }}">
-                                        {{ $item->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                        
+                            <input type="text" name="addMoreEyedrops[' + i + '][eyedrop]" class="form-control"/>
                         </td>
                         <td><input type="text" name="addMoreEyedrops[' + i + '][dosage]" placeholder="Enter Dosage" class="form-control" /></td>
                         <td>
@@ -294,7 +290,7 @@
             ['class' => 'form-label']) }}
            
            
-            <textarea class="form-control" rows="2" type="text" id="investigations_done" name="investigations_done" placeholder="I"></textarea>
+            <textarea class="form-control" rows="2" type="text" id="investigations_done" name="investigations_done" placeholder="Investigations Done"></textarea>
         </div>
 
         
@@ -390,12 +386,100 @@
 
     </div>
 </form>
+
+
+<div class="modal fade" id="addMedicineModal" tabindex="-1" aria-labelledby="addMedicineModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Use modal-lg to make the modal wider -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addMedicineModalLabel">Add New Medicine</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form id="addMedicineForm" action="{{ route('medicine.store_medicines') }}" method="post">
+            @csrf
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-3">
+                            <label for="medicineName" class="form-label">Medicine Name</label>
+                            <input type="text" class="form-control" id="medicineName" name="name" required>
+                        </div>
+                        <div class="col-md-6 col-12 mb-3">
+                            <label for="medicineDosage" class="form-label">Category</label>
+                            <select class="select2 form-select" id="category" name="category_id" required>
+                                        <option value="">Select a category</option>
+                                        @php
+                                            $categories = \App\Models\Category::all();
+                                        @endphp
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-3">
+                            <label for="medicineName" class="form-label">Brand</label>
+                            <select class="select2 form-select" id="brand" name="brand_id" required>
+                                        <option value="">Select a brand</option>
+                                        @php
+                                            $brands = \App\Models\Brand::all();
+                                        @endphp
+                                        @foreach($brands as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        @endforeach
+                                    </select>
+                        </div>
+                        <div class="col-md-6 col-12 mb-3">
+                            <label for="medicineDosage" class="form-label">Salt Composition</label>
+                            <input type="text" class="form-control" id="medicineDosage" name="salt_composition" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-12 mb-3">
+                            <label for="medicineName" class="form-label">Buying Price</label>
+                            <input type="text" class="form-control" id="medicineName" name="buying_price" required>
+                        </div>
+                        <div class="col-md-6 col-12 mb-3">
+                            <label for="medicineDosage" class="form-label">Selling Price</label>
+                            <input type="text" class="form-control" id="medicineDosage" name="selling_price" required>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12 col-12 mb-3">
+                            <label for="medicineName" class="form-label">Side Effects</label>
+                            <textarea class="form-control" name="side_effects"></textarea>
+                        </div>
+                      
+                    </div>
+
+
+                    <div class="row">
+                       
+                        <div class="col-md-12 col-12 mb-3">
+                            <label for="medicineDosage" class="form-label">Description</label>
+                            <textarea class="form-control" name="description"></textarea>
+                            
+                        </div>
+
+                        <input name="quantity" value="0" hidden/>
+                        <input name="available_quantity" value="0" hidden/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
-        $("#dynamicAddRemove").append('<tr><td><select id="dynamicSelectSubject1" name="addMoreEyedrops[' + i +
-            '][eyedrop]" class="form-control"><option value="">Select...</option><?php $medicines = App\Models\Medicine::select("name", "id")->get(); foreach($medicines as $item){ ?><option value="<?php echo $item->id; ?>"><?php echo $item->name; ?></option><?php } ?></select></td><td><input type="text" name="addMoreEyedrops[' + i + '][dosage]" placeholder="Enter Dosage" class="form-control" /></td><td><select id="dynamicSelectDuration" name="addMoreEyedrops[' + i + '][day]" class="select2 form-select" data-control="select2"><option value="">Select Duration</option><?php foreach(\App\Models\Prescription::DOSE_DURATION as $day){ ?><option value="<?php echo $day; ?>"><?php echo $day; ?></option><?php } ?></select></td><td><select id="dynamicSelectTime" name="addMoreEyedrops[' + i + '][time]" class="select2 form-select" data-control="select2"><option value="">Select Time</option><?php foreach(\App\Models\Prescription::MEAL_ARR as $time){ ?><option value="<?php echo $time; ?>"><?php echo $time; ?></option><?php } ?></select></td><td><select id="dynamicSelectInterval" name="addMoreEyedrops[' + i + '][dose_interval]" class="select2 form-select" data-control="select2"><option value="">Select Interval</option><?php foreach(\App\Models\Prescription::DOSE_INTERVAL as $dose_interval){ ?><option value="<?php echo $dose_interval; ?>"><?php echo $dose_interval; ?></option><?php } ?></select></td><td><textarea name="addMoreEyedrops[' + i + '][comment]" class="form-control" rows="1" placeholder="{{ __('messages.prescription.comment')}}"></textarea></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+        $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreEyedrops[' + i + '][eyedrop]" class="form-control"/></td><td><input type="text" name="addMoreEyedrops[' + i + '][dosage]" placeholder="Enter Dosage" class="form-control" /></td><td><select id="dynamicSelectDuration" name="addMoreEyedrops[' + i + '][day]" class="select2 form-select" data-control="select2"><option value="">Select Duration</option><?php foreach(\App\Models\Prescription::DOSE_DURATION as $day){ ?><option value="<?php echo $day; ?>"><?php echo $day; ?></option><?php } ?></select></td><td><select id="dynamicSelectTime" name="addMoreEyedrops[' + i + '][time]" class="select2 form-select" data-control="select2"><option value="">Select Time</option><?php foreach(\App\Models\Prescription::MEAL_ARR as $time){ ?><option value="<?php echo $time; ?>"><?php echo $time; ?></option><?php } ?></select></td><td><select id="dynamicSelectInterval" name="addMoreEyedrops[' + i + '][dose_interval]" class="select2 form-select" data-control="select2"><option value="">Select Interval</option><?php foreach(\App\Models\Prescription::DOSE_INTERVAL as $dose_interval){ ?><option value="<?php echo $dose_interval; ?>"><?php echo $dose_interval; ?></option><?php } ?></select></td><td><textarea name="addMoreEyedrops[' + i + '][comment]" class="form-control" rows="1" placeholder="{{ __('messages.prescription.comment')}}"></textarea></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
             );
 
         // Initialize select2 for newly added select elements
@@ -436,3 +520,36 @@
         $(this).parents('tr').remove();
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('#addMedicineForm').on('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function(response) {
+                    // Handle success response
+                    alert('Medicine added successfully!');
+                    $('#addMedicineModal').modal('hide');
+                    // Optionally, you can append the new medicine to the table dynamically
+                },
+                error: function(response) {
+                    // Handle error response
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    @media (min-width: 992px) {
+        .modal-lg {
+            max-width: 80%; /* Adjust this value as needed */
+        }
+    }
+</style>

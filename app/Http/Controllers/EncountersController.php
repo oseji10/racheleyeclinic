@@ -351,7 +351,7 @@ public function freeHandwritingRightEye(Request $request)
     ]);
 
     Flash::success(__('messages.encounters.encounter_created'));
-    return redirect()->route('patient.encounter')->with('success', __('messages.encounters.visual_acuity'));
+    return redirect()->route('patient.encounter5')->with('success', __('messages.encounters.visual_acuity'));
 }
 
 

@@ -1400,6 +1400,7 @@ Route::post('/upload-image', [EncountersController::class, 'uploadImage'])->name
 
 Route::get('print-encounter/{id}', [PDFController::class, 'generatePdf'])->name('print-encounter');
 
+Route::post('store-medicine', [MedicineController::class, 'storeMedicine'])->name('medicine.store_medicines');
 
 Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Case Manager|Accountant')->group(function () {
     Route::get('encounter/{patient}', [EncountersController::class, 'show'])

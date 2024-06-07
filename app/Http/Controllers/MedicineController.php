@@ -11,6 +11,7 @@ use App\Models\SaleMedicine;
 use App\Repositories\MedicineRepository;
 use Flash;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
 
 class MedicineController extends AppBaseController
 {
@@ -26,7 +27,7 @@ class MedicineController extends AppBaseController
     {
         return view('medicines.index');
     }
-
+ 
     public function create()
     {
         $data = $this->medicineRepository->getSyncList();
@@ -43,6 +44,18 @@ class MedicineController extends AppBaseController
         Flash::success(__('messages.medicine.medicine').' '.__('messages.common.saved_successfully'));
 
         return redirect(route('medicines.index'));
+    }
+
+    public function storeMedicine(Request $request)
+    {
+        $new_medicine = new Medicine();
+    $input = $request->all();
+    $new_medicine->fill($input); // Set attributes of the $new_medicine object
+    $new_medicine->save(); // Save the new medicine object
+
+        Flash::success(__('messages.medicine.medicine').' '.__('messages.common.saved_successfully'));
+
+        // return redirect(route('medicines.index'));
     }
 
     public function show(Medicine $medicine)
