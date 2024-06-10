@@ -13,42 +13,50 @@
         } else {
             return redirect()->route('login');
         }
-    @endphp
-    
-    @foreach ($patients as $patient)
-        <!-- Your code to display patient information goes here -->
-    @endforeach
-    @include('patient_cases.encounter.patient_id_card_template.fields')
-
-    <h3>RIGHT EYE</h3>
-
-    <div class="form-group col-sm-12 mb-5">
-        <div>
-            <input type="radio" id="blackBrush" name="brushSelector" value="black" checked>
-            <label for="blackBrush">Black</label>
+        @endphp
         
-            <input type="radio" id="redBrush" name="brushSelector" value="red">
-            <label for="redBrush">Red</label>
-        </div>
-        
-        <div class="form-group col-sm-12 mb-5 d-flex justify-content-between">
-            <div class="canvas-container" style="border: 1px solid #000; padding: 10px;">
-                <h4>Right Eye Front</h4>
-                <canvas id="canvasFront" height="250px" width="250px"></canvas>
-                <input type="hidden" id="canvasDataFront" name="canvasDataFront">
+        @foreach ($patients as $patient)
+            <div class="patient-info">
+                <h4>Patient Information</h4>
+                <p>Name: {{ $patient->name }}</p>
+                <p>Age: {{ $patient->age }}</p>
+                <p>Gender: {{ $patient->gender }}</p>
+                <!-- Add any other relevant patient information here -->
             </div>
-            <div class="canvas-container" style="border: 1px solid #000; padding: 10px;">
-                <h4>Right Eye Back</h4>
-                <canvas id="canvasBack" height="250px" width="250px"></canvas>
-                <input type="hidden" id="canvasDataBack" name="canvasDataBack">
-            </div>
-        </div>
-    </div>
+        @endforeach
+        @include('patient_cases.encounter.patient_id_card_template.fields')
 
-    <br /><br />
-    <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-secondary me-2" id="clearCanvas">{{ __('Clear') }}</button>
-        <button class="btn btn-primary me-2" type="submit">{{ __('messages.common.save') }}</button>
+        <h3>RIGHT EYE</h3>
+
+        <div class="form-group col-sm-12 mb-5">
+            <div>
+                <input type="radio" id="blackBrush" name="brushSelector" value="black" checked>
+                <label for="blackBrush">Black</label>
+            
+                <input type="radio" id="redBrush" name="brushSelector" value="red">
+                <label for="redBrush">Red</label>
+            </div>
+            
+            <div class="form-group col-sm-12 mb-5 d-flex justify-content-between">
+                <div class="canvas-container" style="border: 1px solid #000; padding: 10px;">
+                    <h4>Right Eye Front</h4>
+                    <canvas id="canvasFront" height="250px" width="250px"></canvas>
+                    <input type="hidden" id="canvasDataFront" name="canvasDataFront">
+                    <button type="button" class="btn btn-secondary mt-2" id="clearCanvasFront">{{ __('Clear Front') }}</button>
+                </div>
+                <div class="canvas-container" style="border: 1px solid #000; padding: 10px;">
+                    <h4>Right Eye Back</h4>
+                    <canvas id="canvasBack" height="250px" width="250px"></canvas>
+                    <input type="hidden" id="canvasDataBack" name="canvasDataBack">
+                    <button type="button" class="btn btn-secondary mt-2" id="clearCanvasBack">{{ __('Clear Back') }}</button>
+                </div>
+            </div>
+        </div>
+
+        <br /><br />
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary me-2" type="submit">{{ __('messages.common.save') }}</button>
+        </div>
     </div>
 </form>
 
@@ -107,9 +115,13 @@
             event.e.preventDefault();
         });
 
-        // Clear both canvases
-        document.getElementById('clearCanvas').addEventListener('click', function() {
+        // Clear front canvas
+        document.getElementById('clearCanvasFront').addEventListener('click', function() {
             canvasFront.clear();
+        });
+
+        // Clear back canvas
+        document.getElementById('clearCanvasBack').addEventListener('click', function() {
             canvasBack.clear();
         });
 
