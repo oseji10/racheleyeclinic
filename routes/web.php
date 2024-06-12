@@ -499,9 +499,9 @@ Route::middleware('auth', 'verified', 'xss', 'checkUserStatus')->group(function 
         Route::patch('doctor-opd-charges/{doctorOPDCharge}', [DoctorOPDChargeController::class, 'update'])->name('doctor-opd-charges.update');
         Route::get('doctor-opd-charges/{doctorOPDCharge}/edit', [DoctorOPDChargeController::class, 'edit'])->name('doctor-opd-charges.edit');
 
-        Route::get('patients', [PatientController::class, 'index'])
-            ->name('patients.index')
-            ->middleware('modules');
+        // Route::get('patients', [PatientController::class, 'index'])
+        //     ->name('patients.index')
+        //     ->middleware('modules');
         Route::post('patients', [PatientController::class, 'store'])->name('patients.store');
         Route::get('patients/create', [PatientController::class, 'create'])->name('patients.create');
         Route::delete('patients/{patient}', [PatientController::class, 'destroy'])->name('patients.destroy');
@@ -1413,3 +1413,6 @@ Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('optimize:clear');
     return "Done";
 });
+
+Route::get('patients', [PatientController::class, 'index'])
+            ->name('patients.index');
