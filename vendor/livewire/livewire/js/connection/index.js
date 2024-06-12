@@ -17,15 +17,15 @@ export default class Connection {
         return componentStore.onErrorCallback(status, response)
     }
 
-    showExpiredMessage(response, message) {
-        if (store.sessionHasExpiredCallback) {
-            store.sessionHasExpiredCallback(response, message)
-        } else {
-            confirm(
-                'This page has expired.\nWould you like to refresh the page?'
-            ) && window.location.reload()
-        }
-    }
+    // showExpiredMessage(response, message) {
+    //     if (store.sessionHasExpiredCallback) {
+    //         store.sessionHasExpiredCallback(response, message)
+    //     } else {
+    //         confirm(
+    //             'This page has expired.\nWould you like to refresh the page?'
+    //         ) && window.location.reload()
+    //     }
+    // }
 
     sendMessage(message) {
         let payload = message.payload()
