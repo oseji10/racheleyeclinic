@@ -1408,3 +1408,8 @@ Route::middleware('role:Admin|Patient|Doctor|Receptionist|Nurse|Case Manager|Acc
         ->name('encounter_patient.show');
     Route::get('encounter/{patient?}', [EncountersController::class, 'getBirthDate'])->name('patients.birthDate');
 });
+
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('optimize:clear');
+    return "Done";
+});
