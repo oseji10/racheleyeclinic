@@ -1,14 +1,14 @@
-document.addEventListener('turbo:load', loadPatientListingData)
+document.addEventListener('turbo:load', loadPatientListingData);
 
 function loadPatientListingData() {
     if (!$('#showPatientUrl').length) {
-        return
+        return;
     }
 
     // Edit And Delete AdvancedPayment Modal
     $('#editPatientPaymentDate').flatpickr({
         dateFormat: 'Y-m-d',
-        locale : $('.userCurrentLanguage').val(),
+        locale: $('.userCurrentLanguage').val(),
     });
 
     $('#editAdvancedPaymentModal').on('shown.bs.modal', function () {
@@ -19,7 +19,7 @@ function loadPatientListingData() {
     $('#editVaccinationDoesGivenDate').flatpickr({
         enableTime: true,
         defaultDate: new Date(),
-        locale : $('.userCurrentLanguage').val(),
+        locale: $('.userCurrentLanguage').val(),
         dateFormat: 'Y-m-d H:i',
     });
 
@@ -30,9 +30,15 @@ function loadPatientListingData() {
         });
     });
 
-    loadDeleteFunction()
+    loadDeleteFunction();
 }
 
+// Setup CSRF token for all AJAX requests
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
 listen('click', '.edit-advancedPayment-btn', function (event) {
     if ($('.ajaxCallIsRunning').val()) {
@@ -94,10 +100,9 @@ listenHiddenBsModal('#editAdvancedPaymentModal', function () {
     resetModalForm('#editAdvancedPaymentForm', '#editPatientPaymentErrorsBox');
 });
 
-
 listen('click', '.edit-vaccination-btn', function (event) {
     if ($('.ajaxCallIsRunning').val()) {
-        return
+        return;
     }
     ajaxCallInProgress();
     let vaccinatedPatientId = $(event.currentTarget).attr('data-id');
@@ -159,7 +164,7 @@ listenHiddenBsModal('#editVaccinationModal', function () {
 
 function loadDeleteFunction() {
     if (!$('#showPatientUrl').length) {
-        return
+        return;
     }
 
     listen('click', '.layout-delete-btn', function (event) {
