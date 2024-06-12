@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'razorpay-payment-success',
-        'ipd-razorpay-payment-success'
+        'ipd-razorpay-payment-success',
+        'livewire/*',
     ];
 }
