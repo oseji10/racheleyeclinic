@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title')
     {{ __('messages.patients') }}
-    <meta name="csrf_token" value="{{ csrf_token() }}"/>
+    <!-- <meta name="csrf_token" value="{{ csrf_token() }}"/> -->
 @endsection
 @section('content')
     <div class="container-fluid">
