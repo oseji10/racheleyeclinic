@@ -63,10 +63,10 @@
                     <input name="password" type="password" class="form-control" id="password" required placeholder="{{ __('messages.user.password')}}"
                            value="{{ (Cookie::get('password') !== null) ? Cookie::get('password') : null }}">
                 </div>
-                <div class="mb-sm-7 mb-4 form-check">
+                <!-- <div class="mb-sm-7 mb-4 form-check">
                     <input type="checkbox" class="form-check-input" id="remember_me" name="remember" checked>
                     <label class="form-check-label" for="remember_me">{{ __('auth.remember_me') }}</label>
-                </div>
+                </div> -->
                 <div class="d-grid">
                     <button type="submit" class="btn btn-primary">{{__('auth.login.login')}}</button>
                 </div>

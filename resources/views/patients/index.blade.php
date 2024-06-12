@@ -8,7 +8,7 @@
             @include('flash::message')
             {{Form::hidden('patientUrl',url('patients'),['id'=>'indexPatientUrl'])}}
             {{ Form::hidden('patients', __('messages.advanced_payment.patient'), ['id' => 'Patients']) }}
-            <livewire:patient-table/>
+            <livewire:patient-table wire:poll.visible/>
             @include('accountants.templates.templates')
             @include('partials.page.templates.templates')
         </div>
