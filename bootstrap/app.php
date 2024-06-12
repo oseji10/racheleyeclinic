@@ -52,4 +52,10 @@ $app->singleton(
 |
 */
 
+$app->withMiddleware(function (Middleware $middleware) {
+    $middleware->validateCsrfTokens(except: [
+        'livewire/*',
+    ]);
+});
+
 return $app;
