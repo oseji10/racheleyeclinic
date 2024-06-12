@@ -4351,31 +4351,31 @@
                                                       );
                                             });
                                     else {
-                                        if (
-                                            !1 ===
-                                            _this.onError(
-                                                message,
-                                                response.status,
-                                                response
-                                            )
-                                        )
-                                            return;
-                                        if (419 === response.status) {
-                                            if (store$2.sessionHasExpired)
-                                                return;
-                                            (store$2.sessionHasExpired = !0),
-                                                _this.showExpiredMessage(
-                                                    response,
-                                                    message
-                                                );
-                                        } else
-                                            response
-                                                .text()
-                                                .then(function (response) {
-                                                    _this.showHtmlModal(
-                                                        response
-                                                    );
-                                                });
+                                       //  if (
+                                       //      !1 ===
+                                       //      _this.onError(
+                                       //          message,
+                                       //          response.status,
+                                       //          response
+                                       //      )
+                                       //  )
+                                       //      return;
+                                       //  if (419 === response.status) {
+                                       //      if (store$2.sessionHasExpired)
+                                       //          return;
+                                       //      (store$2.sessionHasExpired = !0),
+                                       //          _this.showExpiredMessage(
+                                       //              response,
+                                       //              message
+                                       //          );
+                                       //  } else
+                                       //      response
+                                       //          .text()
+                                       //          .then(function (response) {
+                                       //              _this.showHtmlModal(
+                                       //                  response
+                                       //              );
+                                       //          });
                                     }
                                 })
                                 .catch(function () {

@@ -11,11 +11,11 @@ export default class Connection {
         message.component.receiveMessage(message, payload)
     }
 
-    onError(message, status, response) {
-        message.component.messageSendFailed()
+    // onError(message, status, response) {
+    //     message.component.messageSendFailed()
 
-        return componentStore.onErrorCallback(status, response)
-    }
+    //     return componentStore.onErrorCallback(status, response)
+    // }
 
     // showExpiredMessage(response, message) {
     //     if (store.sessionHasExpiredCallback) {
@@ -76,19 +76,19 @@ export default class Connection {
                         }
                     })
                 } else {
-                    if (this.onError(message, response.status, response) === false) return
+                    // if (this.onError(message, response.status, response) === false) return
 
-                    if (response.status === 419) {
-                        if (store.sessionHasExpired) return
+                    // if (response.status === 419) {
+                    //     if (store.sessionHasExpired) return
 
-                        store.sessionHasExpired = true
+                    //     store.sessionHasExpired = true
 
-                        this.showExpiredMessage(response, message)
-                    } else {
-                        response.text().then(response => {
-                            this.showHtmlModal(response)
-                        })
-                    }
+                    //     this.showExpiredMessage(response, message)
+                    // } else {
+                    //     response.text().then(response => {
+                    //         this.showHtmlModal(response)
+                    //     })
+                    // }
                 }
             })
             .catch(() => {

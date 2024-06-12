@@ -4861,15 +4861,15 @@
                             message.component.receiveMessage(message, payload)
                         }
                     },
-                    {
-                        key: 'onError',
-                        value: function (message, status, response) {
-                            return (
-                                message.component.messageSendFailed(),
-                                store$2.onErrorCallback(status, response)
-                            )
-                        }
-                    },
+                  //   {
+                  //       key: 'onError',
+                  //       value: function (message, status, response) {
+                  //           return (
+                  //               message.component.messageSendFailed(),
+                  //               store$2.onErrorCallback(status, response)
+                  //           )
+                  //       }
+                  //   },
                   //   {
                   //       key: 'showExpiredMessage',
                   //       value: function (response, message) {
