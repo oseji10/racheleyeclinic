@@ -98,7 +98,7 @@ class UserRepository extends BaseRepository
     {
             $settings = App::make(SettingRepository::class)->getSyncList();
             try {
-            $input['phone'] = preparePhoneNumber($input, 'phone');
+            // $input['phone'] = preparePhoneNumber($input, 'phone');
             $input['password'] = Hash::make($input['password']);
             $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
             $input['language'] = $settings['default_lang'];

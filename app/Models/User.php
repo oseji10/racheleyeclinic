@@ -251,19 +251,19 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     ];
 
     public static $rules = [
-        'first_name' => 'required|string',
-        'last_name' => 'required|string',
-        'email' => 'required|email:filter|unique:users,email',
-        'password' => 'required|same:password_confirmation|min:6',
-        'department_id' => 'required|string',
-        'gender' => 'required|string',
-        'dob' => 'nullable|date',
-        'phone' => 'required|numeric',
-        'address1' => 'nullable|string',
-        'address2' => 'nullable|string',
-        'city' => 'nullable|string',
-        'zip' => 'nullable|integer',
-        'image' => 'nullable|mimes:jpg,jpeg,png',
+        // 'first_name' => 'required|string',
+        // 'last_name' => 'required|string',
+        // 'email' => 'required|email:filter|unique:users,email',
+        // 'password' => 'required|same:password_confirmation|min:6',
+        // 'department_id' => 'required|string',
+        // 'gender' => 'required|string',
+        // 'dob' => 'nullable|date',
+        // 'phone' => 'required|numeric',
+        // 'address1' => 'nullable|string',
+        // 'address2' => 'nullable|string',
+        // 'city' => 'nullable|string',
+        // 'zip' => 'nullable|integer',
+        // 'image' => 'nullable|mimes:jpg,jpeg,png',
     ];
 
     protected $casts = [

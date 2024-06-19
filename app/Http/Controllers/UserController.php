@@ -95,6 +95,8 @@ class UserController extends AppBaseController
     public function store(CreateUserRequest $request)
     {
         try {
+
+            
             DB::beginTransaction();
             $input = $request->all();
             $input['status'] = isset($input['status']) ? 1 : 0;
