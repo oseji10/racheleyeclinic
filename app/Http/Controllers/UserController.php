@@ -108,7 +108,7 @@ class UserController extends AppBaseController
         } catch (Exception $e) {
             DB::rollBack();
 
-            throw new UnprocessableEntityHttpException($e->getMessage());
+            // throw new UnprocessableEntityHttpException($e->getMessage());
         }
     }
 

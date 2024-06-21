@@ -96,20 +96,20 @@ class UserRepository extends BaseRepository
 
     public function store($input)
     {
-            $settings = App::make(SettingRepository::class)->getSyncList();
-            try {
-            // $input['phone'] = preparePhoneNumber($input, 'phone');
+        $settings = App::make(SettingRepository::class)->getSyncList();
+        try {
+            $input['phone'] = preparePhoneNumber($input, 'phone');
             $input['password'] = Hash::make($input['password']);
             $input['dob'] = (! empty($input['dob'])) ? $input['dob'] : null;
             $input['language'] = $settings['default_lang'];
             $user = User::create($input);
-
+    
             if (isset($input['image']) && ! empty($input['image'])) {
                 $fileExtension = getFileName('User', $input['image']);
                 $user->addMedia($input['image'])->usingFileName($fileExtension)->toMediaCollection(User::COLLECTION_PROFILE_PICTURES,
                     config('app.media_disc'));
             }
-
+    
             if ($input['department_id'] == 1) {
                 $ownerId = null;
                 $ownerType = null;
@@ -120,56 +120,64 @@ class UserRepository extends BaseRepository
                     'doctor_department_id' => $doctorDepartment->id,
                     'specialist' => 'Bones',
                 ]);
-                $user->sendEmailVerificationNotification();
                 $ownerId = $doctor->id;
                 $ownerType = Doctor::class;
                 $user->update(['language' => getSettingValue()['default_lang']->value]);
             } elseif ($input['department_id'] == 3) {
                 $patient = Patient::create(['user_id' => $user->id,'patient_unique_id' => strtoupper(Patient::generateUniquePatientId())]);
-                $user->sendEmailVerificationNotification();
                 $ownerId = $patient->id;
                 $ownerType = Patient::class;
             } elseif ($input['department_id'] == 4) {
                 $nurse = Nurse::create(['user_id' => $user->id]);
-                $user->sendEmailVerificationNotification();
                 $ownerId = $nurse->id;
                 $ownerType = Nurse::class;
             } elseif ($input['department_id'] == 5) {
                 $receptionist = Receptionist::create(['user_id' => $user->id]);
-                $user->sendEmailVerificationNotification();
                 $ownerId = $receptionist->id;
                 $ownerType = Receptionist::class;
             } elseif ($input['department_id'] == 6) {
                 $pharmacist = Pharmacist::create(['user_id' => $user->id]);
-                $user->sendEmailVerificationNotification();
                 $ownerId = $pharmacist->id;
                 $ownerType = Pharmacist::class;
             } elseif ($input['department_id'] == 7) {
                 $accountant = Accountant::create(['user_id' => $user->id]);
-                $user->sendEmailVerificationNotification();
                 $ownerId = $accountant->id;
                 $ownerType = Accountant::class;
             } elseif ($input['department_id'] == 8) {
                 $caseManager = CaseHandler::create(['user_id' => $user->id]);
-                $user->sendEmailVerificationNotification();
                 $ownerId = $caseManager->id;
                 $ownerType = CaseHandler::class;
             } elseif ($input['department_id'] == 9) {
                 $labTechnician = LabTechnician::create(['user_id' => $user->id]);
-                $user->sendEmailVerificationNotification();
                 $ownerId = $labTechnician->id;
                 $ownerType = LabTechnician::class;
             }
-
-            $user->update(['owner_id' => $ownerId, 'owner_type' => $ownerType,]);
-
+    
+            $user->update(['owner_id' => $ownerId, 'owner_type' => $ownerType]);
+    
             $user->assignRole($input['department_id']);
+
+            // Update the email_verified_at field
+            $user->update(['email_verified_at' => Carbon::now()->format('Y-m-d H:i:s')]);
+
+    
+            try {
+                $user->sendEmailVerificationNotification();
+            } catch (Exception $e) {
+                // Log the error or handle it according to your needs
+                Log::error('Error sending email: ' . $e->getMessage());
+            }
+    
+            // Flash a success message
+            session()->flash('success', 'User created successfully!');
+    
         } catch (Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage());
         }
-
+    
         return true;
     }
+    
 
     public function updateUser($input, $userId)
     {
