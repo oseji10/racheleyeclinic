@@ -216,10 +216,17 @@
     'prism_right.acuity_value as prism_right',
     'prism_left.acuity_value as prism_left',
 
-    'free_handwriting_right as free_handwriting_right',
-    'free_handwriting_left as free_handwriting_left',
+    
 
-     'encounters.free_handwriting_right as right_eye', 'encounters.free_handwriting_left as left_eye', 'patients.first_name as patient_first_name', 'patients.last_name as patient_last_name', 'patients.gender as patient_gender', 'patients.blood_group as patient_blood_group', 'patients.dob as patient_dob', 'patients.email as patient_email', 'patients.phone as patient_phone', 'patients.id as patient_id', 'doctors.first_name as doctor_first_name', 'doctors.last_name as doctor_last_name')
+    'free_handwriting_left_front as free_handwriting_left_front',
+      'free_handwriting_left_back as free_handwriting_left_back',
+      'free_handwriting_right_front as free_handwriting_right_front',
+      'free_handwriting_right_back as free_handwriting_right_back',
+
+
+     
+     
+     'patients.first_name as patient_first_name', 'patients.last_name as patient_last_name', 'patients.gender as patient_gender', 'patients.blood_group as patient_blood_group', 'patients.dob as patient_dob', 'patients.email as patient_email', 'patients.phone as patient_phone', 'patients.id as patient_id', 'doctors.first_name as doctor_first_name', 'doctors.last_name as doctor_last_name')
     ->leftJoin('users as patients', 'patients.id', '=', 'encounters.patient_id')
     ->leftJoin('users as doctors', 'doctors.id', '=', 'encounters.doctor_id')
     ->leftjoin('visual_acuity as vafpr', 'vafpr.id', '=', 'encounters.visual_acuity_far_presenting_right')
