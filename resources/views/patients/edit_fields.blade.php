@@ -118,36 +118,7 @@
         </div>
     </div>
     <hr>
-    <div class="row mt-3 mb-5">
-        <div class="col-md-12 mb-3">
-            <h5>{{ __('messages.setting.social_details') }}</h5>
-        </div>
 
-        <!-- Facebook URL Field -->
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('facebook_url', __('messages.facebook_url').':', ['class' => 'form-label']) }}
-            {{ Form::text('facebook_url', null, ['class' => 'form-control patientFacebookUrl','id'=>'editPatientFacebookUrl', 'onkeypress' => 'return avoidSpace(event);','placeholder'=>__('messages.facebook_url')]) }}
-        </div>
-
-        <!-- Twitter URL Field -->
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('twitter_url', __('messages.twitter_url').':', ['class' => 'form-label']) }}
-            {{ Form::text('twitter_url', null, ['class' => 'form-control patientTwitterUrl','id'=>'editPatientTwitterUrl', 'onkeypress' => 'return avoidSpace(event);','placeholder'=>__('messages.twitter_url')]) }}
-        </div>
-
-        <!-- Instagram URL Field -->
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('instagram_url', __('messages.instagram_url').':', ['class' => 'form-label']) }}
-            {{ Form::text('instagram_url', null, ['class' => 'form-control patientInstagramUrl', 'id'=>'editPatientInstagramUrl', 'onkeypress' => 'return avoidSpace(event);','placeholder'=>__('messages.instagram_url')]) }}
-        </div>
-
-        <!-- LinkedIn URL Field -->
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('linkedIn_url', __('messages.linkedIn_url').':', ['class' => 'form-label']) }}
-            {{ Form::text('linkedIn_url', null, ['class' => 'form-control patientLinkedInUrl','id'=>'editPatientLinkedInUrl', 'onkeypress' => 'return avoidSpace(event);','placeholder'=>__('messages.linkedIn_url')]) }}
-        </div>
-
-    </div>
 
     <div class="d-flex justify-content-end">
         {{ Form::submit(__('messages.common.save'), ['class' => 'btn btn-primary me-2','id' => 'editPatientSave']) }}
