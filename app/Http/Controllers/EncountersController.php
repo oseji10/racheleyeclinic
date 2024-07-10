@@ -328,7 +328,7 @@ public function freeHandwritingRightEye(Request $request)
         Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
         
         // Return the correct path format
-        return "main2/public/uploads/uploads/canvas_images/$fileName";
+        return "rachel.ecolemoderne.com/uploads/uploads/canvas_images/$fileName";
     }
 
     // Save front image
@@ -378,7 +378,9 @@ public function freeHandwritingLeftEye(Request $request)
         Storage::disk('public')->put('uploads/canvas_images/' . $fileName, $decodedImageData);
         
         // Return the correct path format
-        return "main2/public/uploads/uploads/canvas_images/$fileName";
+        return "rachel.ecolemoderne.com/uploads/uploads/canvas_images/$fileName";
+        // return "main2/public/uploads/uploads/canvas_images/$fileName";
+        
     }
 
     // Save front image
