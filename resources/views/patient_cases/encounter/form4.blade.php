@@ -4,11 +4,12 @@
         <input type="hidden" name="patient_id" value="{{ session('patient_id') }}">
         <input type="hidden" name="temporary_id" value="{{ session('temporary_id') }}">
         
+        
         @php
         if(session()->has('patient_id')) {
             $patients = App\Models\Patient::select('patients.*', 'users.*')
                         ->join('users', 'users.id', '=', 'patients.user_id')
-                        ->where('user_id', '=', session('patient_id'))
+                         ->where('user_id', '=', session('patient_id'))
                         ->get();
         } else {
             return redirect()->route('login');
@@ -16,13 +17,13 @@
         @endphp
         
         @foreach ($patients as $patient)
-            <div class="patient-info">
+            <!-- <div class="patient-info">
                 <h4>Patient Information</h4>
                 <p>Name: {{ $patient->name }}</p>
                 <p>Age: {{ $patient->age }}</p>
                 <p>Gender: {{ $patient->gender }}</p>
-                <!-- Add any other relevant patient information here -->
-            </div>
+               
+            </div> -->
         @endforeach
         @include('patient_cases.encounter.patient_id_card_template.fields')
 

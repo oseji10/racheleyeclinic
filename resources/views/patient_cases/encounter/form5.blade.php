@@ -16,13 +16,12 @@
         @endphp
         
         @foreach ($patients as $patient)
-            <div class="patient-info">
+            <!-- <div class="patient-info">
                 <h4>Patient Information</h4>
                 <p>Name: {{ $patient->name }}</p>
                 <p>Age: {{ $patient->age }}</p>
                 <p>Gender: {{ $patient->gender }}</p>
-                <!-- Add any other relevant patient information here -->
-            </div>
+                           </div> -->
         @endforeach
         @include('patient_cases.encounter.patient_id_card_template.fields')
     
