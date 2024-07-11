@@ -694,7 +694,7 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_right') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->free_handwriting_right) }}" /></span>
+                                    class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_right_front) }}" /></span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
@@ -702,7 +702,7 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left') }}</label>
                             <p>
                                 <span
-                                class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->free_handwriting_left) }}" /></span>
+                                class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_left_front) }}" /></span>
                             </p>
                         </div>
                    </div>
