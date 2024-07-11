@@ -721,7 +721,7 @@
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                             <label for="name"
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left_back') }}</label>
-                                {{ $visual_acuity->free_handwriting_left_back}}
+                                
                             <p>
                                 <span
                                 class="fs-5 text-gray-800"><img src="{{ $visual_acuity->free_handwriting_left_back}}" /></span>
