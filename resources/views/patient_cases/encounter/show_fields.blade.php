@@ -706,6 +706,25 @@
                             </p>
                         </div>
                    </div>
+
+                   <div class="row">
+                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                            <label for="name"
+                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_right') }}</label>
+                            <p>
+                                <span
+                                    class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_right_back) }}" /></span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
+                            <label for="name"
+                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left') }}</label>
+                            <p>
+                                <span
+                                class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_left_back) }}" /></span>
+                            </p>
+                        </div>
+                   </div>
                 </div>
             </div>
         </div>
