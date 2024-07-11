@@ -691,7 +691,7 @@
                     <div class="row">
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                             <label for="name"
-                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_right') }}</label>
+                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_right_front') }}</label>
                             <p>
                                 <span
                                     class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_right_front) }}" /></span>
@@ -699,7 +699,7 @@
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                             <label for="name"
-                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left') }}</label>
+                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left_front') }}</label>
                             <p>
                                 <span
                                 class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_left_front) }}" /></span>
@@ -710,7 +710,7 @@
                    <div class="row">
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                             <label for="name"
-                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_right') }}</label>
+                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_right_back') }}</label>
                             <p>
                                 <span
                                     class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_right_back) }}" /></span>
@@ -718,7 +718,7 @@
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
                             <label for="name"
-                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left') }}</label>
+                                class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left_back') }}</label>
                             <p>
                                 <span
                                 class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_left_back) }}" /></span>
