@@ -694,7 +694,7 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_right_front') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_right_front) }}" /></span>
+                                    class="fs-5 text-gray-800"><img src="{{ $visual_acuity->free_handwriting_right_front }}" /></span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
@@ -702,7 +702,7 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left_front') }}</label>
                             <p>
                                 <span
-                                class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_left_front) }}" /></span>
+                                class="fs-5 text-gray-800"><img src="{{ $visual_acuity->free_handwriting_left_front }}" /></span>
                             </p>
                         </div>
                    </div>
@@ -713,7 +713,9 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_right_back') }}</label>
                             <p>
                                 <span
-                                    class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_right_back) }}" /></span>
+                                    class="fs-5 text-gray-800"><img src="{{ $visual_acuity->free_handwriting_right_back }}" />
+                                    
+                                </span>
                             </p>
                         </div>
                         <div class="col-sm-6 d-flex flex-column mb-md-10 mb-5">
@@ -721,7 +723,7 @@
                                 class="pb-2 fs-5 text-gray-600">{{ __('messages.case.free_handwriting_left_back') }}</label>
                             <p>
                                 <span
-                                class="fs-5 text-gray-800"><img src="{{ URL::asset($visual_acuity->	free_handwriting_left_back) }}" /></span>
+                                class="fs-5 text-gray-800"><img src="{{ $visual_acuity->free_handwriting_left_back}}" /></span>
                             </p>
                         </div>
                    </div>
