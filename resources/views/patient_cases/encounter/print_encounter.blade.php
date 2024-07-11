@@ -209,12 +209,12 @@
 <table width="100%" border="1" style="border-collapse:collapse">
 <tr>
         <td style="color:black; align-content:center;" colspan="3"> <h5>Left Eye Front:</h5><img src="{{ $item->free_handwriting_left_front  }}" /></td>
-        <td style="color:black" colspan="3"> <h5>Left Eye Back:</h5><img src="https://racheleyeemr.com.ng/new/{{ $item->free_handwriting_left_back }}" /></td>
+        <td style="color:black" colspan="3"> <h5>Left Eye Back:</h5><img src="{{ $item->free_handwriting_left_back }}" /></td>
       </tr>
 
       <tr>
         <td style="color:black; align-content:center;" colspan="3"> <h5>Right Eye Front:</h5><img src="{{ $item->free_handwriting_right_front  }}" /></td>
-        <td style="color:black" colspan="3"> <h5>Left Eye Back:</h5><img src="https://racheleyeemr.com.ng/new/{{ $item->free_handwriting_right_back }}" /></td>
+        <td style="color:black" colspan="3"> <h5>Left Eye Back:</h5><img src="{{ $item->free_handwriting_right_back }}" /></td>
       </tr>
     </table>
   </div>
