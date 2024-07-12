@@ -714,7 +714,9 @@
                             <p>
                                 <span
                                     class="fs-5 text-gray-800"><img src="{{ $visual_acuity->free_handwriting_right_back }}" />
-                                    <img src="{{ $visual_acuity->free_handwriting_right_back }}" />
+                                    <!-- <img src="{{ $visual_acuity->free_handwriting_right_back }}" /> -->
+                                    <img src="{{ asset($visual_acuity->free_handwriting_right_back) }}" alt="Image">
+
                                 </span>
                             </p>
                         </div>
