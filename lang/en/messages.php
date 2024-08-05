@@ -778,6 +778,7 @@ return [
         'visual_acuity_near_right' => 'Visual acuity Near Right',
         'intraoccular_pressure_left' => 'Intraoccular Pressure Left (mmHg)',
         'chief_complaint_left' => 'Chief Complaint Left',
+        'other_complaints_left' => 'Other Complaints Left',
         'detailed_history_left' => 'Detailed History Left',
         'findings_left' => 'Findings Left',
         'eyelid_left' => 'Eyelid Left',
@@ -793,6 +794,7 @@ return [
 
         'intraoccular_pressure_right' => 'Intraoccular Pressure Right (mmHg)',
         'chief_complaint_right' => 'Chief Complaint Right',
+        'other_complaints_right' => 'Other Complaints Right',
         'detailed_history_right' => 'Detailed History Right',
         'findings_right' => 'Findings Right',
         'eyelid_right' => 'Eyelid Right',
@@ -809,7 +811,8 @@ return [
         'free_handwriting_left' => 'Free Handwriting Left Eye',
         'free_handwriting_right' => 'Free Handwriting Right Eye',
 
-        'diagnosis' => 'Diagnosis',
+        'diagnosis_right_eye' => 'Diagnosis Right Eye',
+        'diagnosis_left_eye' => 'Diagnosis Left Eye',
         'treatment_eyedrop' => 'Treatement (Eye Drops)',
         'treatment_tablet' => 'Treatment (Tablets)',
         'investigations_required' => 'Invesitgations Required',
@@ -857,6 +860,8 @@ return [
         'page5' => 'Page 5',
         'page6' => 'Page 6 - Refraction',
         'page7' => 'Page 7 - Diagnosis',
+
+        
     
     ],
     //services

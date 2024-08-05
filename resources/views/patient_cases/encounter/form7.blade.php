@@ -37,9 +37,43 @@
 
 
 
- 
-    
+        {{-- Diagnosis --}}
+        <div class="form-group col-sm-6 mb-5">DIAGNOSIS</div>
+        <div></div>
 
+<div class="form-group col-sm-6 mb-5">
+    {{ Form::label('diagnosis', __('messages.case.diagnosis_right_eye') . ':', ['class' => 'form-label']) }}
+    <select id="diagnosis_right_eye" class="select2 form-select" name="diagnosis_right_eye" multiple data-control="select2">
+        <option value="">Select Diagnosis Type</option>
+        <?php 
+            $encounter = App\Models\Encounters::where('patient_id', session('patient_id') )->where('temporary_id', session('temporary_id'))->first();
+            $selected_visual_acuity_id = $encounter ? $encounter->diagnosis : null;
+            $visual_acuities = App\Models\VisualAcuity::select('acuity_value', 'id')->where('acuity_group_id', '=', 'DIAG')->get(); 
+        ?>
+        @foreach($visual_acuities as $item)
+            <option value="{{ $item->id }}" {{ ($item->id == $selected_visual_acuity_id) ? 'selected' : '' }}>
+                {{ $item->acuity_value }}
+            </option>
+        @endforeach
+    </select>
+</div>
+    
+<div class="form-group col-sm-6 mb-5">
+    {{ Form::label('diagnosis', __('messages.case.diagnosis_left_eye') . ':', ['class' => 'form-label']) }}
+    <select id="diagnosis_left_eye" class="select2 form-select" name="diagnosis_left_eye" multiple data-control="select2">
+        <option value="">Select Diagnosis Type</option>
+        <?php 
+            $encounter = App\Models\Encounters::where('patient_id', session('patient_id') )->where('temporary_id', session('temporary_id'))->first();
+            $selected_visual_acuity_id = $encounter ? $encounter->diagnosis : null;
+            $visual_acuities = App\Models\VisualAcuity::select('acuity_value', 'id')->where('acuity_group_id', '=', 'DIAG')->get(); 
+        ?>
+        @foreach($visual_acuities as $item)
+            <option value="{{ $item->id }}" {{ ($item->id == $selected_visual_acuity_id) ? 'selected' : '' }}>
+                {{ $item->acuity_value }}
+            </option>
+        @endforeach
+    </select>
+</div>
   
 
 
@@ -275,25 +309,7 @@
         
     </div>
 
-        {{-- Diagnosis --}}
 
-
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('diagnosis', __('messages.case.diagnosis') . ':', ['class' => 'form-label']) }}
-            <select id="diagnosis" class="select2 form-select" name="diagnosis" data-control="select2">
-                <option value="">Select Diagnosis Type</option>
-                <?php 
-                    $encounter = App\Models\Encounters::where('patient_id', session('patient_id') )->where('temporary_id', session('temporary_id'))->first();
-                    $selected_visual_acuity_id = $encounter ? $encounter->diagnosis : null;
-                    $visual_acuities = App\Models\VisualAcuity::select('acuity_value', 'id')->where('acuity_group_id', '=', 'DIAG')->get(); 
-                ?>
-                @foreach($visual_acuities as $item)
-                    <option value="{{ $item->id }}" {{ ($item->id == $selected_visual_acuity_id) ? 'selected' : '' }}>
-                        {{ $item->acuity_value }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
 
         <div class="form-group col-sm-6 mb-5">
             {{ Form::label('file_upload', __('messages.case.investigations_done') . ':',
@@ -324,6 +340,15 @@
 </div>
 
 
+<div class="form-group col-sm-6 mb-5">
+        
+                
+                <label for="external_investigation_required">External Investigations Required</label>
+                <textarea name="external_investigation_required" class="form-control" rows="3" placeholder="External Investigations Required"></textarea>
+         </div>
+
+
+
         <div class="form-group col-sm-6 mb-5">
             {{ Form::label('file_upload', __('messages.case.file_upload') . ':',
             ['class' => 'form-label']) }}
@@ -347,7 +372,7 @@
        
 
 
-
+<div></div>
 
 
         <div class="form-group col-sm-6 mb-5">
@@ -365,7 +390,7 @@
                 <label for="food">Food</label>
                 {{-- <input type="text" id="food" name="food"> --}}
                 <textarea name="food" class="form-control" rows="2" placeholder="Food"></textarea>
-        <br/>
+            <br/>
                 <label for="drug-allergy">Drug Allergy</label>
                 <textarea name="drug_allergy" class="form-control" rows="2" placeholder="Drug Allergy"></textarea>
         
@@ -376,6 +401,11 @@
         
                 
         </div>
+
+
+
+
+     
 
 
 
@@ -478,6 +508,8 @@
                         <input name="quantity" value="0" hidden/>
                         <input name="available_quantity" value="0" hidden/>
                     </div>
+
+                    
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>

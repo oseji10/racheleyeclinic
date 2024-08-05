@@ -75,7 +75,9 @@ class Encounters extends Model
     'intraoccular_pressure_left',
     'intraoccular_pressure_right',  
     'chief_complaint_left',
-    'chief_complaint_right', 
+    'chief_complaint_right',
+    'other_complaints_left',
+    'other_complaints_right', 
     'detailed_history_left', 
     'detailed_history_right', 
     'findings_left',
@@ -122,7 +124,12 @@ class Encounters extends Model
     'new_developments',
     'temporary_id',
     'is_complete',
-    'prescription_id'
+    'prescription_id',
+    'other_complaints',
+    'diagnosis_left_eye',
+    'diagnosis_right_eye',
+    'external_investigation_required'
+    
 ];
     
     

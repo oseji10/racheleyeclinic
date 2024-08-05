@@ -92,41 +92,82 @@
         </div>
 
 
+        {{-- OTHER COMPLAINTS --}}
+
+
+        <div class="form-group col-sm-6 mb-5">
+            {{ Form::label('other_complaints_right', __('messages.case.other_complaints_right') . ':', ['class' =>
+            'form-label']) }}
+            <?php
+                // Check if the field is not null in the encounters table
+                $encounter = App\Models\Encounters::where('patient_id', session('patient_id'))->where('temporary_id', session('temporary_id'))->first();
+                $other_complaints_right = $encounter ? $encounter->other_complaints_right : null;
+            ?>
+            <textarea class="form-control" rows="4" name="other_complaints_right"
+                placeholder="{{ __('messages.case.other_complaints_right') }}">
+        @if($other_complaints_right !== null)
+        {{ $other_complaints_right }}
+        @endif
+        </textarea>
+        </div>
+
+
+        <div class="form-group col-sm-6 mb-5">
+            {{ Form::label('other_complaints_left', __('messages.case.other_complaints_left') . ':', ['class' =>
+            'form-label']) }}
+            <?php
+                // Check if the field is not null in the encounters table
+                $encounter = App\Models\Encounters::where('patient_id', session('patient_id'))->where('temporary_id', session('temporary_id'))->first();
+                $other_complaints_left = $encounter ? $encounter->other_complaints_left : null;
+            ?>
+            <textarea class="form-control" rows="4" name="other_complaints_left"
+                placeholder="{{ __('messages.case.other_complaints_left') }}">
+        @if($other_complaints_left !== null)
+        {{ $other_complaints_left }}
+        @endif
+        </textarea>
+        </div>
+
+
+
+
+
         {{-- DETIALED HISTORY --}}
 
 
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('detailed_history_right', __('messages.case.detailed_history_right') . ':', ['class' =>
-            'form-label']) }}
-            <?php
-                // Check if the field is not null in the encounters table
-                $encounter = App\Models\Encounters::where('patient_id', session('patient_id'))->where('temporary_id', session('temporary_id'))->first();
-                $detailed_history_right = $encounter ? $encounter->detailed_history_right : null;
-            ?>
-            <textarea class="form-control" rows="4" name="detailed_history_right"
-                placeholder="{{ __('messages.case.detailed_history_right') }}">
-        @if($detailed_history_right !== null)
-        {{ $detailed_history_right }}
-        @endif
-        </textarea>
-        </div>
+<div class="form-group col-sm-6 mb-5">
+    {{ Form::label('detailed_history_right', __('messages.case.detailed_history_right') . ':', ['class' =>
+    'form-label']) }}
+    <?php
+        // Check if the field is not null in the encounters table
+        $encounter = App\Models\Encounters::where('patient_id', session('patient_id'))->where('temporary_id', session('temporary_id'))->first();
+        $detailed_history_right = $encounter ? $encounter->detailed_history_right : null;
+    ?>
+    <textarea class="form-control" rows="4" name="detailed_history_right"
+        placeholder="{{ __('messages.case.detailed_history_right') }}">
+@if($detailed_history_right !== null)
+{{ $detailed_history_right }}
+@endif
+</textarea>
+</div>
 
 
-        <div class="form-group col-sm-6 mb-5">
-            {{ Form::label('detailed_history_left', __('messages.case.detailed_history_left') . ':', ['class' =>
-            'form-label']) }}
-            <?php
-                // Check if the field is not null in the encounters table
-                $encounter = App\Models\Encounters::where('patient_id', session('patient_id'))->where('temporary_id', session('temporary_id'))->first();
-                $detailed_history_left = $encounter ? $encounter->detailed_history_left : null;
-            ?>
-            <textarea class="form-control" rows="4" name="detailed_history_left"
-                placeholder="{{ __('messages.case.detailed_history_left') }}">
-        @if($detailed_history_left !== null)
-        {{ $detailed_history_left }}
-        @endif
-        </textarea>
-        </div>
+<div class="form-group col-sm-6 mb-5">
+    {{ Form::label('detailed_history_left', __('messages.case.detailed_history_left') . ':', ['class' =>
+    'form-label']) }}
+    <?php
+        // Check if the field is not null in the encounters table
+        $encounter = App\Models\Encounters::where('patient_id', session('patient_id'))->where('temporary_id', session('temporary_id'))->first();
+        $detailed_history_left = $encounter ? $encounter->detailed_history_left : null;
+    ?>
+    <textarea class="form-control" rows="4" name="detailed_history_left"
+        placeholder="{{ __('messages.case.detailed_history_left') }}">
+@if($detailed_history_left !== null)
+{{ $detailed_history_left }}
+@endif
+</textarea>
+</div>
+
 
 
 

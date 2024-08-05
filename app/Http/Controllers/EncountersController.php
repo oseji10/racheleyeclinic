@@ -229,6 +229,7 @@ public function updateConsultation(Request $request)
             // Left Eye
             'intraoccular_pressure_left' => $request->intraoccular_pressure_left,
             'chief_complaint_left' => $request->chief_complaint_left,
+            'other_complaints_left' => $request->other_complaints_left,
             'detailed_history_left' => $request->detailed_history_left,
             'findings_left' => $request->findings_left,
             'eyelid_left' => $request->eyelid_left,
@@ -245,6 +246,7 @@ public function updateConsultation(Request $request)
             // Right Eye
             'intraoccular_pressure_right' => $request->intraoccular_pressure_right,
             'chief_complaint_right' => $request->chief_complaint_right,
+            'other_complaints_right' => $request->other_complaints_right,
             'detailed_history_right' => $request->detailed_history_right,
             'findings_right' => $request->findings_right,
             'eyelid_right' => $request->eyelid_right,
@@ -509,7 +511,11 @@ public function diagnosis(Request $request)
 
         // Update the encounter record with the prescription_id
         $encounter->update([
-            'diagnosis' => $request->diagnosis,
+            
+            'diagnosis_left_eye' => $request->diagnosis_left_eye,
+            'diagnosis_right_eye' => $request->diagnosis_right_eye,
+            'external_investigation_required' => $request->external_investigation_required,
+            'prescription_id' => $prescription_id,
             'treatment_eyedrop' => $request->treatment_eyedrop,
             'treatment_tablet' => $request->treatment_tablet,
             'investigations_required' => $request->investigations_required,
