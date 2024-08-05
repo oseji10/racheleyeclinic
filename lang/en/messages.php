@@ -232,6 +232,7 @@ return [
 
     //common keys
     'common' => [
+        'new_encounter' => 'New Encounter',
         'field_required' => 'field is Required.',
         'change' => 'Change',
         'change_profile' => 'Change Image',

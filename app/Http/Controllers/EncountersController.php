@@ -451,12 +451,12 @@ public function diagnosis(Request $request)
     try {
         // Start a database transaction
         DB::beginTransaction();
-        
+
         $randomNumber = random_int(100000, 999999);
         $randomNumber2 = random_int(100000, 999999);
         $patient_id = $request->patient_id;
         $pid = $request->pid;
-        
+
         // Generate the new prescription
         $new_prescription = new Prescription();
         $new_prescription->patient_id = $pid;
@@ -468,43 +468,37 @@ public function diagnosis(Request $request)
         // Loop through the input fields and create PrescriptionMedicineModal instances
         foreach ($request->addMoreEyedrops as $data) {
             $prescription = new PrescriptionMedicineModal();
-            $prescription->medicine = $data['eyedrop']; // Updated 'tablets' to 'subject'
+            $prescription->medicine = $data['eyedrop'];
             $prescription->dosage = $data['dosage'];
             $prescription->day = $data['day'];
             $prescription->time = $data['time'];
             $prescription->comment = $data['comment'];
-            // Set prescriptions_id using the retrieved ID
             $prescription->prescription_id = $prescription_id;
             $prescription->treatment_type = $request->treatment_type1;
-            
             $prescription->save();
         }
 
         foreach ($request->addMoreTablets as $data2) {
             $prescription = new PrescriptionMedicineModal();
-            $prescription->medicine = $data2['tablet']; // Updated 'tablets' to 'subject'
+            $prescription->medicine = $data2['tablet'];
             $prescription->dosage = $data2['dosage'];
             $prescription->day = $data2['day'];
             $prescription->time = $data2['time'];
             $prescription->comment = $data2['comment'];
-            // Set prescriptions_id using the retrieved ID
             $prescription->prescription_id = $prescription_id;
             $prescription->treatment_type = $request->treatment_type2;
-            
             $prescription->save();
         }
 
         foreach ($request->addMoreOintments as $data3) {
             $prescription = new PrescriptionMedicineModal();
-            $prescription->medicine = $data3['ointment']; // Updated 'tablets' to 'subject'
+            $prescription->medicine = $data3['ointment'];
             $prescription->dosage = $data3['dosage'];
             $prescription->day = $data3['day'];
             $prescription->time = $data3['time'];
             $prescription->comment = $data3['comment'];
-            // Set prescriptions_id using the retrieved ID
             $prescription->prescription_id = $prescription_id;
             $prescription->treatment_type = $request->treatment_type3;
-            
             $prescription->save();
         }
 
@@ -515,7 +509,6 @@ public function diagnosis(Request $request)
 
         // Update the encounter record with the prescription_id
         $encounter->update([
-            // 'treatment_type' => $request->treatment_type1,
             'diagnosis' => $request->diagnosis,
             'treatment_eyedrop' => $request->treatment_eyedrop,
             'treatment_tablet' => $request->treatment_tablet,
@@ -535,7 +528,18 @@ public function diagnosis(Request $request)
 
         if ($request->filled('followup_appointment_date')) {
             $doctor = Doctor::select('doctor_department_id', 'id')->where('user_id', Auth::user()->id)->first();
+            if (!$doctor) {
+                throw new \Exception("Doctor not found for the authenticated user.");
+            }
+
+            Log::info('Doctor details: ', ['doctor' => $doctor]);
+
             $patient = Patient::select('id')->where('user_id', $request->patient_id)->first();
+            if (!$patient) {
+                throw new \Exception("Patient not found for the given user ID.");
+            }
+
+            Log::info('Patient details: ', ['patient' => $patient]);
 
             $appointment = new Appointment();
             $appointment->patient_id = $patient->id;
@@ -545,10 +549,11 @@ public function diagnosis(Request $request)
             $appointment->is_completed = "0";
             $appointment->save();
         }
+
         // Store Physical Information
         $physical_information = new PhysicalInformation();
         $physical_information->encounter_id = $encounter->id;
-        $physical_information->hbp = $request->hbp; // Updated 'tablets' to 'subject'
+        $physical_information->hbp = $request->hbp;
         $physical_information->diabetes = $request->diabetes;
         $physical_information->pregnancy = $request->pregnancy;
         $physical_information->food = $request->food;
@@ -556,37 +561,29 @@ public function diagnosis(Request $request)
         $physical_information->current_medication = $request->current_medication;
         $physical_information->save();
 
+        // Extract the selected values from the request
+        $investigationsRequired = $request->input('investigations_required');
 
-        // Validate incoming request
-    // $request->validate([
-    //     'investigations_required' => 'required|array', // Ensure it's an array
-    //     'investigations_required.*' => 'exists:investigations,id', // Ensure each value exists in your database
-    // ]);
-
-    // Extract the selected values from the request
-    $investigationsRequired = $request->input('investigations_required');
-
-    // Save each selected value as a new row in the investigations table
-    if (!empty($investigationsRequired)) {
-        foreach ($investigationsRequired as $investigation_type) {
-            Investigation::create([
-                'encounter_id' => $encounter->id,
-                'investigation_type' => $investigation_type,
-            ]);
+        // Save each selected value as a new row in the investigations table
+        if (!empty($investigationsRequired)) {
+            foreach ($investigationsRequired as $investigation_type) {
+                Investigation::create([
+                    'encounter_id' => $encounter->id,
+                    'investigation_type' => $investigation_type,
+                ]);
+            }
         }
-    }
-    
 
         // Commit the transaction
         DB::commit();
-        
+
         // Redirect with success message
         Flash::success(__('messages.encounters.encounter_created'));
         return redirect()->route('encounter.index')->with('success', __('messages.encounters.visual_acuity'));
     } catch (\Exception $e) {
         // Rollback the transaction if an error occurs
         DB::rollback();
-        
+
         // Log the error
         Log::error('Error updating consultations: ' . $e->getMessage());
 
@@ -594,6 +591,7 @@ public function diagnosis(Request $request)
         return redirect()->back()->withErrors(['error' => 'Failed to update consultations']);
     }
 }
+
 
 // public function freeHandwriting(Request $request)
 // {

@@ -19,3 +19,13 @@
         </a>
     @endif
 @endif
+
+
+@if (Auth::user()->hasRole('Admin|Doctor'))
+    @if ($row->is_completed == 0 || $row->is_completed == 1)
+        <a href="{{ route('encounter_patient.show',['patient' => $row->patient_id])}}" title="{{__('messages.common.new_encounter') }}"
+        class="btn px-1 text-primary fs-3 ps-0">
+            <i class="fa-solid fa-user-doctor"></i>
+        </a>
+    @endif
+@endif

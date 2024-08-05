@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    {{ __('messages.encounters.page3') }}
+    {{ __('messages.encounters.page2') }}
 @endsection
 
 @section('header_toolbar')
