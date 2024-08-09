@@ -833,8 +833,30 @@ return [
         'refraction' => 'Refraction',
         'freehand' => 'Freehand Drawing',
 
-        'encounter' => 'Encounters',
-        
+        'near_add_right' => 'Near Add Right',
+        'near_add_left' => 'Near Add Left',
+        'oct_right' => 'OCT Right',
+        'oct_left' => 'OCT Left',
+        'ffa_right' => 'FFA Right',
+        'ffa_left' => 'FFA Left',
+        'fundus_photography_right' => 'Fundus Photography Left',
+        'fundus_photography_left' => 'Fundus Photography Right',
+        'pachymetry_right' => 'Pachymetry Leftt',
+        'pachymetry_left' => 'Pachymetry Right',
+        'cuft_static_right' => 'CUFT Static Right',
+        'cuft_static_left' => 'CUFT Static Left',
+        'cuft_kinetic_right' => 'CUFT Kinetic Right',
+        'cuft_kinetic_left' => 'CUFT Kinetic Left',
+        'pupil_distance' => 'Pupil Distance',
+        'frame' => 'Frame',
+        'lens_type' => 'Lens Type',
+        'cost_of_lens' => 'Cost of lens',
+        'cost_of_frame' => 'Cost of Frame',
+
+        'cost_of_frame' => 'Cost of Frame',
+
+
+           
         
         'case_id' => 'Case ID',
         'date' => 'Date',

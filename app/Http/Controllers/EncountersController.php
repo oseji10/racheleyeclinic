@@ -428,6 +428,23 @@ public function refraction(Request $request)
             'axis_left' => $request->axis_left,
             'prism_right' => $request->prism_right,
             'prism_left' => $request->prism_left,
+
+            'near_add_right' => $request->near_add_right,
+            'near_add_left' => $request->near_add_left,
+            'oct_left' => $request->oct_left,
+            'oct_right' => $request->oct_right,
+            'ffa_left' => $request->ffa_left,
+            'ffa_right' => $request->ffa_right,
+            'fundus_photography_right' => $request->fundus_photography_right,
+            'fundus_photography_left' => $request->fundus_photography_left,
+            'pachymetry_right' => $request->pachymetry_right,
+            'pachymetry_left' => $request->pachymetry_left,
+            'cuft_static_right' => $request->cuft_static_right,
+            'cuft_static_left' => $request->cuft_static_left,
+            'cuft_kinetic_right' => $request->cuft_kinetic_right,
+            'cuft_kinetic_left' => $request->cuft_kinetic_left,
+            
+            'pupil_distance' => $request->pupil_distance,
            
      
         ]);
@@ -522,6 +539,13 @@ public function diagnosis(Request $request)
             'followup_appointment_date' => $request->followup_appointment_date,
             'new_developments' => $request->new_developments,
             'prescription_id' => $prescription_id,
+
+            'frame' => $request->frame,
+            'lens_type' => $request->lens_type,
+            'cost_of_lens' => $request->cost_of_lens,
+            'cost_of_frame' => $request->cost_of_frame,
+
+
             'is_complete' => "1",
         ]);
 

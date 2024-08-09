@@ -128,7 +128,30 @@ class Encounters extends Model
     'other_complaints',
     'diagnosis_left_eye',
     'diagnosis_right_eye',
-    'external_investigation_required'
+    'external_investigation_required',
+
+    'near_add_right',
+    'near_add_left',
+    'oct_left',
+    'oct_right',
+    'ffa_left',
+    'ffa_right',
+    'fundus_photography_right',
+    'fundus_photography_left',
+    'pachymetry_right',
+    'pachymetry_left',
+    'cuft_static_right',
+    'cuft_static_left',
+    'cuft_kinetic_right',
+    'cuft_kinetic_left',
+    
+    'pupil_distance',
+    'frame',
+    'lens_type',
+    'cost_of_lens',
+    'cost_of_frame',
+    'payment_status',
+    'payment_method',
     
 ];
     
